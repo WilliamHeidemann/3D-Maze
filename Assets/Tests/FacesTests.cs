@@ -31,7 +31,7 @@ public class FacesTests
 
             return true;
         });
-        Assert.AreEqual(allHasFourNeighbors, true);
+        Assert.AreEqual(true, allHasFourNeighbors);
     }
 
     // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use

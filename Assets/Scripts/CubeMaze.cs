@@ -104,7 +104,7 @@ public class CubeMaze
         throw new ArgumentOutOfRangeException("No orientation");
     }
     
-    [System.Serializable]
+    [Serializable]
     public class Square
     {
         public Vector3Int position;

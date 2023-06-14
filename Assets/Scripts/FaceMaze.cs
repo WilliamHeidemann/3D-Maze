@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class Cube
 {
@@ -76,6 +77,33 @@ public class Cube
             Bottom.Squares[width - 1, depth-i-1].RightNeighbor.Item1 = Right.Squares[i, 0];
             Right.Squares[i, 0].BottomNeighbor.Item1 = Bottom.Squares[width - 1, depth-i-1];
         }
+
+        CreateMaze();
+    }
+
+    private void CreateMaze()
+    {
+        // Choose a random starting square in the future
+        var current = Front.Squares[0, 0];
+        var stack = new Stack<Square>();
+        stack.Push(current);
+        var visited = new HashSet<Square> { current };
+        while (stack.Any())
+        {
+            var neighbors = current.Neighbors.Where(neighbor => !visited.Contains(neighbor.Item1)).ToArray();
+            if (neighbors.Any())
+            {
+                var neighbor = neighbors[Random.Range(0, neighbors.Length)];
+                neighbor.Item2.IsOpen = true;
+                visited.Add(neighbor.Item1);
+                stack.Push(neighbor.Item1);
+                current = neighbor.Item1;
+            }
+            else
+            {
+                current = stack.Pop();
+            }
+        }
     }
 }
 
@@ -95,7 +123,7 @@ public class Face
         {
             for (int w = 0; w < width; w++)
             {
-                Squares[w, h] = new Square(w, h);
+                Squares[w, h] = new Square();
             }
         }
     }
@@ -132,13 +160,11 @@ public class Face
 
 public class Square
 {
-    public readonly int X;
-    public readonly int Y;
-    public (Square, bool) TopNeighbor;
-    public (Square, bool) BottomNeighbor;
-    public (Square, bool) RightNeighbor;
-    public (Square, bool) LeftNeighbor;
-    public IEnumerable<(Square, bool)> Neighbors => new[]
+    public (Square, Wall) TopNeighbor;
+    public (Square, Wall) BottomNeighbor;
+    public (Square, Wall) RightNeighbor;
+    public (Square, Wall) LeftNeighbor;
+    public IEnumerable<(Square, Wall)> Neighbors => new[]
     {
         TopNeighbor,
         BottomNeighbor,
@@ -146,9 +172,8 @@ public class Square
         LeftNeighbor
     }.Where(neighbor => neighbor.Item1 != null);
 
-    public Square(int x, int y)
-    {
-        X = x;
-        Y = y;
-    }
+}
+public class Wall
+{
+    public bool IsOpen = false;
 }

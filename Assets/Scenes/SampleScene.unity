@@ -8011,9 +8011,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41ac45e086473c145b73f93fe0ff1486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 3
+  x: 4
   y: 4
-  z: 5
+  z: 4
   squarePrefab: {fileID: 2166238180326112377, guid: 700d66b82af062847ae19015fb6faf75, type: 3}
 --- !u!1 &467091386
 GameObject:
