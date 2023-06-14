@@ -47,7 +47,6 @@ public class MazeVisualiser : MonoBehaviour
         {
             for (int w = 0; w < width; w++)
             {
-                var spawn = Instantiate(squarePrefab);
                 var position = orientation switch
                 {
                     Orientation.Front => new Vector3(w, h, 0),
@@ -58,6 +57,7 @@ public class MazeVisualiser : MonoBehaviour
                     Orientation.Down => new Vector3(w, 0, -h),
                     _ => throw new ArgumentOutOfRangeException(nameof(orientation), orientation, null)
                 };
+                position += startingPoint;
                 var rotation = orientation switch
                 {
                     Orientation.Front => Quaternion.Euler(0,0,0),
@@ -68,14 +68,21 @@ public class MazeVisualiser : MonoBehaviour
                     Orientation.Down => Quaternion.Euler(-90,0,0),
                     _ => throw new ArgumentOutOfRangeException(nameof(orientation), orientation, null)
                 };
-                position += startingPoint;
-                spawn.transform.position = position;
-                spawn.transform.rotation = rotation;
-                Positions.Add(face.Squares[w, h], position);
-                spawn.transform.parent = transform;
-                spawn.GetComponent<MeshRenderer>().material.color = new Color(Random.value, Random.value, Random.value);
+                var spawn = Instantiate(squarePrefab, position, rotation, transform);
                 spawn.name = $"{orientation.ToString()} {w},{h}";
-
+                var square = face.Squares[w, h];
+                // Wall is null
+                // var a = square.BottomNeighbor;
+                // var b = a.Item2;
+                // var c = b.IsOpen;
+                //
+                // Back face has no wall (null) in top en bottom neighbors along x-axis in bottom and bottom-1 row and top and top-1 row
+                if(square.TopNeighbor.Item2 != null) if (square.TopNeighbor.Item2.IsOpen) spawn.transform.GetChild(0).gameObject.SetActive(false);
+                if(square.RightNeighbor.Item2 != null) if (square.RightNeighbor.Item2.IsOpen) spawn.transform.GetChild(1).gameObject.SetActive(false);
+                if(square.BottomNeighbor.Item2 != null) if (square.BottomNeighbor.Item2.IsOpen) spawn.transform.GetChild(2).gameObject.SetActive(false);
+                if(square.LeftNeighbor.Item2 != null) if (square.LeftNeighbor.Item2.IsOpen) spawn.transform.GetChild(3).gameObject.SetActive(false);
+                Positions.Add(square, position);
+                // spawn.GetComponent<MeshRenderer>().material.color = new Color(Random.value, Random.value, Random.value);
                 // spawn.GetComponent<MeshRenderer>().enabled = false;
             }
         }
@@ -107,6 +114,7 @@ public class MazeVisualiser : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.yellow;
         if (Squares == null) return;
         foreach (var square in Squares)
         {
@@ -114,6 +122,7 @@ public class MazeVisualiser : MonoBehaviour
             foreach (var neighbor in square.Neighbors)
             {
                 Gizmos.DrawLine(Positions[square], Positions[neighbor.Item1]);
+                if (neighbor.Item2 == null) Gizmos.DrawSphere(Positions[square], 0.2f);
             }
         }
     }
