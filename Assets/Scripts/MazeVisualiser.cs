@@ -77,10 +77,18 @@ public class MazeVisualiser : MonoBehaviour
                 // var c = b.IsOpen;
                 //
                 // Back face has no wall (null) in top en bottom neighbors along x-axis in bottom and bottom-1 row and top and top-1 row
-                if(square.TopNeighbor.Item2 != null) if (square.TopNeighbor.Item2.IsOpen) spawn.transform.GetChild(0).gameObject.SetActive(false);
-                if(square.RightNeighbor.Item2 != null) if (square.RightNeighbor.Item2.IsOpen) spawn.transform.GetChild(1).gameObject.SetActive(false);
-                if(square.BottomNeighbor.Item2 != null) if (square.BottomNeighbor.Item2.IsOpen) spawn.transform.GetChild(2).gameObject.SetActive(false);
-                if(square.LeftNeighbor.Item2 != null) if (square.LeftNeighbor.Item2.IsOpen) spawn.transform.GetChild(3).gameObject.SetActive(false);
+                if(square.TopNeighbor.Item2 != null) 
+                    if (square.TopNeighbor.Item2.IsOpen) 
+                        spawn.transform.GetChild(0).gameObject.SetActive(false);
+                if(square.RightNeighbor.Item2 != null) 
+                    if (square.RightNeighbor.Item2.IsOpen) 
+                        spawn.transform.GetChild(1).gameObject.SetActive(false);
+                if(square.BottomNeighbor.Item2 != null) 
+                    if (square.BottomNeighbor.Item2.IsOpen) 
+                        spawn.transform.GetChild(2).gameObject.SetActive(false);
+                if(square.LeftNeighbor.Item2 != null) 
+                    if (square.LeftNeighbor.Item2.IsOpen) 
+                        spawn.transform.GetChild(3).gameObject.SetActive(false);
                 Positions.Add(square, position);
                 // spawn.GetComponent<MeshRenderer>().material.color = new Color(Random.value, Random.value, Random.value);
                 // spawn.GetComponent<MeshRenderer>().enabled = false;
@@ -114,14 +122,16 @@ public class MazeVisualiser : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
+        Random.InitState(0);
         if (Squares == null) return;
         foreach (var square in Squares)
         {
             if (square.Neighbors == null) return;
+            Gizmos.color = new Color(Random.value, Random.value, Random.value);
             foreach (var neighbor in square.Neighbors)
             {
-                Gizmos.DrawLine(Positions[square], Positions[neighbor.Item1]);
+                var midPoint = Vector3.Lerp(Positions[square], Positions[neighbor.Item1], 0.5f);
+                Gizmos.DrawLine(Positions[square], midPoint);
                 if (neighbor.Item2 == null) Gizmos.DrawSphere(Positions[square], 0.2f);
             }
         }

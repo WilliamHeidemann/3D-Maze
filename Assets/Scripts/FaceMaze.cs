@@ -62,7 +62,7 @@ public class Cube
             // Back.Squares[width-i-1, 0].TopNeighbor.Item1 = Bottom.Squares[i, 0];
             // Bottom.Squares[i, 0].BottomNeighbor.Item1 = Back.Squares[width-i-1, 0];
             
-            Connect(Top.Squares[i, depth-1], Orientation.Up, Back.Squares[width-i-1, height-1], Orientation.Down, new Wall());
+            Connect(Top.Squares[i, depth-1], Orientation.Down, Back.Squares[width-i-1, height-1], Orientation.Up, new Wall());
             // Top.Squares[i, depth-1].TopNeighbor.Item1 = Back.Squares[width-i-1, height-1];
             // Back.Squares[width-i-1, height-1].BottomNeighbor.Item1 = Top.Squares[i, depth-1];
             
