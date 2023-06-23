@@ -8,11 +8,12 @@ public class PlayerMovement : MonoBehaviour
     private Dictionary<Square, GameObject> _squarePositions;
     private Square _current;
     private GameObject target;
+    public Square ObjectiveSquare;
+    public GameObject nextLevelButton;
     public void SetSquares(Dictionary<Square, GameObject> squarePositions, Square startingSquare)
     {
         _squarePositions = squarePositions;
-        _current = startingSquare;
-        target = squarePositions[startingSquare];
+        MoveTo(startingSquare);
     }
     
     private void Update()
@@ -47,5 +48,6 @@ public class PlayerMovement : MonoBehaviour
         var mazeRotator = FindObjectOfType<MazeRotator>();
         mazeRotator.Rotate(nextSquare.FaceDirection);
         target = _squarePositions[nextSquare];
+        if (nextSquare == ObjectiveSquare) nextLevelButton.SetActive(true);
     }
 }

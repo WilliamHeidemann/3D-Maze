@@ -17,7 +17,9 @@ public enum Orientation
 
 public class MazeVisualiser : MonoBehaviour
 {
-    public int x, y, z;
+    public int x;
+    public int y; 
+    public int z;
     // public List<CubeMaze.Square> Squares = new();
     // private Dictionary<CubeMaze.Square, GameObject> dictionary = new();
 
@@ -28,12 +30,27 @@ public class MazeVisualiser : MonoBehaviour
 
     private void Start()
     {
+        x = Random.Range(3,6);
+        y = Random.Range(3,6);
+        z = Random.Range(3,6);
         CreateFaceCube();
+        SetPlayerAndObjective();
+    }
+
+    public void SetPlayerAndObjective()
+    {
         var endpointSquares = Cube.FurthestApart(Squares);
+        
         var startingPoint = endpointSquares.Item1;
-        FindObjectOfType<PlayerMovement>().SetSquares(Positions, startingPoint);
+        var player = FindObjectOfType<PlayerMovement>();
+        player.SetSquares(Positions, startingPoint);
+        player.ObjectiveSquare = endpointSquares.Item2;
+        
         var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         sphere.transform.position = Positions[endpointSquares.Item2].transform.position;
+        sphere.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        var follow = sphere.AddComponent<FollowSquare>();
+        follow.Target = Positions[endpointSquares.Item2];
     }
 
     public void CreateFaceCube()

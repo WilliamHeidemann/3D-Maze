@@ -103,22 +103,40 @@ public class Cube
 
     private static Square FindEndpoint(Square startingPoint)
     {
-        List<Square> current = new() { startingPoint };
+        // List<Square> current = new() { startingPoint };
         HashSet<Square> visited = new() { startingPoint };
-        var endpoint = startingPoint;
-        while (current.Any())
+        // var endpoint = startingPoint;
+        // while (current.Any())
+        // {
+        //     endpoint = current.First();
+        //     var neighbors = current
+        //         .SelectMany(square => square.Neighbors)
+        //         .Select(pair => pair.Item1)
+        //         .Where(square => visited.Contains(square) == false)
+        //         .ToList();
+        //     neighbors.ForEach(neighbor => visited.Add(neighbor));
+        //     current = neighbors;
+        // }
+
+        Queue<Square> queue = new();
+        queue.Enqueue(startingPoint);
+        var endPoint = startingPoint;
+        while (queue.Any())
         {
-            endpoint = current.First();
-            var neighbors = current
-                .SelectMany(square => square.Neighbors)
+            endPoint = queue.Dequeue();
+            var neighbors = endPoint.Neighbors
+                .Where(pair => pair.Item2.IsOpen)
                 .Select(pair => pair.Item1)
                 .Where(square => visited.Contains(square) == false)
                 .ToList();
-            neighbors.ForEach(neighbor => visited.Add(neighbor));
-            current = neighbors;
+            neighbors.ForEach(neighbor =>
+            {
+                visited.Add(neighbor);
+                queue.Enqueue(neighbor);
+            });
         }
 
-        return endpoint;
+        return endPoint;
     }
 }
 
