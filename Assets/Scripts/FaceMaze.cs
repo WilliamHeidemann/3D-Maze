@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Cube
@@ -24,71 +25,38 @@ public class Cube
 
     public Cube(int width, int height, int depth)
     {
-        Front = new Face(width, height);
-        Back = new Face(width, height);
-        Right = new Face(depth, height);
-        Left = new Face(depth, height);
-        Top = new Face(width, depth);
-        Bottom = new Face(width, depth);
+        Front = new Face(width, height, Orientation.Front);
+        Back = new Face(width, height, Orientation.Back);
+        Right = new Face(depth, height, Orientation.Right);
+        Left = new Face(depth, height, Orientation.Left);
+        Top = new Face(width, depth, Orientation.Up);
+        Bottom = new Face(width, depth, Orientation.Down);
 
         // Zip Height Seams
         for (int i = 0; i < height; i++)
         {
             Connect(Front.Squares[width - 1, i], Orientation.Right, Right.Squares[0, i], Orientation.Left, new Wall());
-            // Front.Squares[width - 1, i].RightNeighbor.Item1 = Right.Squares[0, i];
-            // Right.Squares[0, i].LeftNeighbor.Item1 = Front.Squares[width - 1, i];
-            
             Connect(Back.Squares[width - 1, i], Orientation.Right, Left.Squares[0, i], Orientation.Left, new Wall());
-            // Back.Squares[width - 1, i].RightNeighbor.Item1 = Left.Squares[0, i];
-            // Left.Squares[0, i].LeftNeighbor.Item1 = Back.Squares[width - 1, i];
-            
             Connect(Right.Squares[depth - 1, i], Orientation.Right, Back.Squares[0, i], Orientation.Left, new Wall());
-            // Right.Squares[depth - 1, i].RightNeighbor.Item1 = Back.Squares[0, i];
-            // Back.Squares[0, i].LeftNeighbor.Item1 = Right.Squares[depth - 1, i];
-            
             Connect(Left.Squares[depth - 1, i], Orientation.Right, Front.Squares[0, i], Orientation.Left, new Wall());
-            // Left.Squares[depth - 1, i].RightNeighbor.Item1 = Front.Squares[0, i];
-            // Front.Squares[0, i].LeftNeighbor.Item1 = Left.Squares[depth - 1, i];
         }
         
         // Zip Width Seams
         for (int i = 0; i < width; i++)
         {
             Connect(Front.Squares[i, height-1], Orientation.Up, Top.Squares[i, 0], Orientation.Down, new Wall());
-            // Front.Squares[i, height-1].TopNeighbor.Item1 = Top.Squares[i, 0];
-            // Top.Squares[i, 0].BottomNeighbor.Item1 = Front.Squares[i, height-1];
-            
             Connect(Back.Squares[width-i-1, 0], Orientation.Down, Bottom.Squares[i, 0], Orientation.Down, new Wall());
-            // Back.Squares[width-i-1, 0].TopNeighbor.Item1 = Bottom.Squares[i, 0];
-            // Bottom.Squares[i, 0].BottomNeighbor.Item1 = Back.Squares[width-i-1, 0];
-            
             Connect(Top.Squares[i, depth-1], Orientation.Up, Back.Squares[width-i-1, height-1], Orientation.Up, new Wall());
-            // Top.Squares[i, depth-1].TopNeighbor.Item1 = Back.Squares[width-i-1, height-1];
-            // Back.Squares[width-i-1, height-1].BottomNeighbor.Item1 = Top.Squares[i, depth-1];
-            
             Connect(Bottom.Squares[i, depth-1], Orientation.Up, Front.Squares[i, 0], Orientation.Down, new Wall());
-            // Bottom.Squares[i, depth-1].TopNeighbor.Item1 = Front.Squares[i, 0];
-            // Front.Squares[i, 0].BottomNeighbor.Item1 = Bottom.Squares[i, depth-1];
         }
-        //
+
         // Zip Depth Seams
         for (int i = 0; i < depth; i++)
         {
             Connect(Right.Squares[i, height - 1], Orientation.Up, Top.Squares[width - 1, i], Orientation.Right, new Wall());
-            // Right.Squares[i, height - 1].TopNeighbor.Item1 = Top.Squares[width - 1, i];
-            // Top.Squares[width - 1, i].RightNeighbor.Item1 = Right.Squares[i, height - 1];
-        
             Connect(Top.Squares[0, depth-i-1], Orientation.Left, Left.Squares[i, height - 1], Orientation.Up, new Wall());
-            // Top.Squares[0, depth-i-1].LeftNeighbor.Item1 = Left.Squares[i, height - 1];
-            // Left.Squares[i, height - 1].TopNeighbor.Item1 = Top.Squares[0, depth-i-1];
-        
             Connect(Left.Squares[i, 0], Orientation.Down, Bottom.Squares[0, i], Orientation.Left, new Wall());
-            // Left.Squares[i, 0].BottomNeighbor.Item1 = Bottom.Squares[0, i];
-            // Bottom.Squares[0, i].LeftNeighbor.Item1 = Left.Squares[i, 0];
-        
             Connect(Bottom.Squares[width - 1, depth-i-1], Orientation.Right, Right.Squares[i, 0], Orientation.Down, new Wall());
-            // Bottom.Squares[width - 1, depth-i-1].RightNeighbor.Item1 = Right.Squares[i, 0];
-            // Right.Squares[i, 0].BottomNeighbor.Item1 = Bottom.Squares[width - 1, depth-i-1];
         }
 
         CreateMaze();
@@ -124,25 +92,53 @@ public class Cube
             }
         }
     }
+
+    public static (Square, Square) FurthestApart(IEnumerable<Square> squares)
+    {
+        var startSquare = squares.First();
+        var endPointOne = FindEndpoint(startSquare);
+        var endPointTwo = FindEndpoint(endPointOne);
+        return (endPointOne, endPointTwo);
+    }
+
+    private static Square FindEndpoint(Square startingPoint)
+    {
+        List<Square> current = new() { startingPoint };
+        HashSet<Square> visited = new() { startingPoint };
+        var endpoint = startingPoint;
+        while (current.Any())
+        {
+            endpoint = current.First();
+            var neighbors = current
+                .SelectMany(square => square.Neighbors)
+                .Select(pair => pair.Item1)
+                .Where(square => visited.Contains(square) == false)
+                .ToList();
+            neighbors.ForEach(neighbor => visited.Add(neighbor));
+            current = neighbors;
+        }
+
+        return endpoint;
+    }
 }
 
 public class Face
 {
     public Square[,] Squares;
-    public Face(int width, int height)
+    public Face(int width, int height, Orientation orientation)
     {
-        CreateSquares(width, height);
+        CreateSquares(width, height, orientation);
         ConnectDirectNeighbors(width, height);
     }
 
-    private void CreateSquares(int width, int height)
+    private void CreateSquares(int width, int height, Orientation orientation)
     {
         Squares = new Square[width, height];
         for (int h = 0; h < height; h++)
         {
             for (int w = 0; w < width; w++)
             {
-                Squares[w, h] = new Square();
+                Squares[w, h] = new Square(orientation);
             }
         }
     }
@@ -158,8 +154,6 @@ public class Face
                     var wall = new Wall();
                     Squares[w, h].SetNeighbor(Orientation.Right, (Squares[w + 1, h], wall));
                     Squares[w + 1, h].SetNeighbor(Orientation.Left, (Squares[w, h], wall));
-                    // Squares[w, h].RightNeighbor.Item1 = Squares[w + 1, h];
-                    // Squares[w, h].LeftNeighbor.Item1 = Squares[w - 1, h];
                 }
                 
                 if (h < height - 1)
@@ -167,8 +161,6 @@ public class Face
                     var wall = new Wall();
                     Squares[w, h].SetNeighbor(Orientation.Up, (Squares[w, h + 1], wall));
                     Squares[w, h + 1].SetNeighbor(Orientation.Down, (Squares[w, h], wall));
-                    // Squares[w, h].TopNeighbor.Item1 = Squares[w, h + 1];
-                    // Squares[w, h].BottomNeighbor.Item1 = Squares[w, h - 1];
                 }
             }
         }
@@ -181,6 +173,12 @@ public class Square
     public (Square, Wall) BottomNeighbor;
     public (Square, Wall) RightNeighbor;
     public (Square, Wall) LeftNeighbor;
+    public Orientation FaceDirection;
+
+    public Square(Orientation faceDirection)
+    {
+        FaceDirection = faceDirection;
+    }
 
     public void SetNeighbor(Orientation direction, (Square, Wall) neighbor)
     {
