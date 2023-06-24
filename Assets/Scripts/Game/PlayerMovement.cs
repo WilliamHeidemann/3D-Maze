@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _current = nextSquare;
         var mazeRotator = FindObjectOfType<MazeRotator>();
-        mazeRotator.Rotate(nextSquare.FaceDirection);
+        mazeRotator.Rotate(nextSquare.Orientation);
         target = _squarePositions[nextSquare];
         if (nextSquare == ObjectiveSquare) nextLevelButton.SetActive(true);
     }

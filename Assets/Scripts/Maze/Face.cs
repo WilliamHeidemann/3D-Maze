@@ -8,7 +8,6 @@
             CreateSquares(width, height, orientation);
             ConnectDirectNeighbors(width, height);
         }
-
         private void CreateSquares(int width, int height, Orientation orientation)
         {
             Squares = new Square[width, height];
@@ -20,7 +19,6 @@
                 }
             }
         }
-
         private void ConnectDirectNeighbors(int width, int height)
         {
             for (int h = 0; h < height; h++)

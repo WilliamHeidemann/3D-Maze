@@ -13,11 +13,11 @@ namespace Maze
         public (Square, Wall) BottomNeighbor;
         public (Square, Wall) RightNeighbor;
         public (Square, Wall) LeftNeighbor;
-        public Orientation FaceDirection;
+        public readonly Orientation Orientation;
 
-        public Square(Orientation faceDirection)
+        public Square(Orientation orientation)
         {
-            FaceDirection = faceDirection;
+            Orientation = orientation;
         }
 
         public void SetNeighbor(Orientation direction, (Square, Wall) neighbor)

@@ -52,7 +52,7 @@ public class MazeVisualiser : MonoBehaviour
         CreateFace(cube.Left, new Vector3(0-1, 0,z-1), Orientation.Left);
         CreateFace(cube.Top, new Vector3(0, y,0), Orientation.Up);
         CreateFace(cube.Bottom, new Vector3(0, -1,z-1), Orientation.Down);
-        Squares = cube.Faces.Select(face => face.Squares).SelectMany(twoDArray => twoDArray.Cast<Square>()).ToList();
+        Squares = cube.AllSquares;
 
         var anchor = Instantiate(new GameObject());
         anchor.transform.position = new Vector3(x-1, y-1, z-1) / 2;

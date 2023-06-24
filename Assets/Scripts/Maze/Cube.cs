@@ -15,8 +15,7 @@ namespace Maze
         public Face Top;
         public Face Bottom;
 
-        public Face[] Faces => new[]
-        {
+        public Face[] Faces => new[] {
             Front,
             Back,
             Right,
@@ -24,8 +23,14 @@ namespace Maze
             Top,
             Bottom
         };
-
+        public List<Square> AllSquares => Faces.Select(face => face.Squares).SelectMany(twoDArray => twoDArray.Cast<Square>()).ToList();
         public Cube(int width, int height, int depth)
+        {
+            CreateFaces(width, height, depth);
+            ZipEdges(width, height, depth);
+            CreateMaze();
+        }
+        private void CreateFaces(int width, int height, int depth)
         {
             Front = new Face(width, height, Orientation.Front);
             Back = new Face(width, height, Orientation.Back);
@@ -33,7 +38,9 @@ namespace Maze
             Left = new Face(depth, height, Orientation.Left);
             Top = new Face(width, depth, Orientation.Up);
             Bottom = new Face(width, depth, Orientation.Down);
-
+        }
+        private void ZipEdges(int width, int height, int depth)
+        {
             // Zip Height Seams
             for (int i = 0; i < height; i++)
             {
@@ -42,38 +49,33 @@ namespace Maze
                 Connect(Right.Squares[depth - 1, i], Orientation.Right, Back.Squares[0, i], Orientation.Left, new Wall());
                 Connect(Left.Squares[depth - 1, i], Orientation.Right, Front.Squares[0, i], Orientation.Left, new Wall());
             }
-            
+
             // Zip Width Seams
             for (int i = 0; i < width; i++)
             {
-                Connect(Front.Squares[i, height-1], Orientation.Up, Top.Squares[i, 0], Orientation.Down, new Wall());
-                Connect(Back.Squares[width-i-1, 0], Orientation.Down, Bottom.Squares[i, 0], Orientation.Down, new Wall());
-                Connect(Top.Squares[i, depth-1], Orientation.Up, Back.Squares[width-i-1, height-1], Orientation.Up, new Wall());
-                Connect(Bottom.Squares[i, depth-1], Orientation.Up, Front.Squares[i, 0], Orientation.Down, new Wall());
+                Connect(Front.Squares[i, height - 1], Orientation.Up, Top.Squares[i, 0], Orientation.Down, new Wall());
+                Connect(Back.Squares[width - i - 1, 0], Orientation.Down, Bottom.Squares[i, 0], Orientation.Down, new Wall());
+                Connect(Top.Squares[i, depth - 1], Orientation.Up, Back.Squares[width - i - 1, height - 1], Orientation.Up, new Wall());
+                Connect(Bottom.Squares[i, depth - 1], Orientation.Up, Front.Squares[i, 0], Orientation.Down, new Wall());
             }
 
             // Zip Depth Seams
             for (int i = 0; i < depth; i++)
             {
                 Connect(Right.Squares[i, height - 1], Orientation.Up, Top.Squares[width - 1, i], Orientation.Right, new Wall());
-                Connect(Top.Squares[0, depth-i-1], Orientation.Left, Left.Squares[i, height - 1], Orientation.Up, new Wall());
+                Connect(Top.Squares[0, depth - i - 1], Orientation.Left, Left.Squares[i, height - 1], Orientation.Up, new Wall());
                 Connect(Left.Squares[i, 0], Orientation.Down, Bottom.Squares[0, i], Orientation.Left, new Wall());
-                Connect(Bottom.Squares[width - 1, depth-i-1], Orientation.Right, Right.Squares[i, 0], Orientation.Down, new Wall());
+                Connect(Bottom.Squares[width - 1, depth - i - 1], Orientation.Right, Right.Squares[i, 0], Orientation.Down, new Wall());
             }
-
-            CreateMaze();
         }
-
         private static void Connect(Square square1, Orientation direction1, Square square2, Orientation direction2, Wall wall)
         {
             square1.SetNeighbor(direction1, (square2, wall));
             square2.SetNeighbor(direction2, (square1, wall));
         }
-
         private void CreateMaze()
         {
-            // Choose a random starting square in the future
-            var current = Front.Squares[0, 0];
+            var current = GetRandomSquare();
             var stack = new Stack<Square>();
             stack.Push(current);
             var visited = new HashSet<Square> { current };
@@ -94,16 +96,21 @@ namespace Maze
                 }
             }
         }
-
+        private Square GetRandomSquare()
+        {
+            var allSquares = AllSquares;
+            var count = allSquares.Count;
+            var index = Random.Range(0, count);
+            return allSquares[index];
+        }
         public static (Square, Square) FurthestApart(IEnumerable<Square> squares)
         {
             var startSquare = squares.First();
-            var endPointOne = FindEndpoint(startSquare);
-            var endPointTwo = FindEndpoint(endPointOne);
+            var endPointOne = FurthestAway(startSquare);
+            var endPointTwo = FurthestAway(endPointOne);
             return (endPointOne, endPointTwo);
         }
-
-        private static Square FindEndpoint(Square startingPoint)
+        private static Square FurthestAway(Square startingPoint)
         {
             HashSet<Square> visited = new() { startingPoint };
             Queue<Square> queue = new();
