@@ -18,7 +18,7 @@ public class MazeVisualiserEditor : Editor
         if (GUILayout.Button("Create Face Cube"))
         {
             ClearOldMaze();
-            visualiser.CreateFaceCube();
+            visualiser.CreateFaceCube(visualiser.width, visualiser.height, visualiser.depth);
         }
         
         if (GUILayout.Button("Clear Maze"))

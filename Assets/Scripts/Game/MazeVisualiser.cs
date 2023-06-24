@@ -4,24 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Maze;
 
-public enum Orientation
-{
-    Front,
-    Back,
-    Right,
-    Left,
-    Up,
-    Down
-}
 
 public class MazeVisualiser : MonoBehaviour
 {
-    public int x;
-    public int y; 
-    public int z;
-    // public List<CubeMaze.Square> Squares = new();
-    // private Dictionary<CubeMaze.Square, GameObject> dictionary = new();
+    public int width;
+    public int height; 
+    public int depth;
 
     public GameObject squarePrefab;
 
@@ -30,10 +20,10 @@ public class MazeVisualiser : MonoBehaviour
 
     private void Start()
     {
-        x = Random.Range(3,6);
-        y = Random.Range(3,6);
-        z = Random.Range(3,6);
-        CreateFaceCube();
+        width = Random.Range(3,6);
+        height = Random.Range(3,6);
+        depth = Random.Range(3,6);
+        CreateFaceCube(width, height, depth);
         SetPlayerAndObjective();
     }
 
@@ -53,7 +43,7 @@ public class MazeVisualiser : MonoBehaviour
         follow.Target = Positions[endpointSquares.Item2];
     }
 
-    public void CreateFaceCube()
+    public void CreateFaceCube(int x, int y, int z)
     {
         var cube = new Cube(x, y, z);
         CreateFace(cube.Front, new Vector3(0,0,-1), Orientation.Front);
