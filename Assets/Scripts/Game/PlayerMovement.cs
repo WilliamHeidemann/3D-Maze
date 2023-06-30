@@ -47,11 +47,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void TryMove(CardinalDirection direction)
     {
-        var neighbor = CalculateNeighbor(direction);
-        if (neighbor.Item2.IsOpen)
+        try
         {
-            CheckRotation(neighbor.Item1, direction);
-            MoveTo(neighbor.Item1);
+            var neighbor = CalculateNeighbor(direction);
+            if (neighbor.Item2.IsOpen)
+            {
+                CheckRotation(neighbor.Item1, direction);
+                MoveTo(neighbor.Item1);
+            }
+        }
+        catch
+        {
+            print("Heps");
+            FindObjectOfType<MazeRotator>().Rotate(_current.Orientation);
         }
     }
 

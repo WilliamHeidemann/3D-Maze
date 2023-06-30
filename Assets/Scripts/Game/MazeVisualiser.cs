@@ -39,6 +39,7 @@ public class MazeVisualiser : MonoBehaviour
         var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         sphere.transform.position = Positions[endpointSquares.Item2].transform.position;
         sphere.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        sphere.transform.parent = transform;
         var follow = sphere.AddComponent<FollowSquare>();
         follow.Target = Positions[endpointSquares.Item2];
     }
