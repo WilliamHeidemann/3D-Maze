@@ -10,7 +10,7 @@ public class MazeRotator : MonoBehaviour
 
     private void Update()
     {
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, target, 1f);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, target, 2f);
     }
 
     public void Rotate(Orientation face)
