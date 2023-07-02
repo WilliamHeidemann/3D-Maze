@@ -25,41 +25,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            TryMove(CardinalDirection.North);
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            TryMove(CardinalDirection.South);
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            TryMove(CardinalDirection.East);
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            TryMove(CardinalDirection.West);
-        }
+        
         
         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, 0.1f);
     }
 
-    private void TryMove(CardinalDirection direction)
+    public void TryMove(CardinalDirection direction)
     {
-        try
+        var rotator = FindObjectOfType<MazeRotator>();
+        rotator.RotateToTarget();
+        var neighbor = CalculateNeighbor(direction);
+        rotator.ReturnToTempRotation();
+        if (neighbor.Item2.IsOpen)
         {
-            var neighbor = CalculateNeighbor(direction);
-            if (neighbor.Item2.IsOpen)
-            {
-                CheckRotation(neighbor.Item1, direction);
-                MoveTo(neighbor.Item1);
-            }
-        }
-        catch
-        {
-            print("Heps");
-            FindObjectOfType<MazeRotator>().Rotate(_current.Orientation);
+            CheckRotation(neighbor.Item1, direction);
+            MoveTo(neighbor.Item1);
         }
     }
 

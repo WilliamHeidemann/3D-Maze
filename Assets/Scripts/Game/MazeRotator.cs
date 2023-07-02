@@ -8,6 +8,7 @@ using UnityEngine;
 public class MazeRotator : MonoBehaviour
 {
     private Quaternion target;
+    private Quaternion tempRotation;
 
     private void Update()
     {
@@ -53,5 +54,16 @@ public class MazeRotator : MonoBehaviour
         transform.rotation = currentRotation;
         // transform.Rotate(axis, -angle, Space.World);
         target = next;
+    }
+
+    public void RotateToTarget()
+    {
+        tempRotation = transform.rotation;
+        transform.rotation = target;
+    }
+
+    public void ReturnToTempRotation()
+    {
+        transform.rotation = tempRotation;
     }
 }
