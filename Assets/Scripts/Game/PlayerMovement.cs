@@ -94,7 +94,13 @@ public class PlayerMovement : MonoBehaviour
     {
         _current = nextSquare;
         target = _squarePositions[nextSquare];
-        if (nextSquare == ObjectiveSquare) nextLevelButton.SetActive(true);
+        if (nextSquare == ObjectiveSquare)
+        {
+            nextLevelButton.SetActive(true);
+            var timer = FindObjectOfType<Timer>();
+            timer.levelComplete = true;
+            timer.RecordAttempt();
+        }
     }
     
     private void SetStartOrientation(Square startingSquare)

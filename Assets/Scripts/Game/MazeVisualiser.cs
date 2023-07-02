@@ -20,9 +20,9 @@ public class MazeVisualiser : MonoBehaviour
 
     private void Start()
     {
-        width = Random.Range(3,6);
-        height = Random.Range(3,6);
-        depth = Random.Range(3,6);
+        // width = Random.Range(3,6);
+        // height = Random.Range(3,6);
+        // depth = Random.Range(3,6);
         CreateFaceCube(width, height, depth);
         SetPlayerAndObjective();
     }

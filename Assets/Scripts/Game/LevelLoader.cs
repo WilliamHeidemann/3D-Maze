@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
-    public MazeVisualiser maze;
     public void NextLevel()
     {
         SceneManager.LoadScene(0);
@@ -14,10 +13,9 @@ public class LevelLoader : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(0);
-
         }
     }
 }
