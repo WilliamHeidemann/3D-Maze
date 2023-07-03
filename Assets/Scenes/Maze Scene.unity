@@ -549,6 +549,7 @@ MonoBehaviour:
   height: 2
   depth: 2
   squarePrefab: {fileID: 2166238180326112377, guid: 700d66b82af062847ae19015fb6faf75, type: 3}
+  shouldRandomize: 0
 --- !u!1 &699271627
 GameObject:
   m_ObjectHideFlags: 0

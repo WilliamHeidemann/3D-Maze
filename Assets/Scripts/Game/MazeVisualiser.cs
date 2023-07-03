@@ -15,14 +15,20 @@ public class MazeVisualiser : MonoBehaviour
 
     public GameObject squarePrefab;
 
-    public List<Square> Squares;
-    public Dictionary<Square, GameObject> Positions = new();
+    private List<Square> Squares;
+    private Dictionary<Square, GameObject> Positions = new();
+
+    public bool shouldRandomize;
 
     private void Start()
     {
-        // width = Random.Range(3,6);
-        // height = Random.Range(3,6);
-        // depth = Random.Range(3,6);
+        if (shouldRandomize)
+        {
+            width = Random.Range(3,6);
+            height = Random.Range(3,6);
+            depth = Random.Range(3,6);
+        }
+        
         CreateFaceCube(width, height, depth);
         SetPlayerAndObjective();
     }

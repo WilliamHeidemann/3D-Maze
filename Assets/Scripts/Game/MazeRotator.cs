@@ -29,6 +29,11 @@ public class MazeRotator : MonoBehaviour
         };
     }
 
+    public void SnapToTarget()
+    {
+        transform.rotation = target;
+    }
+
     public void Rotate(CardinalDirection direction)
     {
         var currentRotation = transform.rotation;

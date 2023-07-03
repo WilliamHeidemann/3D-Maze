@@ -25,9 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        
-        
-        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, 0.1f);
+        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, Time.deltaTime * 10f);
     }
 
     public void TryMove(CardinalDirection direction)
@@ -107,5 +105,7 @@ public class PlayerMovement : MonoBehaviour
     {
         var mazeRotator = FindObjectOfType<MazeRotator>();
         mazeRotator.Rotate(startingSquare.Orientation);
+        mazeRotator.SnapToTarget();
+        transform.position = target.transform.position;
     }
 }
