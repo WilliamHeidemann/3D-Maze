@@ -10,14 +10,18 @@ public class PlayerMovement : MonoBehaviour
 {
     private Dictionary<Square, GameObject> _squarePositions;
     private Square _current;
+    private Square _targetSquare;
     private GameObject target;
     public Square ObjectiveSquare;
     public GameObject nextLevelButton;
+
+    public GameObject joystickGameObject;
 
     
     public void SetSquares(Dictionary<Square, GameObject> squarePositions, Square startingSquare)
     {
         _squarePositions = squarePositions;
+        _current = startingSquare;
         MoveTo(startingSquare);
         SetStartOrientation(startingSquare);
     }
@@ -25,11 +29,23 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, Time.deltaTime * 10f);
+        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, Time.deltaTime * 5f);
+        ProximityCheck();
+    }
+
+    private void ProximityCheck()
+    {
+        if (_targetSquare == null) return;
+        if (Vector3.Distance(target.transform.position, transform.position) < 0.01f)
+        {
+            _current = _targetSquare;
+            _targetSquare = null;
+        }
     }
 
     public void TryMove(CardinalDirection direction)
     {
+        if (_targetSquare != null) return;
         var rotator = FindObjectOfType<MazeRotator>();
         rotator.RotateToTarget();
         var neighbor = CalculateNeighbor(direction);
@@ -90,14 +106,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void MoveTo(Square nextSquare)
     {
-        _current = nextSquare;
+        // _current = nextSquare;
         target = _squarePositions[nextSquare];
+        _targetSquare = nextSquare;
         if (nextSquare == ObjectiveSquare)
         {
             nextLevelButton.SetActive(true);
             var timer = FindObjectOfType<Timer>();
             timer.levelComplete = true;
             timer.RecordAttempt();
+            joystickGameObject.SetActive(false);
         }
     }
     

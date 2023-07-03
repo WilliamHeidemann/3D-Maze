@@ -6,8 +6,9 @@ using UnityEngine;
 public class MovementInputHandler : MonoBehaviour
 {
     private PlayerMovement _playerMovement;
-
     private Vector2 _touchStartPosition;
+
+    [SerializeField] private FloatingJoystick joystick;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,10 +19,21 @@ public class MovementInputHandler : MonoBehaviour
     void Update()
     {
         KeyboardInput();
-        TouchInput();
+        // SwipeInput();
+        JoystickInput();
     }
 
-    private void TouchInput()
+    private void JoystickInput()
+    {
+        var x = (int)joystick.Horizontal;
+        var y = (int)joystick.Vertical;
+        if (x == 1) _playerMovement.TryMove(CardinalDirection.East);
+        if (x == -1) _playerMovement.TryMove(CardinalDirection.West);
+        if (y == 1) _playerMovement.TryMove(CardinalDirection.North);
+        if (y == -1) _playerMovement.TryMove(CardinalDirection.South);
+    }
+
+    private void SwipeInput()
     {
         if (Input.touchCount == 0) return;
         var touch = Input.GetTouch(0);
@@ -55,19 +67,19 @@ public class MovementInputHandler : MonoBehaviour
 
     private void KeyboardInput()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKey(KeyCode.W))
         {
             _playerMovement.TryMove(CardinalDirection.North);
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKey(KeyCode.S))
         {
             _playerMovement.TryMove(CardinalDirection.South);
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
             _playerMovement.TryMove(CardinalDirection.East);
         }
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
             _playerMovement.TryMove(CardinalDirection.West);
         }
