@@ -122,8 +122,7 @@ public class PlayerMovement : MonoBehaviour
     private void SetStartOrientation(Square startingSquare)
     {
         var mazeRotator = FindObjectOfType<MazeRotator>();
-        mazeRotator.Rotate(startingSquare.Orientation);
-        mazeRotator.SnapToTarget();
+        mazeRotator.SnapToFace(startingSquare.Orientation);
         transform.position = target.transform.position;
     }
 }

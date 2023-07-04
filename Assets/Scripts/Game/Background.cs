@@ -15,7 +15,6 @@ public class Background : MonoBehaviour
         _camera = GetComponent<Camera>();
         Random.InitState(DateTime.Now.Millisecond);
         colorOffset = Random.value;
-        print(colorOffset);
     }
 
     void Update()

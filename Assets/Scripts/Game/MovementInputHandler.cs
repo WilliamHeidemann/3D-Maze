@@ -8,6 +8,8 @@ public class MovementInputHandler : MonoBehaviour
     private PlayerMovement _playerMovement;
     private Vector2 _touchStartPosition;
 
+    public int KeyPadNumber { get; set; }
+
     [SerializeField] private FloatingJoystick joystick;
     // Start is called before the first frame update
     void Start()
@@ -19,8 +21,22 @@ public class MovementInputHandler : MonoBehaviour
     void Update()
     {
         KeyboardInput();
-        // SwipeInput();
-        JoystickInput();
+        SwipeInput();
+        // JoystickInput();
+        KeyPadInput();
+    }
+
+    private void KeyPadInput()
+    {
+        if (KeyPadNumber == 0) return;
+        var direction = KeyPadNumber switch
+        {
+            1 => CardinalDirection.North,
+            2 => CardinalDirection.East,
+            3 => CardinalDirection.South,
+            4 => CardinalDirection.West,
+        };
+        _playerMovement.TryMove(direction);
     }
 
     private void JoystickInput()
