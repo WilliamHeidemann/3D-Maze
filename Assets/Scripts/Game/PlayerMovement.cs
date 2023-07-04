@@ -14,9 +14,13 @@ public class PlayerMovement : MonoBehaviour
     private GameObject target;
     public Square ObjectiveSquare;
     public GameObject nextLevelButton;
-
     public GameObject joystickGameObject;
+    private MazeRotator _mazeRotator;
 
+    private void Awake()
+    {
+        _mazeRotator = GetComponentInParent<MazeRotator>();
+    }
     
     public void SetSquares(Dictionary<Square, GameObject> squarePositions, Square startingSquare)
     {
@@ -26,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
         SetStartOrientation(startingSquare);
     }
     
-
     private void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, Time.deltaTime * 5f);
@@ -46,10 +49,9 @@ public class PlayerMovement : MonoBehaviour
     public void TryMove(CardinalDirection direction)
     {
         if (_targetSquare != null) return;
-        var rotator = FindObjectOfType<MazeRotator>();
-        rotator.RotateToTarget();
+        _mazeRotator.RotateToTarget();
         var neighbor = CalculateNeighbor(direction);
-        rotator.ReturnToTempRotation();
+        _mazeRotator.ReturnToTempRotation();
         if (neighbor.Item2.IsOpen)
         {
             CheckRotation(neighbor.Item1, direction);
@@ -61,11 +63,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (nextSquare.Orientation != _current.Orientation)
         {
-            FindObjectOfType<MazeRotator>().Rotate(direction);
+            _mazeRotator.Rotate(direction);
         }
     }
-
-
+    
     private (Square, Wall) CalculateNeighbor(CardinalDirection direction)
     {
         var neighbors = 
@@ -106,7 +107,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void MoveTo(Square nextSquare)
     {
-        // _current = nextSquare;
         target = _squarePositions[nextSquare];
         _targetSquare = nextSquare;
         if (nextSquare == ObjectiveSquare)
@@ -121,8 +121,7 @@ public class PlayerMovement : MonoBehaviour
     
     private void SetStartOrientation(Square startingSquare)
     {
-        var mazeRotator = FindObjectOfType<MazeRotator>();
-        mazeRotator.SnapToFace(startingSquare.Orientation);
+        _mazeRotator.SnapToFace(startingSquare.Orientation);
         transform.position = target.transform.position;
     }
 }

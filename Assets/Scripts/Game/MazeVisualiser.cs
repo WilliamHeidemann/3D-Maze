@@ -52,6 +52,8 @@ public class MazeVisualiser : MonoBehaviour
 
     public void CreateFaceCube(int x, int y, int z)
     {
+        transform.position = new Vector3(x-1, y-1, z-1) / 2;
+        
         var cube = new Cube(x, y, z);
         CreateFace(cube.Front, new Vector3(0,0,-1), Orientation.Front);
         CreateFace(cube.Back, new Vector3(x-1, 0, z), Orientation.Back);
@@ -61,19 +63,19 @@ public class MazeVisualiser : MonoBehaviour
         CreateFace(cube.Bottom, new Vector3(0, -1,z-1), Orientation.Down);
         Squares = cube.AllSquares;
 
-        var anchor = Instantiate(new GameObject());
-        anchor.transform.position = new Vector3(x-1, y-1, z-1) / 2;
-        anchor.AddComponent<MazeRotator>();
-        transform.parent = anchor.transform;
+        // var anchor = Instantiate(new GameObject());
+        // anchor.transform.position = new Vector3(x-1, y-1, z-1) / 2;
+        // anchor.AddComponent<MazeRotator>();
+        // transform.parent = anchor.transform;
     }
 
     private void CreateFace(Face face, Vector3 startingPoint, Orientation orientation)
     {
-        var width = face.Squares.GetLength(0);
-        var height = face.Squares.GetLength(1);
-        for (int h = 0; h < height; h++)
+        var faceWidth = face.Squares.GetLength(0);
+        var faceHeight = face.Squares.GetLength(1);
+        for (int h = 0; h < faceHeight; h++)
         {
-            for (int w = 0; w < width; w++)
+            for (int w = 0; w < faceWidth; w++)
             {
                 var position = orientation switch
                 {
@@ -108,8 +110,6 @@ public class MazeVisualiser : MonoBehaviour
                 if (square.LeftNeighbor.Item2.IsOpen) 
                     spawn.transform.GetChild(3).gameObject.SetActive(false);
                 Positions.Add(square, spawn);
-                // spawn.GetComponent<MeshRenderer>().material.color = new Color(Random.value, Random.value, Random.value);
-                // spawn.GetComponent<MeshRenderer>().enabled = false;
             }
         }
     }
