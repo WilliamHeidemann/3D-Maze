@@ -9,11 +9,11 @@ public class Background : MonoBehaviour
     private Camera _camera;
     private Color color = Color.white;
     private float colorOffset;
+    [SerializeField] private Material mazeMaterial;
 
     private void Start()
     {
         _camera = GetComponent<Camera>();
-        Random.InitState(DateTime.Now.Millisecond);
         colorOffset = Random.value;
     }
 
@@ -25,5 +25,8 @@ public class Background : MonoBehaviour
         var b = Mathf.Cos(time);
         color = new Color(r, g, b);
         _camera.backgroundColor = color;
+        mazeMaterial.color = Complementary(r, g, b);
     }
+
+    private static Color Complementary(float r, float g, float b) => new Color(1f - r, 1f - g, 1f - b);
 }

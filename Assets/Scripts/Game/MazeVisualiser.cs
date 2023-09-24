@@ -22,6 +22,7 @@ public class MazeVisualiser : MonoBehaviour
 
     private void Start()
     {
+        Random.InitState(DateTime.Now.Millisecond);
         if (shouldRandomize)
         {
             width = Random.Range(3,6);
