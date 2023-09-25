@@ -83,19 +83,19 @@ public class MovementInputHandler : MonoBehaviour
 
     private void KeyboardInput()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
             _playerMovement.TryMove(CardinalDirection.North);
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
             _playerMovement.TryMove(CardinalDirection.South);
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             _playerMovement.TryMove(CardinalDirection.East);
         }
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             _playerMovement.TryMove(CardinalDirection.West);
         }

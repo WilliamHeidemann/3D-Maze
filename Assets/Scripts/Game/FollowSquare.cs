@@ -9,6 +9,6 @@ public class FollowSquare : MonoBehaviour
 
     private void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, Target.transform.position, 0.1f);
+        transform.position = Vector3.MoveTowards(transform.position, Target.transform.position, Time.deltaTime);
     }
 }

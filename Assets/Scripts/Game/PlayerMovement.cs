@@ -113,8 +113,11 @@ public class PlayerMovement : MonoBehaviour
         {
             nextLevelButton.SetActive(true);
             var timer = FindObjectOfType<Timer>();
-            timer.levelComplete = true;
-            timer.RecordAttempt();
+            if (timer != null)
+            {
+                timer.levelComplete = true;
+                timer.RecordAttempt();
+            }
             joystickGameObject.SetActive(false);
         }
     }
