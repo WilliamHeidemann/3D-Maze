@@ -543,6 +543,7 @@ MonoBehaviour:
   squarePrefab: {fileID: 2166238180326112377, guid: 700d66b82af062847ae19015fb6faf75, type: 3}
   goalPrefab: {fileID: 919132149155446097, guid: 0b9513362da3f2e48affbcba41680ca3, type: 3}
   shouldRandomize: 1
+  mazeParts: []
 --- !u!114 &460119757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -555,52 +556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1d943cc62feab54eac3fb17568efa55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &492930616
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 492930617}
-  - component: {fileID: 492930618}
-  m_Layer: 0
-  m_Name: Color Picker
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &492930617
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 492930616}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &492930618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 492930616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dac6330b8f684af4baf58e5253596769, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  colorMaterial: {fileID: 2100000, guid: 714c5840802badd48a761a80a551d710, type: 2}
-  complementaryMaterial: {fileID: 2100000, guid: 4777af17549913f41a5b2c56635a5376, type: 2}
+  rotationSpeed: 150
 --- !u!1 &505065889
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,7 +856,6 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -974,18 +929,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &963194229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dc6031db1ac8a94d9297aa8b179f9ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1007444955
 GameObject:
   m_ObjectHideFlags: 0
@@ -1432,7 +1375,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1894740279
 MonoBehaviour:
@@ -1447,7 +1390,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timePassedText: {fileID: 1572059277}
-  levelCompleteTimeBonus: 0
+  levelCompleteTimeBonus: 30
+  maxTimeInSeconds: 120
 --- !u!1 &1949245833
 GameObject:
   m_ObjectHideFlags: 0

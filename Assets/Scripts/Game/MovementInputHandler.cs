@@ -11,19 +11,17 @@ public class MovementInputHandler : MonoBehaviour
     public int KeyPadNumber { get; set; }
 
     [SerializeField] private FloatingJoystick joystick;
-    // Start is called before the first frame update
     void Start()
     {
         _playerMovement = GetComponent<PlayerMovement>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         KeyboardInput();
-        SwipeInput();
+        // SwipeInput();
         // JoystickInput();
-        KeyPadInput();
+        // KeyPadInput();
     }
 
     private void KeyPadInput()
@@ -53,10 +51,7 @@ public class MovementInputHandler : MonoBehaviour
     {
         if (Input.touchCount == 0) return;
         var touch = Input.GetTouch(0);
-        if (touch.phase == TouchPhase.Began)
-        {
-            _touchStartPosition = touch.position;
-        }
+        if (touch.phase == TouchPhase.Began) _touchStartPosition = touch.position;
 
         if (touch.phase == TouchPhase.Ended)
         {
@@ -70,14 +65,8 @@ public class MovementInputHandler : MonoBehaviour
         var xDelta = Mathf.Abs(swipe.x);
         var yDelta = Mathf.Abs(swipe.y);
         CardinalDirection direction;
-        if (xDelta > yDelta)
-        {
-            direction = swipe.x > 0 ? CardinalDirection.East : CardinalDirection.West;
-        }
-        else
-        {
-            direction = swipe.y > 0 ? CardinalDirection.North : CardinalDirection.South;
-        }
+        if (xDelta > yDelta) direction = swipe.x > 0 ? CardinalDirection.East : CardinalDirection.West;
+        else direction = swipe.y > 0 ? CardinalDirection.North : CardinalDirection.South;
         _playerMovement.TryMove(direction);
     }
 

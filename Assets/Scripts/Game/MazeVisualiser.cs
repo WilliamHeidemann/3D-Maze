@@ -16,10 +16,12 @@ public class MazeVisualiser : MonoBehaviour
     public GameObject squarePrefab;
     public GameObject goalPrefab;
 
-    private List<Square> Squares;
-    private Dictionary<Square, GameObject> Positions = new();
+    private List<Square> _squares;
+    private readonly Dictionary<Square, GameObject> _positions = new();
 
     public bool shouldRandomize;
+
+    [SerializeField] private List<GameObject> mazeParts = new();
     
     private void Start()
     {
@@ -28,6 +30,12 @@ public class MazeVisualiser : MonoBehaviour
 
     public void VisualizeMaze()
     {
+        foreach (var part in mazeParts)
+        {
+            Destroy(part);
+        }
+        mazeParts.Clear();
+        
         Random.InitState(DateTime.Now.Millisecond);
         if (shouldRandomize)
         {
@@ -42,20 +50,18 @@ public class MazeVisualiser : MonoBehaviour
 
     private void SetPlayerAndObjective()
     {
-        var endpointSquares = Cube.FurthestApart(Squares);
+        var (playerSquare, goalSquare) = Cube.FurthestApart(_squares);
 
-        var startingPoint = endpointSquares.Item1;
         var player = FindObjectOfType<PlayerMovement>();
-        player.SetSquares(Positions, startingPoint);
-        player.ObjectiveSquare = endpointSquares.Item2;
+        player.SetSquares(_positions, playerSquare);
+        player.ObjectiveSquare = goalSquare;
 
         // var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        var sphere = Instantiate(goalPrefab);
-        sphere.transform.position = Positions[endpointSquares.Item2].transform.position;
-        sphere.transform.localScale = new Vector3(1,1,1);
-        sphere.transform.parent = transform;
-        var follow = sphere.AddComponent<FollowSquare>();
-        follow.Target = Positions[endpointSquares.Item2];
+        var goal = Instantiate(goalPrefab, transform);
+        mazeParts.Add(goal);
+        goal.transform.position = _positions[goalSquare].transform.position;
+        goal.transform.localScale = new Vector3(1,1,1);
+        goal.transform.parent = transform;
     }
 
     public void CreateFaceCube(int x, int y, int z)
@@ -69,7 +75,7 @@ public class MazeVisualiser : MonoBehaviour
         CreateFace(cube.Left, new Vector3(0 - 1, 0, z - 1), Orientation.Left);
         CreateFace(cube.Top, new Vector3(0, y, 0), Orientation.Up);
         CreateFace(cube.Bottom, new Vector3(0, -1, z - 1), Orientation.Down);
-        Squares = cube.AllSquares;
+        _squares = cube.AllSquares;
     }
 
     private void CreateFace(Face face, Vector3 startingPoint, Orientation orientation)
@@ -102,6 +108,7 @@ public class MazeVisualiser : MonoBehaviour
                     _ => throw new ArgumentOutOfRangeException(nameof(orientation), orientation, null)
                 };
                 var spawn = Instantiate(squarePrefab, position, rotation, transform);
+                mazeParts.Add(spawn);
                 spawn.name = $"{orientation.ToString()} {w},{h}";
                 var square = face.Squares[w, h];
                 if (square.TopNeighbor.Item2.IsOpen)
@@ -112,7 +119,7 @@ public class MazeVisualiser : MonoBehaviour
                     spawn.transform.GetChild(2).gameObject.SetActive(false);
                 if (square.LeftNeighbor.Item2.IsOpen)
                     spawn.transform.GetChild(3).gameObject.SetActive(false);
-                Positions.Add(square, spawn);
+                _positions.Add(square, spawn);
             }
         }
     }
@@ -120,17 +127,17 @@ public class MazeVisualiser : MonoBehaviour
     private void OnDrawGizmos()
     {
         Random.InitState(0);
-        if (Squares == null) return;
-        foreach (var square in Squares)
+        if (_squares == null) return;
+        foreach (var square in _squares)
         {
             if (square.Neighbors == null) return;
             Gizmos.color = new Color(Random.value, Random.value, Random.value);
             foreach (var neighbor in square.Neighbors)
             {
-                var midPoint = Vector3.Lerp(Positions[square].transform.position,
-                    Positions[neighbor.Item1].transform.position, 0.5f);
-                Gizmos.DrawLine(Positions[square].transform.position, midPoint);
-                if (neighbor.Item2 == null) Gizmos.DrawSphere(Positions[square].transform.position, 0.2f);
+                var midPoint = Vector3.Lerp(_positions[square].transform.position,
+                    _positions[neighbor.Item1].transform.position, 0.5f);
+                Gizmos.DrawLine(_positions[square].transform.position, midPoint);
+                if (neighbor.Item2 == null) Gizmos.DrawSphere(_positions[square].transform.position, 0.2f);
             }
         }
     }

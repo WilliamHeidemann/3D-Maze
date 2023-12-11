@@ -7,17 +7,18 @@ using UnityEngine;
 
 public class MazeRotator : MonoBehaviour
 {
-    private Quaternion target;
-    private Quaternion tempRotation;
-
+    private Quaternion _target;
+    private Quaternion _tempRotation;
+    [SerializeField] [Range(1f, 300f)] private float rotationSpeed;
+    
     private void Update()
     {
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, target, 2f);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, _target, rotationSpeed * Time.deltaTime);
     }
 
     public void SnapToFace(Orientation face)
     {
-        target = face switch
+        _target = face switch
         {
             Orientation.Front => Quaternion.Euler(0,0,0),
             Orientation.Back => Quaternion.Euler(180, 0, 180),
@@ -27,7 +28,7 @@ public class MazeRotator : MonoBehaviour
             Orientation.Down => Quaternion.Euler(90, 0, 0),
             _ => throw new ArgumentOutOfRangeException(nameof(face), face, null)
         };
-        transform.rotation = target;
+        transform.rotation = _target;
     }
 
     public void Rotate(CardinalDirection direction)
@@ -36,10 +37,10 @@ public class MazeRotator : MonoBehaviour
         var angle = GetRotationAngle(direction);
         var cubeTransform = transform;
         var currentRotation = cubeTransform.rotation;
-        cubeTransform.rotation = target;
+        cubeTransform.rotation = _target;
         transform.Rotate(axis, angle, Space.World);
         var next = cubeTransform.rotation;
-        target = next;
+        _target = next;
         cubeTransform.rotation = currentRotation;
     }
 
@@ -63,12 +64,12 @@ public class MazeRotator : MonoBehaviour
 
     public void RotateToTarget()
     {
-        tempRotation = transform.rotation;
-        transform.rotation = target;
+        _tempRotation = transform.rotation;
+        transform.rotation = _target;
     }
 
     public void ReturnToTempRotation()
     {
-        transform.rotation = tempRotation;
+        transform.rotation = _tempRotation;
     }
 }

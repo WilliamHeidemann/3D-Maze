@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        _mazeRotator = GetComponentInParent<MazeRotator>();
+        _mazeRotator = FindObjectOfType<MazeRotator>();
     }
     
     public void SetSquares(Dictionary<Square, GameObject> squarePositions, Square startingSquare)
@@ -74,35 +74,35 @@ public class PlayerMovement : MonoBehaviour
                 .Select(neighbor => (neighbor, _squarePositions[neighbor.Item1].transform))
                 .ToArray();
         
-        if (direction == CardinalDirection.North)
+        switch (direction)
         {
-            var pair = neighbors.First(neighbor =>
-                neighbor.ToTuple().Item2.position.y - _squarePositions[_current].transform.position.y > 0.001f);
-            return pair.neighbor;
+            case CardinalDirection.North:
+            {
+                var pair = neighbors.First(neighbor =>
+                    neighbor.ToTuple().Item2.position.y - _squarePositions[_current].transform.position.y > 0.001f);
+                return pair.neighbor;
+            }
+            case CardinalDirection.South:
+            {
+                var pair = neighbors.First(neighbor =>
+                    neighbor.ToTuple().Item2.position.y - _squarePositions[_current].transform.position.y < -0.001f);
+                return pair.neighbor;
+            }
+            case CardinalDirection.East:
+            {
+                var pair = neighbors.First(neighbor =>
+                    neighbor.ToTuple().Item2.position.x - _squarePositions[_current].transform.position.x > 0.001f);
+                return pair.neighbor;
+            }
+            case CardinalDirection.West:
+            {
+                var pair = neighbors.First(neighbor =>
+                    neighbor.ToTuple().Item2.position.x - _squarePositions[_current].transform.position.x < -0.001f);
+                return pair.neighbor;
+            }
+            default:
+                throw new Exception("This is not possible");
         }
-        
-        if (direction == CardinalDirection.South)
-        {
-            var pair = neighbors.First(neighbor =>
-                neighbor.ToTuple().Item2.position.y - _squarePositions[_current].transform.position.y < -0.001f);
-            return pair.neighbor;
-        }
-        
-        if (direction == CardinalDirection.East)
-        {
-            var pair = neighbors.First(neighbor =>
-                neighbor.ToTuple().Item2.position.x - _squarePositions[_current].transform.position.x > 0.001f);
-            return pair.neighbor;
-        }
-        
-        if (direction == CardinalDirection.West)
-        {
-            var pair = neighbors.First(neighbor =>
-                neighbor.ToTuple().Item2.position.x - _squarePositions[_current].transform.position.x < -0.001f);
-            return pair.neighbor;
-        }
-
-        throw new Exception("This is not possible");
     }
 
     private void MoveTo(Square nextSquare)
