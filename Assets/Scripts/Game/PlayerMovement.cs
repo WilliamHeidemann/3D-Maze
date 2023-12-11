@@ -115,8 +115,7 @@ public class PlayerMovement : MonoBehaviour
             var timer = FindObjectOfType<Timer>();
             if (timer != null)
             {
-                timer.levelComplete = true;
-                timer.RecordAttempt();
+                timer.IncrementTimer();
             }
             joystickGameObject.SetActive(false);
         }

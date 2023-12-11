@@ -5,46 +5,39 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    private TextMeshProUGUI timePassedText;
-    public bool levelComplete;
-    private float timePassed;
-    public TextMeshProUGUI bestTimeText;
+    [SerializeField] private TextMeshProUGUI timePassedText;
 
-    // Start is called before the first frame update
+    [SerializeField] private int levelCompleteTimeBonus;
+    private float _timeLeft;
+    
+
     void Start()
     {
-        timePassedText = GetComponent<TextMeshProUGUI>();
-        var bestTime = PlayerPrefs.GetFloat("BestTime");
-        bestTimeText.text = "Best time: " + FormatTime(bestTime);
+        _timeLeft = 120;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (!levelComplete)
+        _timeLeft -= Time.deltaTime;
+        timePassedText.text = "Time " + FormatTime(_timeLeft);
+    }
+
+    public void IncrementTimer()
+    {
+        _timeLeft += levelCompleteTimeBonus;
+    }
+
+    private static string FormatTime(float time)
+    {
+        if (time < 0)
         {
-            timePassed += Time.deltaTime;
-            timePassedText.text = "Time: " + FormatTime(timePassed);
+            return "00:00";
         }
-    }
 
-    public void RecordAttempt()
-    {
-        var previousBest = PlayerPrefs.GetFloat("BestTime");
-        var best = Mathf.Min(previousBest, timePassed);
-        PlayerPrefs.SetFloat("BestTime", best);
-    }
-    
-    public string FormatTime(float time)
-    {
-        int totalMilliseconds = (int)(time * 1000);
-        int seconds = totalMilliseconds / 1000;
-        int milliseconds = totalMilliseconds % 1000;
+        var minutes = (int)(time / 60);
+        var seconds = (int)(time % 60);
 
-        string formattedSeconds = seconds.ToString().PadLeft(2, '0');
-        string formattedMilliseconds = milliseconds.ToString().PadLeft(3, '0').Substring(0, 2);
-
-        return $"{formattedSeconds}:{formattedMilliseconds}";
+        return $"{minutes:D2}:{seconds:D2}";
     }
 
 }

@@ -14,13 +14,19 @@ public class MazeVisualiser : MonoBehaviour
     public int depth;
 
     public GameObject squarePrefab;
+    public GameObject goalPrefab;
 
     private List<Square> Squares;
     private Dictionary<Square, GameObject> Positions = new();
 
     public bool shouldRandomize;
-
+    
     private void Start()
+    {
+        VisualizeMaze();
+    }
+
+    public void VisualizeMaze()
     {
         Random.InitState(DateTime.Now.Millisecond);
         if (shouldRandomize)
@@ -34,7 +40,7 @@ public class MazeVisualiser : MonoBehaviour
         SetPlayerAndObjective();
     }
 
-    public void SetPlayerAndObjective()
+    private void SetPlayerAndObjective()
     {
         var endpointSquares = Cube.FurthestApart(Squares);
 
@@ -43,9 +49,10 @@ public class MazeVisualiser : MonoBehaviour
         player.SetSquares(Positions, startingPoint);
         player.ObjectiveSquare = endpointSquares.Item2;
 
-        var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        // var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        var sphere = Instantiate(goalPrefab);
         sphere.transform.position = Positions[endpointSquares.Item2].transform.position;
-        sphere.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        sphere.transform.localScale = new Vector3(1,1,1);
         sphere.transform.parent = transform;
         var follow = sphere.AddComponent<FollowSquare>();
         follow.Target = Positions[endpointSquares.Item2];
