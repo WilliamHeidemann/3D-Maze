@@ -17,7 +17,7 @@ public class MazeVisualiser : MonoBehaviour
     public GameObject goalPrefab;
 
     private List<Square> _squares;
-    private readonly Dictionary<Square, GameObject> _positions = new();
+    private readonly Dictionary<Square, Transform> _positions = new();
 
     public bool shouldRandomize;
 
@@ -59,7 +59,7 @@ public class MazeVisualiser : MonoBehaviour
         // var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         var goal = Instantiate(goalPrefab, transform);
         mazeParts.Add(goal);
-        goal.transform.position = _positions[goalSquare].transform.position;
+        goal.transform.position = _positions[goalSquare].position;
         goal.transform.localScale = new Vector3(1,1,1);
         goal.transform.parent = transform;
     }
@@ -119,7 +119,7 @@ public class MazeVisualiser : MonoBehaviour
                     spawn.transform.GetChild(2).gameObject.SetActive(false);
                 if (square.LeftNeighbor.Item2.IsOpen)
                     spawn.transform.GetChild(3).gameObject.SetActive(false);
-                _positions.Add(square, spawn);
+                _positions.Add(square, spawn.transform);
             }
         }
     }

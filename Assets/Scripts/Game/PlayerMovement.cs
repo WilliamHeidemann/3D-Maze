@@ -8,10 +8,10 @@ using Maze;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Dictionary<Square, GameObject> _squarePositions;
+    private Dictionary<Square, Transform> _squarePositions;
     private Square _current;
     private Square _targetSquare;
-    private GameObject target;
+    private Transform _target;
     public Square ObjectiveSquare;
     public GameObject nextLevelButton;
     public GameObject joystickGameObject;
@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
         _mazeRotator = FindObjectOfType<MazeRotator>();
     }
     
-    public void SetSquares(Dictionary<Square, GameObject> squarePositions, Square startingSquare)
+    public void SetSquares(Dictionary<Square, Transform> squarePositions, Square startingSquare)
     {
         _squarePositions = squarePositions;
         _current = startingSquare;
@@ -32,14 +32,14 @@ public class PlayerMovement : MonoBehaviour
     
     private void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, Time.deltaTime * 5f);
+        transform.position = Vector3.MoveTowards(transform.position, _target.position, Time.deltaTime * 5f);
         ProximityCheck();
     }
 
     private void ProximityCheck()
     {
         if (_targetSquare == null) return;
-        if (Vector3.Distance(target.transform.position, transform.position) < 0.01f)
+        if (Vector3.Distance(_target.position, transform.position) < 0.01f)
         {
             _current = _targetSquare;
             _targetSquare = null;
@@ -107,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MoveTo(Square nextSquare)
     {
-        target = _squarePositions[nextSquare];
+        _target = _squarePositions[nextSquare];
         _targetSquare = nextSquare;
         if (nextSquare == ObjectiveSquare)
         {
@@ -124,6 +124,6 @@ public class PlayerMovement : MonoBehaviour
     private void SetStartOrientation(Square startingSquare)
     {
         _mazeRotator.SnapToFace(startingSquare.Orientation);
-        transform.position = target.transform.position;
+        transform.position = _target.position;
     }
 }
