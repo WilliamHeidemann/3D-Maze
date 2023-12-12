@@ -15,7 +15,7 @@ namespace Maze
         public Face Top;
         public Face Bottom;
 
-        public Face[] Faces => new[] {
+        private IEnumerable<Face> Faces => new[] {
             Front,
             Back,
             Right,

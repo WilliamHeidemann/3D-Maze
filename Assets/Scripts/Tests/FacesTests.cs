@@ -12,26 +12,9 @@ public class FacesTests
     [Test]
     public void FacesTestsSimplePasses()
     {
-        // Use the Assert class to test conditions
         var cube = new Cube(5,5,5);
-        var squares = cube.Faces.Select(face => face.Squares);
-        var allHasFourNeighbors = squares.ToList().TrueForAll(squareFace =>
-        {
-            var width = squareFace.GetLength(0);
-            var height = squareFace.GetLength(1);
-            for (int h = 0; h < height; h++)
-            {
-                for (int w = 0; w < width; w++)
-                {
-                    if (squareFace[w, h].Neighbors.Count() != 4)
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        });
+        var squares = cube.AllSquares;
+        var allHasFourNeighbors = squares.TrueForAll(square => square.Neighbors.Count() == 4);
         Assert.AreEqual(true, allHasFourNeighbors);
     }
 

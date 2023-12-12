@@ -50,12 +50,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_targetSquare != null) return;
         _mazeRotator.RotateToTarget();
-        var neighbor = CalculateNeighbor(direction);
+        var (square, wall) = CalculateNeighbor(direction);
         _mazeRotator.ReturnToTempRotation();
-        if (neighbor.Item2.IsOpen)
+        if (wall.IsOpen)
         {
-            CheckRotation(neighbor.Item1, direction);
-            MoveTo(neighbor.Item1);
+            CheckRotation(square, direction);
+            MoveTo(square);
         }
     }
 
