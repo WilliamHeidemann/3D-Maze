@@ -13,8 +13,6 @@ public class PlayerMovement : MonoBehaviour
     private Square _targetSquare;
     private Transform _target;
     public Square ObjectiveSquare;
-    public GameObject nextLevelButton;
-    public GameObject joystickGameObject;
     private MazeRotator _mazeRotator;
 
     private void Awake()
@@ -26,8 +24,9 @@ public class PlayerMovement : MonoBehaviour
     {
         _squarePositions = squarePositions;
         _current = startingSquare;
-        MoveTo(startingSquare);
-        SetStartOrientation(startingSquare);
+        _target = _squarePositions[startingSquare];
+        _targetSquare = startingSquare;
+        transform.position = _target.position;
     }
     
     private void Update()
@@ -111,19 +110,11 @@ public class PlayerMovement : MonoBehaviour
         _targetSquare = nextSquare;
         if (nextSquare == ObjectiveSquare)
         {
-            nextLevelButton.SetActive(true);
             var timer = FindObjectOfType<Timer>();
             if (timer != null)
             {
                 timer.IncrementTimer();
             }
-            joystickGameObject.SetActive(false);
         }
-    }
-    
-    private void SetStartOrientation(Square startingSquare)
-    {
-        _mazeRotator.SnapToFace(startingSquare.Orientation);
-        transform.position = _target.position;
     }
 }

@@ -9,6 +9,7 @@ using UnityEngine;
 [CustomEditor(typeof(MazeVisualiser))]
 public class MazeVisualiserEditor : Editor
 {
+    /*
     private Transform parent;
     public override void OnInspectorGUI()
     {
@@ -34,4 +35,5 @@ public class MazeVisualiserEditor : Editor
             DestroyImmediate(parent.GetChild(0).gameObject);
         }
     }
+    */
 }
