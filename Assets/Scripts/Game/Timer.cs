@@ -1,32 +1,49 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Timer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timePassedText;
 
-    [SerializeField] private int levelCompleteTimeBonus;
+    [SerializeField] private int timeBonus;
     [SerializeField] private int maxTimeInSeconds;
     private float _timeLeft;
-    
+    public static bool timeIsRunning;
 
     void Start()
     {
-        _timeLeft = 120;
+        _timeLeft = maxTimeInSeconds;
+        timeIsRunning = true;
     }
 
     void Update()
     {
-        _timeLeft -= Time.deltaTime;
-        timePassedText.text = FormatTime(_timeLeft);
+        if (timeIsRunning)
+        {
+            _timeLeft -= Time.deltaTime;
+            timePassedText.text = FormatTime(_timeLeft);
+            if (_timeLeft < 0)
+            {
+                timeIsRunning = false;
+            }
+        }
     }
 
     public void IncrementTimer()
     {
-        _timeLeft += levelCompleteTimeBonus;
+        _timeLeft += timeBonus;
         _timeLeft = Mathf.Min(_timeLeft, maxTimeInSeconds);
+    }
+
+    public void ResetTimer()
+    {
+        _timeLeft = maxTimeInSeconds;
+        timePassedText.text = FormatTime(_timeLeft);
+        timeIsRunning = true;
     }
 
     private static string FormatTime(float time)

@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     
     private void Update()
     {
+        if (Timer.timeIsRunning == false) return;
         transform.position = Vector3.MoveTowards(transform.position, _target.position, Time.deltaTime * 5f);
         ProximityCheck();
     }
@@ -42,6 +43,12 @@ public class PlayerMovement : MonoBehaviour
         {
             _current = _targetSquare;
             _targetSquare = null;
+            if (_current == ObjectiveSquare)
+            {
+                FindObjectOfType<Timer>()?.IncrementTimer();
+                FindObjectOfType<Points>()?.IncrementPoints(_squarePositions.Count);
+                FindObjectOfType<GameStarter>()?.NextMaze();
+            }
         }
     }
 
@@ -108,13 +115,5 @@ public class PlayerMovement : MonoBehaviour
     {
         _target = _squarePositions[nextSquare];
         _targetSquare = nextSquare;
-        if (nextSquare == ObjectiveSquare)
-        {
-            var timer = FindObjectOfType<Timer>();
-            if (timer != null)
-            {
-                timer.IncrementTimer();
-            }
-        }
     }
 }
