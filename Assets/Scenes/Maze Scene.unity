@@ -428,8 +428,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 162.00977, y: 59.752563}
-  m_SizeDelta: {x: 324.0195, y: 119.5051}
+  m_AnchoredPosition: {x: 162.00977, y: 88.37099}
+  m_SizeDelta: {x: 324.0195, y: 176.7419}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &89615590
 MonoBehaviour:
@@ -453,10 +453,12 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'HOW TO PLAY
 
-    Use your arrow keys to move
+    Hold your arrow keys to move
 
     Find your way to the
-    exit'
+    exit
+
+    Click space to pause '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -1319,8 +1321,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 372.61188, y: -130}
-  m_SizeDelta: {x: 123.7621, y: 30}
+  m_AnchoredPosition: {x: 428.92932, y: -130}
+  m_SizeDelta: {x: 236.397, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &705305353
 MonoBehaviour:
@@ -1376,7 +1378,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1767,10 +1769,10 @@ RectTransform:
   m_Father: {fileID: 923019704}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 56.101227, y: -15}
+  m_SizeDelta: {x: 112.20245, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &918103888
 MonoBehaviour:
@@ -1792,7 +1794,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: seed
+  m_text: some text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -1880,12 +1882,12 @@ GameObject:
   - component: {fileID: 923019704}
   - component: {fileID: 923019705}
   m_Layer: 5
-  m_Name: Seed
+  m_Name: Template
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &923019704
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1903,10 +1905,10 @@ RectTransform:
   m_Father: {fileID: 1663622708}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 30}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 122.24745, y: -237.01001}
+  m_SizeDelta: {x: 244.4949, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &923019705
 MonoBehaviour:
@@ -2065,10 +2067,10 @@ RectTransform:
   m_Father: {fileID: 923019704}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 178.34868, y: -15}
+  m_SizeDelta: {x: 132.29245, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1155868595
 MonoBehaviour:
@@ -2225,7 +2227,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 5 x 5 x 5
+  m_text: 3 x 3 x 3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -2334,7 +2336,7 @@ RectTransform:
   - {fileID: 390796921}
   - {fileID: 1271253914}
   m_Father: {fileID: 1663622708}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2457,6 +2459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointsText: {fileID: 1423759149}
+  pointAwardText: {fileID: 1861845152}
   animator: {fileID: 1861845154}
 --- !u!1 &1369870052
 GameObject:
@@ -2506,6 +2509,7 @@ MonoBehaviour:
   goalPrefab: {fileID: 919132149155446097, guid: 0b9513362da3f2e48affbcba41680ca3, type: 3}
   mazePrefab: {fileID: 8678468210360356694, guid: c9b78bdeaff06ea4f94ea68003bde964, type: 3}
   cameraLock: {fileID: 963194229}
+  dimensionsText: {fileID: 1271253915}
 --- !u!1 &1423759147
 GameObject:
   m_ObjectHideFlags: 0
@@ -3145,8 +3149,8 @@ RectTransform:
   - {fileID: 334367364}
   - {fileID: 1664654600}
   - {fileID: 1578453759}
-  - {fileID: 1744416343}
   - {fileID: 1295178823}
+  - {fileID: 1744416343}
   - {fileID: 923019704}
   m_Father: {fileID: 1949245837}
   m_RootOrder: 3
@@ -3288,7 +3292,7 @@ RectTransform:
   m_Children:
   - {fileID: 1870657084}
   m_Father: {fileID: 1663622708}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3425,8 +3429,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 372.61188, y: -160}
-  m_SizeDelta: {x: 123.7621, y: 30}
+  m_AnchoredPosition: {x: 428.92932, y: -160}
+  m_SizeDelta: {x: 236.397, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1861845152
 MonoBehaviour:
@@ -3482,7 +3486,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -3725,8 +3729,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timePassedText: {fileID: 1572059277}
+  timeAwardText: {fileID: 705305353}
   animator: {fileID: 705305355}
-  timeBonus: 20
+  timeBonus: 10
   maxTimeInSeconds: 120
 --- !u!1 &1949245833
 GameObject:

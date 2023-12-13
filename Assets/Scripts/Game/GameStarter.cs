@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class GameStarter : MonoBehaviour
@@ -6,6 +7,7 @@ public class GameStarter : MonoBehaviour
     [SerializeField] private GameObject goalPrefab;
     [SerializeField] private MazeVisualiser mazePrefab;
     [SerializeField] private CameraLock cameraLock;
+    [SerializeField] private TextMeshProUGUI dimensionsText;
     private MazeVisualiser _mazeInstance;
 
     private readonly int[][] _sizes =
@@ -14,18 +16,26 @@ public class GameStarter : MonoBehaviour
         new [] {4, 3, 3},
         new [] {4, 4, 3},
         new [] {4, 4, 4},
+        new [] {4, 2, 2},
+        new [] {4, 4, 4},
         new [] {5, 3, 3},
         new [] {5, 4, 3},
         new [] {5, 4, 4},
+        new [] {5, 5, 1},
         new [] {5, 5, 3},
         new [] {5, 5, 4},
+        new [] {6, 1, 1},
         new [] {5, 5, 5},
         new [] {6, 3, 3},
         new [] {6, 4, 4},
         new [] {6, 5, 4},
         new [] {6, 6, 3},
         new [] {6, 5, 5},
-        new [] {6, 6, 6}
+        new [] {6, 6, 6},
+        new [] {6, 6, 1},
+        new [] {6, 6, 6},
+        new [] {1, 1, 1},
+        new [] {6, 6, 6},
     };
 
     private int _levelIndex = 0;
@@ -50,6 +60,7 @@ public class GameStarter : MonoBehaviour
         var depth = _sizes[_levelIndex][2];
         _levelIndex = Mathf.Min(_levelIndex + 1, _sizes.Length - 1);
         _mazeInstance.VisualizeMaze(width, height, depth);
+        dimensionsText.text = $"{width} x {height} x {depth}";
         
         var (start, finish) = _mazeInstance.FurthestApart();
         var player = Instantiate(playerPrefab, _mazeInstance.transform);

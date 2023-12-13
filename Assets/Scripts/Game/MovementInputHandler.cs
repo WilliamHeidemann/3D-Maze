@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game;
@@ -33,6 +34,7 @@ public class MovementInputHandler : MonoBehaviour
             2 => CardinalDirection.East,
             3 => CardinalDirection.South,
             4 => CardinalDirection.West,
+            _ => throw new ArgumentOutOfRangeException()
         };
         _playerMovement.TryMove(direction);
     }

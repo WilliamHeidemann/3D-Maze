@@ -8,6 +8,7 @@ using UnityEngine.Serialization;
 public class Timer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timePassedText;
+    [SerializeField] private TextMeshProUGUI timeAwardText;
     [SerializeField] private Animator animator;
     [SerializeField] private int timeBonus;
     [SerializeField] private int maxTimeInSeconds;
@@ -18,6 +19,7 @@ public class Timer : MonoBehaviour
     void Start()
     {
         _timeLeft = maxTimeInSeconds;
+        timeAwardText.text = $"+{timeBonus} seconds";
         timeIsRunning = true;
     }
 
