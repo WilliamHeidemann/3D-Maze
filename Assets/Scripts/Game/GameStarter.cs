@@ -10,7 +10,7 @@ public class GameStarter : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dimensionsText;
     private MazeVisualiser _mazeInstance;
 
-    private readonly int[][] _sizes =
+    private readonly int[][] _levels =
     {
         new [] {3, 3, 3},
         new [] {4, 3, 3},
@@ -55,10 +55,10 @@ public class GameStarter : MonoBehaviour
     {
         if (_mazeInstance != null) Destroy(_mazeInstance.gameObject);
         _mazeInstance = Instantiate(mazePrefab);
-        var width = _sizes[_levelIndex][0];
-        var height = _sizes[_levelIndex][1];
-        var depth = _sizes[_levelIndex][2];
-        _levelIndex = Mathf.Min(_levelIndex + 1, _sizes.Length - 1);
+        var width = _levels[_levelIndex][0];
+        var height = _levels[_levelIndex][1];
+        var depth = _levels[_levelIndex][2];
+        _levelIndex = Mathf.Min(_levelIndex + 1, _levels.Length - 1);
         _mazeInstance.VisualizeMaze(width, height, depth);
         dimensionsText.text = $"{width} x {height} x {depth}";
         

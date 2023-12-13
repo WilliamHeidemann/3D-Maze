@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         if (Timer.timeIsRunning == false) return;
-        transform.position = Vector3.MoveTowards(transform.position, _target.position, Time.deltaTime * 5f);
+        transform.position = Vector3.MoveTowards(transform.position, _target.position, Time.deltaTime * 5.5f);
         ProximityCheck();
     }
 
