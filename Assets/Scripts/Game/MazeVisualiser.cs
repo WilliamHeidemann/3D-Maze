@@ -9,25 +9,25 @@ using Maze;
 
 public class MazeVisualiser : MonoBehaviour
 {
-    public int width;
-    public int height;
-    public int depth;
+    public int debugWidth;
+    public int debugHeight;
+    public int debugDepth;
 
     [SerializeField] private GameObject squarePrefab;
-    [SerializeField] private bool shouldRandomize;
+    [SerializeField] private bool debugMode;
     public List<Square> Squares { get; private set; }
     public Dictionary<Square, Transform> _positions { get; } = new();
 
     public (Square, Square) FurthestApart() => Cube.FurthestApart(Squares);
     
-    public void VisualizeMaze()
+    public void VisualizeMaze(int width, int height, int depth)
     {
-        Random.InitState(DateTime.Now.Millisecond);
-        if (shouldRandomize)
+        // Random.InitState(DateTime.Now.Millisecond);
+        if (debugMode)
         {
-            width = Random.Range(3, 6);
-            height = Random.Range(3, 6);
-            depth = Random.Range(3, 6);
+            width = debugWidth;
+            height = debugHeight;
+            depth = debugDepth;
         }
         CreateFaceCube(width, height, depth);
     }

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameStarter : MonoBehaviour
@@ -8,22 +5,39 @@ public class GameStarter : MonoBehaviour
     [SerializeField] private PlayerMovement playerPrefab;
     [SerializeField] private GameObject goalPrefab;
     [SerializeField] private MazeVisualiser mazePrefab;
+    [SerializeField] private CameraLock cameraLock;
     private MazeVisualiser _mazeInstance;
 
-    void Start() => FirstMaze();
-    
-    private void Update()
+    private readonly int[][] _sizes =
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.R))
-        {
-            // FirstMaze();
-        }
-    }
+        new [] {3, 3, 3},
+        new [] {4, 3, 3},
+        new [] {4, 4, 3},
+        new [] {4, 4, 4},
+        new [] {5, 3, 3},
+        new [] {5, 4, 3},
+        new [] {5, 4, 4},
+        new [] {5, 5, 3},
+        new [] {5, 5, 4},
+        new [] {5, 5, 5},
+        new [] {6, 3, 3},
+        new [] {6, 4, 4},
+        new [] {6, 5, 4},
+        new [] {6, 6, 3},
+        new [] {6, 5, 5},
+        new [] {6, 6, 6}
+    };
+
+    private int _levelIndex = 0;
+
+    
+    void Start() => FirstMaze();
 
     public void FirstMaze()
     {
         FindObjectOfType<Timer>()?.ResetTimer();
         FindObjectOfType<Points>()?.ResetPoints();
+        _levelIndex = 0;
         NextMaze();
     }
 
@@ -31,7 +45,11 @@ public class GameStarter : MonoBehaviour
     {
         if (_mazeInstance != null) Destroy(_mazeInstance.gameObject);
         _mazeInstance = Instantiate(mazePrefab);
-        _mazeInstance.VisualizeMaze();
+        var width = _sizes[_levelIndex][0];
+        var height = _sizes[_levelIndex][1];
+        var depth = _sizes[_levelIndex][2];
+        _levelIndex = Mathf.Min(_levelIndex + 1, _sizes.Length - 1);
+        _mazeInstance.VisualizeMaze(width, height, depth);
         
         var (start, finish) = _mazeInstance.FurthestApart();
         var player = Instantiate(playerPrefab, _mazeInstance.transform);
@@ -42,13 +60,6 @@ public class GameStarter : MonoBehaviour
         var goal = Instantiate(goalPrefab, _mazeInstance._positions[finish].position, Quaternion.identity, _mazeInstance.transform);
         goal.transform.localScale = new Vector3(1,1,1);
         
-        PlayTransitionAnimation();
-    }
-    
-    private void PlayTransitionAnimation()
-    {
-        var transitionObject = Instantiate(goalPrefab);
-        transitionObject.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
-        transitionObject.AddComponent<TransitionObject>();
+        cameraLock.SetTarget(_mazeInstance.transform);
     }
 }

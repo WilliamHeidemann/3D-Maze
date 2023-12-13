@@ -8,11 +8,12 @@ using UnityEngine.Serialization;
 public class Timer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timePassedText;
-
+    [SerializeField] private Animator animator;
     [SerializeField] private int timeBonus;
     [SerializeField] private int maxTimeInSeconds;
     private float _timeLeft;
     public static bool timeIsRunning;
+    private static readonly int LevelComplete = Animator.StringToHash("LevelComplete");
 
     void Start()
     {
@@ -37,6 +38,7 @@ public class Timer : MonoBehaviour
     {
         _timeLeft += timeBonus;
         _timeLeft = Mathf.Min(_timeLeft, maxTimeInSeconds);
+        animator.SetTrigger(LevelComplete);
     }
 
     public void ResetTimer()
@@ -51,7 +53,7 @@ public class Timer : MonoBehaviour
         if (time < 0) return "00:00";
         var minutes = (int)(time / 60);
         var seconds = (int)(time % 60);
-        return $"Time {minutes:D2}:{seconds:D2}";
+        return $"{minutes:D2}:{seconds:D2}";
     }
 
 }
