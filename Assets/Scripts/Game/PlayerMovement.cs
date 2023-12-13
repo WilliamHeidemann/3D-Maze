@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     
     private void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, _target.position, Time.deltaTime * 5.5f);
+        transform.position = Vector3.MoveTowards(transform.position, _target.position, Time.deltaTime * 5.3f);
         ProximityCheck();
     }
 
