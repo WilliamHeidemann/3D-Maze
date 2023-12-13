@@ -10,29 +10,28 @@ public class Timer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timePassedText;
     [SerializeField] private TextMeshProUGUI timeAwardText;
     [SerializeField] private Animator animator;
+    [SerializeField] private GameOver gameOver;
     [SerializeField] private int timeBonus;
     [SerializeField] private int maxTimeInSeconds;
     private float _timeLeft;
-    public static bool timeIsRunning;
+    private bool _isTimeUp;
     private static readonly int LevelComplete = Animator.StringToHash("LevelComplete");
 
     void Start()
     {
         _timeLeft = maxTimeInSeconds;
         timeAwardText.text = $"+{timeBonus} seconds";
-        timeIsRunning = true;
     }
 
     void Update()
     {
-        if (timeIsRunning)
+        if (_isTimeUp) return;
+        _timeLeft -= Time.deltaTime;
+        timePassedText.text = FormatTime(_timeLeft);
+        if (_timeLeft < 1)
         {
-            _timeLeft -= Time.deltaTime;
-            timePassedText.text = FormatTime(_timeLeft);
-            if (_timeLeft < 0)
-            {
-                timeIsRunning = false;
-            }
+            _isTimeUp = true;
+            gameOver.EndGame();
         }
     }
 
@@ -45,9 +44,9 @@ public class Timer : MonoBehaviour
 
     public void ResetTimer()
     {
+        _isTimeUp = false;
         _timeLeft = maxTimeInSeconds;
         timePassedText.text = FormatTime(_timeLeft);
-        timeIsRunning = true;
     }
 
     private static string FormatTime(float time)

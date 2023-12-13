@@ -31,7 +31,6 @@ public class PlayerMovement : MonoBehaviour
     
     private void Update()
     {
-        if (Timer.timeIsRunning == false) return;
         transform.position = Vector3.MoveTowards(transform.position, _target.position, Time.deltaTime * 5.5f);
         ProximityCheck();
     }
@@ -39,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     private void ProximityCheck()
     {
         if (_targetSquare == null) return;
-        if (Vector3.Distance(_target.position, transform.position) < 0.01f)
+        if (Vector3.Distance(_target.position, transform.position) < 0.3f)
         {
             _current = _targetSquare;
             _targetSquare = null;
