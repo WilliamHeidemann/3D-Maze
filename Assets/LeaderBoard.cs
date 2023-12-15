@@ -45,10 +45,9 @@ public class LeaderBoard : MonoBehaviour
 
     private void DisplayEntries(List<LeaderboardEntry_t> entries)
     {
-        print(entries.Count);
+        // Make no connection or not enough entries be empty strings once game is connected to steam
         for (int i = 0; i < 10; i++)
         {
-            // print($"ID {entries[i].m_steamIDUser}: {entries[i].m_nScore}");
             var playerName = entries.Count > i ? entries[i].m_steamIDUser.ToString() : "Test Player";
             var playerScore = entries.Count > i ? entries[i].m_nScore.ToString() : "99999";
             entriesNames[i].text = playerName;

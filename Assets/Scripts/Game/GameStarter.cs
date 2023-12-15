@@ -7,7 +7,6 @@ public class GameStarter : MonoBehaviour
     [SerializeField] private GameObject goalPrefab;
     [SerializeField] private MazeVisualiser mazePrefab;
     [SerializeField] private CameraLock cameraLock;
-    [SerializeField] private TextMeshProUGUI dimensionsText;
     private MazeVisualiser _mazeInstance;
 
     private readonly int[][] _levels =
@@ -60,7 +59,6 @@ public class GameStarter : MonoBehaviour
         var depth = _levels[_levelIndex][2];
         _levelIndex = Mathf.Min(_levelIndex + 1, _levels.Length - 1);
         _mazeInstance.VisualizeMaze(width, height, depth);
-        dimensionsText.text = $"{width} x {height} x {depth}";
         
         var (start, finish) = _mazeInstance.FurthestApart();
         var player = Instantiate(playerPrefab, _mazeInstance.transform);
