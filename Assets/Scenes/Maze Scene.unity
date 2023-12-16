@@ -2360,59 +2360,59 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 301462923827348333, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 301462924193626807, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 301462924193626807, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 301462924193626807, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 301462924193626807, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 193.5873
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 301462924193626807, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -88.37094
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 301462924325836211, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 301462924325836211, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 301462924325836211, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 64.5291
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 301462924325836211, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -88.37095
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 301462925348303005, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 301462925348303005, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 301462925348303005, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 244.4949
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 301462925348303005, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 122.24745
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 301462925348303005, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -36.005
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
@@ -2635,7 +2635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverScreen: {fileID: 2064226458}
-  gameStarter: {fileID: 1369870054}
+  survivalModeStarter: {fileID: 1369870054}
   pauseController: {fileID: 1302199444}
 --- !u!1 &2039008161
 GameObject:
