@@ -1,22 +1,24 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-internal class TransitionObject : MonoBehaviour
+namespace Game
 {
-    private readonly Vector3 _scaler = new(100f, 100f, 100f);
-
-    private void Start()
+    internal class TransitionObject : MonoBehaviour
     {
-        transform.position = Vector3.one;
-        transform.localScale = new Vector3(100f, 100f, 100f);
-    }
+        private readonly Vector3 _scaler = new(100f, 100f, 100f);
 
-    private void Update()
-    {
-        transform.localScale -= _scaler * Time.deltaTime;
-        if (transform.localScale.x < 0)
+        private void Start()
         {
-            Destroy(gameObject);
+            transform.position = Vector3.one;
+            transform.localScale = new Vector3(100f, 100f, 100f);
+        }
+
+        private void Update()
+        {
+            transform.localScale -= _scaler * Time.deltaTime;
+            if (transform.localScale.x < 0)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

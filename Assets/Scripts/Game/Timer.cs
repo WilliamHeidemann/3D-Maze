@@ -1,60 +1,59 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class Timer : MonoBehaviour
+namespace Game
 {
-    [SerializeField] private TextMeshProUGUI timePassedText;
-    [SerializeField] private TextMeshProUGUI timeAwardText;
-    [SerializeField] private Animator animator;
-    [SerializeField] private GameOver gameOver;
-    [SerializeField] private int timeBonus;
-    [SerializeField] private int maxTimeInSeconds;
-    private float _timeLeft;
-    private bool _isTimeUp;
-    private static readonly int LevelComplete = Animator.StringToHash("LevelComplete");
-
-    void Start()
+    public class Timer : MonoBehaviour
     {
-        _timeLeft = maxTimeInSeconds;
-        timeAwardText.text = $"+{timeBonus} seconds";
-    }
+        [SerializeField] private TextMeshProUGUI timePassedText;
+        [SerializeField] private TextMeshProUGUI timeAwardText;
+        [SerializeField] private Animator animator;
+        [SerializeField] private GameOver gameOver;
+        [SerializeField] private int timeBonus;
+        [SerializeField] private int maxTimeInSeconds;
+        private float _timeLeft;
+        private bool _isTimeUp;
+        private static readonly int LevelComplete = Animator.StringToHash("LevelComplete");
 
-    void Update()
-    {
-        if (_isTimeUp) return;
-        _timeLeft -= Time.deltaTime;
-        timePassedText.text = FormatTime(_timeLeft);
-        if (_timeLeft < 1)
+        void Start()
         {
-            _isTimeUp = true;
-            gameOver.EndGame();
+            _timeLeft = maxTimeInSeconds;
+            timeAwardText.text = $"+{timeBonus} seconds";
         }
-    }
 
-    public void IncrementTimer()
-    {
-        _timeLeft += timeBonus;
-        _timeLeft = Mathf.Min(_timeLeft, maxTimeInSeconds);
-        animator.SetTrigger(LevelComplete);
-    }
+        void Update()
+        {
+            if (_isTimeUp) return;
+            _timeLeft -= Time.deltaTime;
+            timePassedText.text = FormatTime(_timeLeft);
+            if (_timeLeft < 1)
+            {
+                _isTimeUp = true;
+                gameOver.EndGame();
+            }
+        }
 
-    public void ResetTimer()
-    {
-        _isTimeUp = false;
-        _timeLeft = maxTimeInSeconds;
-        timePassedText.text = FormatTime(_timeLeft);
-    }
+        public void IncrementTimer()
+        {
+            _timeLeft += timeBonus;
+            _timeLeft = Mathf.Min(_timeLeft, maxTimeInSeconds);
+            animator.SetTrigger(LevelComplete);
+        }
 
-    private static string FormatTime(float time)
-    {
-        if (time < 0) return "00:00";
-        var minutes = (int)(time / 60);
-        var seconds = (int)(time % 60);
-        return $"{minutes:D2}:{seconds:D2}";
-    }
+        public void ResetTimer()
+        {
+            _isTimeUp = false;
+            _timeLeft = maxTimeInSeconds;
+            timePassedText.text = FormatTime(_timeLeft);
+        }
 
+        private static string FormatTime(float time)
+        {
+            if (time < 0) return "00:00";
+            var minutes = (int)(time / 60);
+            var seconds = (int)(time % 60);
+            return $"{minutes:D2}:{seconds:D2}";
+        }
+
+    }
 }

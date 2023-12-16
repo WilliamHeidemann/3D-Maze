@@ -1,33 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class GameOver : MonoBehaviour
+namespace Game
 {
-    [SerializeField] private GameObject gameOverScreen;
-    [SerializeField] private SurvivalModeStarter survivalModeStarter;
-    [SerializeField] private PauseController pauseController;
-    private bool _isGameOver;
-    void Update()
+    public class GameOver : MonoBehaviour
     {
-        if (_isGameOver == false) return;
-        if (Input.GetKey(KeyCode.Space))
+        [SerializeField] private GameObject gameOverScreen;
+        [SerializeField] private SurvivalModeStarter survivalModeStarter;
+        [SerializeField] private PauseController pauseController;
+        private bool _isGameOver;
+        void Update()
         {
-            _isGameOver = false;
-            pauseController.enabled = true;
-            gameOverScreen.SetActive(false);
-            Time.timeScale = 1;
-            survivalModeStarter.FirstMaze();
+            if (_isGameOver == false) return;
+            if (Input.GetKey(KeyCode.Space))
+            {
+                _isGameOver = false;
+                pauseController.enabled = true;
+                gameOverScreen.SetActive(false);
+                Time.timeScale = 1;
+                survivalModeStarter.FirstMaze();
+            }
         }
-    }
 
-    public void EndGame()
-    {
-        _isGameOver = true;
-        gameOverScreen.SetActive(true);
-        pauseController.enabled = false;
-        Time.timeScale = 0;
+        public void EndGame()
+        {
+            _isGameOver = true;
+            gameOverScreen.SetActive(true);
+            pauseController.enabled = false;
+            Time.timeScale = 0;
+        }
     }
 }

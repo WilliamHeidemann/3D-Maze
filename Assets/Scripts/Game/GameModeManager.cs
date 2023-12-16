@@ -1,51 +1,53 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameModeManager : MonoBehaviour
+namespace Game
 {
-    [SerializeField] private GameMode gameMode;
-    [SerializeField] private List<GameObject> survivalModeObjects;
-    [SerializeField] private List<GameObject> freePlayModeObjects;
-
-    private enum GameMode
+    public class GameModeManager : MonoBehaviour
     {
-        Survival, 
-        FreePlay,
-    }
+        [SerializeField] private GameMode gameMode;
+        [SerializeField] private List<GameObject> survivalModeObjects;
+        [SerializeField] private List<GameObject> freePlayModeObjects;
 
-    private void Start()
-    {
-        switch (gameMode)
+        private enum GameMode
         {
-            case GameMode.Survival:
-                EnterSurvivalMode();
-                break;
-            case GameMode.FreePlay:
-                EnterFreePlayMode();
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
+            Survival, 
+            FreePlay,
         }
-    }
 
-    private void DisableAll()
-    {
-        survivalModeObjects.ForEach(o => o.SetActive(false));
-        freePlayModeObjects.ForEach(o => o.SetActive(false));
-    }
+        private void Start()
+        {
+            switch (gameMode)
+            {
+                case GameMode.Survival:
+                    EnterSurvivalMode();
+                    break;
+                case GameMode.FreePlay:
+                    EnterFreePlayMode();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
 
-    public void EnterSurvivalMode()
-    {
-        DisableAll();
-        survivalModeObjects.ForEach(o => o.SetActive(true));
-    }
+        private void DisableAll()
+        {
+            survivalModeObjects.ForEach(o => o.SetActive(false));
+            freePlayModeObjects.ForEach(o => o.SetActive(false));
+        }
 
-    public void EnterFreePlayMode()
-    {
-        DisableAll();
-        freePlayModeObjects.ForEach(o => o.SetActive(true));
-    }
+        public void EnterSurvivalMode()
+        {
+            DisableAll();
+            survivalModeObjects.ForEach(o => o.SetActive(true));
+        }
+
+        public void EnterFreePlayMode()
+        {
+            DisableAll();
+            freePlayModeObjects.ForEach(o => o.SetActive(true));
+        }
     
+    }
 }
