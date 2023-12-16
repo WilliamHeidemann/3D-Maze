@@ -1,4 +1,4 @@
-﻿namespace Maze
+﻿namespace Graph
 {
     public class Wall
     {

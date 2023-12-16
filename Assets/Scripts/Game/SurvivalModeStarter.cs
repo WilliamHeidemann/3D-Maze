@@ -1,13 +1,9 @@
 using TMPro;
 using UnityEngine;
 
-public class GameStarter : MonoBehaviour
+public class SurvivalModeStarter : MonoBehaviour
 {
-    [SerializeField] private PlayerMovement playerPrefab;
-    [SerializeField] private GameObject goalPrefab;
-    [SerializeField] private MazeVisualiser mazePrefab;
-    [SerializeField] private CameraLock cameraLock;
-    private MazeVisualiser _mazeInstance;
+    [SerializeField] private MazeSpawner mazeSpawner;
 
     private readonly int[][] _levels =
     {
@@ -52,23 +48,10 @@ public class GameStarter : MonoBehaviour
 
     public void NextMaze()
     {
-        if (_mazeInstance != null) Destroy(_mazeInstance.gameObject);
-        _mazeInstance = Instantiate(mazePrefab);
         var width = _levels[_levelIndex][0];
         var height = _levels[_levelIndex][1];
         var depth = _levels[_levelIndex][2];
         _levelIndex = Mathf.Min(_levelIndex + 1, _levels.Length - 1);
-        _mazeInstance.VisualizeMaze(width, height, depth);
-        
-        var (start, finish) = _mazeInstance.FurthestApart();
-        var player = Instantiate(playerPrefab, _mazeInstance.transform);
-        player.SetSquares(_mazeInstance._positions, start);
-        player.ObjectiveSquare = finish;
-        _mazeInstance.GetComponent<MazeRotator>().SnapToFace(start.Orientation);
-
-        var goal = Instantiate(goalPrefab, _mazeInstance._positions[finish].position, Quaternion.identity, _mazeInstance.transform);
-        goal.transform.localScale = new Vector3(1,1,1);
-        
-        cameraLock.SetTarget(_mazeInstance.transform);
+        mazeSpawner.SpawnMaze(width, height, depth);
     }
 }

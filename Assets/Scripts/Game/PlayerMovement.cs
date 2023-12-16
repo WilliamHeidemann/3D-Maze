@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Game;
+using Graph;
 using UnityEngine;
-using Maze;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 FindObjectOfType<Timer>()?.IncrementTimer();
                 FindObjectOfType<Points>()?.IncrementPoints(_squarePositions.Count);
-                FindObjectOfType<GameStarter>()?.NextMaze();
+                FindObjectOfType<SurvivalModeStarter>()?.NextMaze();
             }
         }
     }

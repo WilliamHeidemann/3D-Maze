@@ -2,12 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Graph;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using Maze;
 
 
-public class MazeVisualiser : MonoBehaviour
+public class Maze : MonoBehaviour
 {
     public int debugWidth;
     public int debugHeight;

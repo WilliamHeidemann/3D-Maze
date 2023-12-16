@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameOver : MonoBehaviour
 {
     [SerializeField] private GameObject gameOverScreen;
-    [SerializeField] private GameStarter gameStarter;
+    [SerializeField] private SurvivalModeStarter survivalModeStarter;
     [SerializeField] private PauseController pauseController;
     private bool _isGameOver;
     void Update()
@@ -18,7 +19,7 @@ public class GameOver : MonoBehaviour
             pauseController.enabled = true;
             gameOverScreen.SetActive(false);
             Time.timeScale = 1;
-            gameStarter.FirstMaze();
+            survivalModeStarter.FirstMaze();
         }
     }
 
