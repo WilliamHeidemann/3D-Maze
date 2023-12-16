@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Game
@@ -21,16 +22,21 @@ namespace Game
         [SerializeField] private Color wallBright;
         [SerializeField] private Color playerGoalBright;
 
-        private bool _isDark = false;
-    
+        private bool _isDark;
 
         private void Start()
         {
-            SetDark(_isDark);
+            SetDark(false);
         }
 
-        public void SetDark(bool dark)
+        public void ToggleDark()
         {
+            SetDark(!_isDark);
+        }
+
+        private void SetDark(bool dark)
+        {
+            _isDark = dark;
             mainCamera.backgroundColor = dark ? backgroundDark : backgroundBright;
             squareMaterial.color = dark ? squareDark : squareBright;
             wallMaterial.color = dark ? wallDark : wallBright;
