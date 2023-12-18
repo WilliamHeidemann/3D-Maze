@@ -8,11 +8,10 @@ namespace Game
 {
     public class PlayerMovement : MonoBehaviour
     {
-        private Dictionary<Square, Transform> _squarePositions;
+        private Dictionary<Square, Transform> _squareTransforms;
         private Square _current;
         private Square _targetSquare;
-        private Transform _target;
-        public Square ObjectiveSquare;
+        private Square _objectiveSquare;
         private MazeRotator _mazeRotator;
 
         private void Awake()
@@ -20,47 +19,42 @@ namespace Game
             _mazeRotator = FindObjectOfType<MazeRotator>();
         }
     
-        public void SetSquares(Dictionary<Square, Transform> squarePositions, Square startingSquare)
+        public void SetSquares(Dictionary<Square, Transform> squarePositions, Square startingSquare, Square objectiveSquare)
         {
-            _squarePositions = squarePositions;
+            _squareTransforms = squarePositions;
             _current = startingSquare;
-            _target = _squarePositions[startingSquare];
             _targetSquare = startingSquare;
-            transform.position = _target.position;
+            _objectiveSquare = objectiveSquare;
+            transform.position = _squareTransforms[_targetSquare].position;
         }
     
         private void Update()
         {
-            transform.position = Vector3.MoveTowards(transform.position, _target.position, Time.deltaTime * 5.3f);
+            transform.position = Vector3.MoveTowards(transform.position, _squareTransforms[_targetSquare].position, Time.deltaTime * 5.3f);
             ProximityCheck();
         }
 
         private void ProximityCheck()
         {
-            if (_targetSquare == null) return;
-            if (Vector3.Distance(_target.position, transform.position) < 0.3f)
+            if (Vector3.Distance(_squareTransforms[_targetSquare].position, transform.position) < 0.3f)
             {
                 _current = _targetSquare;
-                _targetSquare = null;
-                if (_current == ObjectiveSquare)
+                if (_current == _objectiveSquare)
                 {
-                    FindObjectOfType<Timer>()?.IncrementTimer();
-                    FindObjectOfType<Points>()?.IncrementPoints(_squarePositions.Count);
-                    FindObjectOfType<SurvivalModeStarter>()?.NextMaze();
+                    AdvanceLevel();
                 }
             }
         }
 
         public void TryMove(CardinalDirection direction)
         {
-            if (_targetSquare != null) return;
             _mazeRotator.RotateToTarget();
             var (square, wall) = CalculateNeighbor(direction);
             _mazeRotator.ReturnToTempRotation();
             if (wall.IsOpen)
             {
                 CheckRotation(square, direction);
-                MoveTo(square);
+                _targetSquare = square;
             }
         }
 
@@ -76,7 +70,7 @@ namespace Game
         {
             var neighbors = 
                 _current.Neighbors
-                    .Select(neighbor => (neighbor, _squarePositions[neighbor.Item1].transform))
+                    .Select(neighbor => (neighbor, _squareTransforms[neighbor.Item1].transform)) // Why .transform?
                     .ToArray();
         
             switch (direction)
@@ -84,25 +78,25 @@ namespace Game
                 case CardinalDirection.North:
                 {
                     var pair = neighbors.First(neighbor =>
-                        neighbor.ToTuple().Item2.position.y - _squarePositions[_current].transform.position.y > 0.001f);
+                        neighbor.ToTuple().Item2.position.y - _squareTransforms[_current].transform.position.y > 0.001f);
                     return pair.neighbor;
                 }
                 case CardinalDirection.South:
                 {
                     var pair = neighbors.First(neighbor =>
-                        neighbor.ToTuple().Item2.position.y - _squarePositions[_current].transform.position.y < -0.001f);
+                        neighbor.ToTuple().Item2.position.y - _squareTransforms[_current].transform.position.y < -0.001f);
                     return pair.neighbor;
                 }
                 case CardinalDirection.East:
                 {
                     var pair = neighbors.First(neighbor =>
-                        neighbor.ToTuple().Item2.position.x - _squarePositions[_current].transform.position.x > 0.001f);
+                        neighbor.ToTuple().Item2.position.x - _squareTransforms[_current].transform.position.x > 0.001f);
                     return pair.neighbor;
                 }
                 case CardinalDirection.West:
                 {
                     var pair = neighbors.First(neighbor =>
-                        neighbor.ToTuple().Item2.position.x - _squarePositions[_current].transform.position.x < -0.001f);
+                        neighbor.ToTuple().Item2.position.x - _squareTransforms[_current].transform.position.x < -0.001f);
                     return pair.neighbor;
                 }
                 default:
@@ -110,10 +104,11 @@ namespace Game
             }
         }
 
-        private void MoveTo(Square nextSquare)
+        private void AdvanceLevel()
         {
-            _target = _squarePositions[nextSquare];
-            _targetSquare = nextSquare;
+            FindObjectOfType<Timer>()?.IncrementTimer();
+            FindObjectOfType<Points>()?.IncrementPoints(_squareTransforms.Count);
+            FindObjectOfType<SurvivalModeStarter>()?.NextMaze();
         }
     }
 }
