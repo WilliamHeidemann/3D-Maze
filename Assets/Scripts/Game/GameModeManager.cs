@@ -1,30 +1,32 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game
 {
     public class GameModeManager : MonoBehaviour
     {
         [SerializeField] private GameMode gameMode;
-        [SerializeField] private List<GameObject> survivalModeObjects;
-        [SerializeField] private List<GameObject> freePlayModeObjects;
+        [SerializeField] private List<GameObject> timeTrialModeObjects;
+        [SerializeField] private List<GameObject> classicModeObjects;
+        [SerializeField] private List<GameObject> levelSelectObjects;
 
         private enum GameMode
         {
-            Survival, 
-            FreePlay,
+            TimeTrial,
+            Classic,
         }
 
         private void Start()
         {
             switch (gameMode)
             {
-                case GameMode.Survival:
-                    EnterSurvivalMode();
+                case GameMode.TimeTrial:
+                    EnterTimeTrialMode();
                     break;
-                case GameMode.FreePlay:
-                    EnterFreePlayMode();
+                case GameMode.Classic:
+                    EnterLevelSelect();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -33,20 +35,21 @@ namespace Game
 
         private void DisableAll()
         {
-            survivalModeObjects.ForEach(o => o.SetActive(false));
-            freePlayModeObjects.ForEach(o => o.SetActive(false));
+            timeTrialModeObjects.ForEach(o => o.SetActive(false));
+            classicModeObjects.ForEach(o => o.SetActive(false));
+            levelSelectObjects.ForEach(o => o.SetActive(false));
         }
 
-        public void EnterSurvivalMode()
+        public void EnterTimeTrialMode()
         {
             DisableAll();
-            survivalModeObjects.ForEach(o => o.SetActive(true));
+            timeTrialModeObjects.ForEach(o => o.SetActive(true));
         }
 
-        public void EnterFreePlayMode()
+        public void EnterLevelSelect()
         {
             DisableAll();
-            freePlayModeObjects.ForEach(o => o.SetActive(true));
+            levelSelectObjects.ForEach(o => o.SetActive(true));
         }
     
     }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Game
@@ -37,7 +38,9 @@ namespace Game
         private int _levelIndex = 0;
 
     
-        void Start() => FirstMaze();
+        // void Start() => FirstMaze();
+
+        private void OnEnable() => FirstMaze();
 
         public void FirstMaze()
         {
