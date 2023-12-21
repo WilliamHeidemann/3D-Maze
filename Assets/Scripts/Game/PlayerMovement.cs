@@ -9,10 +9,13 @@ namespace Game
     public class PlayerMovement : MonoBehaviour
     {
         private Dictionary<Square, Transform> _squareTransforms;
-        private Square _current;
-        private Square _targetSquare;
+        private Square _nearest;
+        // private Square Current => _squareTransforms
+            // .OrderBy(pair => Vector3.Distance(pair.Value.position, transform.position)).First().Key;
+        private Square _target;
         private Square _objectiveSquare;
         private MazeRotator _mazeRotator;
+        private List<Quaternion> _quaternions;
 
         private void Awake()
         {
@@ -22,81 +25,69 @@ namespace Game
         public void SetSquares(Dictionary<Square, Transform> squarePositions, Square startingSquare, Square objectiveSquare)
         {
             _squareTransforms = squarePositions;
-            _current = startingSquare;
-            _targetSquare = startingSquare;
+            _nearest = startingSquare;
+            _target = startingSquare;
             _objectiveSquare = objectiveSquare;
-            transform.position = _squareTransforms[_targetSquare].position;
+            transform.position = _squareTransforms[_target].position;
         }
     
         private void Update()
         {
-            transform.position = Vector3.MoveTowards(transform.position, _squareTransforms[_targetSquare].position, Time.deltaTime * 5.3f);
-            ProximityCheck();
+            _nearest = Nearest(_nearest);
+            transform.position = Vector3.MoveTowards(transform.position, _squareTransforms[_target].position, Time.deltaTime * 5.3f);
         }
 
-        private void ProximityCheck()
+        private Square Nearest(Square current)
         {
-            if (Vector3.Distance(_squareTransforms[_targetSquare].position, transform.position) < 0.3f)
-            {
-                _current = _targetSquare;
-                if (_current == _objectiveSquare)
-                {
-                    AdvanceLevel();
-                }
-            }
+            var neighbors = current.Neighbors
+                .Where(pair => pair.Item2.IsOpen)
+                .Select(pair => pair.Item1)
+                .ToList();
+            neighbors.Add(current);
+            return neighbors.OrderBy(square =>
+                Vector3.Distance(transform.position, _squareTransforms[square].position)).First();
         }
 
         public void TryMove(CardinalDirection direction)
         {
-            _mazeRotator.RotateToTarget();
-            var (square, wall) = CalculateNeighbor(direction);
-            _mazeRotator.ReturnToTempRotation();
-            if (wall.IsOpen)
-            {
-                CheckRotation(square, direction);
-                _targetSquare = square;
-            }
+            var (square, wall) = CalculateNeighbor(_nearest, direction);
+            if (square == _target) return;
+            _target = wall.IsOpen ? square : _nearest;
+            // Hvis wall er closed og _nearest.orientation er anderledes end rotater.targetOrientation skal rotate gå modsat rotater.targetOrientation
+            _mazeRotator.SetTarget(direction, _target.Orientation, _squareTransforms[_target].name);
         }
 
-        private void CheckRotation(Square nextSquare, CardinalDirection direction)
-        {
-            if (nextSquare.Orientation != _current.Orientation)
-            {
-                _mazeRotator.Rotate(direction);
-            }
-        }
-    
-        private (Square, Wall) CalculateNeighbor(CardinalDirection direction)
+        private (Square, Wall) CalculateNeighbor(Square current, CardinalDirection direction)
         {
             var neighbors = 
-                _current.Neighbors
-                    .Select(neighbor => (neighbor, _squareTransforms[neighbor.Item1].transform)) // Why .transform?
+                current.Neighbors
+                    .Select(neighbor => (neighbor, _squareTransforms[neighbor.Item1]))
                     .ToArray();
         
             switch (direction)
             {
                 case CardinalDirection.North:
                 {
-                    var pair = neighbors.First(neighbor =>
-                        neighbor.ToTuple().Item2.position.y - _squareTransforms[_current].transform.position.y > 0.001f);
+                    var pair = neighbors.OrderByDescending(neighbor =>
+                        neighbor.ToTuple().Item2.position.y - _squareTransforms[current].transform.position.y).First();
                     return pair.neighbor;
                 }
                 case CardinalDirection.South:
                 {
-                    var pair = neighbors.First(neighbor =>
-                        neighbor.ToTuple().Item2.position.y - _squareTransforms[_current].transform.position.y < -0.001f);
+                    var pair = neighbors.OrderBy(neighbor =>
+                        neighbor.ToTuple().Item2.position.y - _squareTransforms[current].transform.position.y).First();
                     return pair.neighbor;
                 }
                 case CardinalDirection.East:
                 {
-                    var pair = neighbors.First(neighbor =>
-                        neighbor.ToTuple().Item2.position.x - _squareTransforms[_current].transform.position.x > 0.001f);
+                    var pair = neighbors.OrderByDescending(neighbor =>
+                        neighbor.ToTuple().Item2.position.x - _squareTransforms[current].transform.position.x).First();
                     return pair.neighbor;
                 }
                 case CardinalDirection.West:
                 {
-                    var pair = neighbors.First(neighbor =>
-                        neighbor.ToTuple().Item2.position.x - _squareTransforms[_current].transform.position.x < -0.001f);
+                    var pair = neighbors.OrderBy(neighbor =>
+                        neighbor.ToTuple().Item2.position.x - _squareTransforms[current].transform.position.x).First();
                     return pair.neighbor;
                 }
                 default:
@@ -109,6 +100,13 @@ namespace Game
             FindObjectOfType<Timer>()?.IncrementTimer();
             FindObjectOfType<Points>()?.IncrementPoints(_squareTransforms.Count);
             FindObjectOfType<SurvivalModeStarter>()?.NextMaze();
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawSphere(_squareTransforms[_target].position, .05f);
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(_squareTransforms[_nearest].position, .05f);
         }
     }
 }

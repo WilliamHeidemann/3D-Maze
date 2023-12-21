@@ -16,7 +16,7 @@ namespace Game
     
         private void Start()
         {
-            if (!SteamManager.Initialized) { print("Steam Manager is not initialized"); return; }
+            if (!SteamManager.Initialized) return;
             var handle = SteamUserStats.FindLeaderboard(GlobalLeaderboardName);
             _leaderboard = new SteamLeaderboard_t(handle.m_SteamAPICall);
             _onLeaderboardScoresDownloaded = CallResult<LeaderboardScoresDownloaded_t>.Create(OnLeaderboardScoresDownloaded);
