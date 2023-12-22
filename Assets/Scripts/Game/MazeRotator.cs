@@ -10,7 +10,8 @@ namespace Game
     {
         private Quaternion _target;
         [SerializeField] [Range(1f, 300f)] private float rotationSpeed;
-        private Orientation _targetOrientation;
+        public Orientation TargetOrientation { get; private set; }
+        public CardinalDirection TargetDirection { get; private set; }
         private void Update()
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, _target, rotationSpeed * Time.deltaTime);
@@ -29,15 +30,19 @@ namespace Game
                 _ => throw new ArgumentOutOfRangeException(nameof(face), face, null)
             };
             transform.rotation = _target;
-            _targetOrientation = face;
+            TargetOrientation = face;
         }
 
-        public void SetTarget(CardinalDirection direction, Orientation targetOrientation, string s)
+        public void SetTarget(CardinalDirection direction)
         {
-            if (targetOrientation == _targetOrientation) return;
             _target = Get90DegreeRotation(direction);
-            _targetOrientation = targetOrientation;
-            print(s);
+            TargetDirection = direction;
+        }
+
+        public void GoBack()
+        {
+            _target = Get90DegreeRotation(TargetDirection.Opposite());
+            TargetDirection = TargetDirection.Opposite();
         }
 
         private Quaternion Get90DegreeRotation(CardinalDirection direction)
