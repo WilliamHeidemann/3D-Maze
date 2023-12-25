@@ -15,8 +15,8 @@ namespace Game
 
         [SerializeField] private GameObject squarePrefab;
         [SerializeField] private bool debugMode;
-        public List<Square> Squares { get; private set; }
-        public Dictionary<Square, Transform> _positions { get; } = new();
+        private List<Square> Squares { get; set; }
+        public Dictionary<Square, Transform> Positions { get; } = new();
 
         public (Square, Square) FurthestApart() => Cube.FurthestApart(Squares);
     
@@ -85,7 +85,7 @@ namespace Game
                         spawn.transform.GetChild(2).gameObject.SetActive(false);
                     if (square.LeftNeighbor.Item2.IsOpen)
                         spawn.transform.GetChild(3).gameObject.SetActive(false);
-                    _positions.Add(square, spawn.transform);
+                    Positions.Add(square, spawn.transform);
                 }
             }
         }

@@ -11,8 +11,7 @@ namespace Game
         private Quaternion _target;
         [SerializeField] [Range(1f, 300f)] private float rotationSpeed;
         private Quaternion _tempRotation;
-        public Orientation TargetOrientation { get; private set; }
-        public CardinalDirection TargetDirection { get; private set; }
+        private CardinalDirection TargetDirection { get; set; }
         private void Update()
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, _target, rotationSpeed * Time.deltaTime);
@@ -31,7 +30,6 @@ namespace Game
                 _ => throw new ArgumentOutOfRangeException(nameof(face), face, null)
             };
             transform.rotation = _target;
-            TargetOrientation = face;
         }
 
         public void SetTarget(CardinalDirection direction)

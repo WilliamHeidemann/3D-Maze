@@ -17,7 +17,7 @@ namespace Game
 
         void Start()
         {
-            _timeLeft = 10000;//maxTimeInSeconds;
+            _timeLeft = maxTimeInSeconds;
             timeAwardText.text = $"+{timeBonus} seconds";
         }
 
