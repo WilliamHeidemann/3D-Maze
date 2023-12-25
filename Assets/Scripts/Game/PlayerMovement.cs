@@ -11,8 +11,6 @@ namespace Game
     {
         private Dictionary<Square, Transform> _squareTransforms;
         private Square _nearest;
-        // private Square Current => _squareTransforms
-            // .OrderBy(pair => Vector3.Distance(pair.Value.position, transform.position)).First().Key;
         private Square _target;
         private Square _objectiveSquare;
         private MazeRotator _mazeRotator;
@@ -66,8 +64,7 @@ namespace Game
 
         private void TryMove(CardinalDirection direction, Square square, Wall wall)
         {
-            if (_target.Orientation == square.Orientation) {} // (a) -> a og (b) -> b
-            else if (_nearest.Orientation != _target.Orientation && square.Orientation == _nearest.Orientation && wall.IsOpen) _mazeRotator.GoBack(); // a (c) -> a open
+            if (_nearest.Orientation != _target.Orientation && square.Orientation == _nearest.Orientation && wall.IsOpen) _mazeRotator.GoBack(); // a (c) -> a open
             else if (_nearest.Orientation != _target.Orientation && _target.Orientation != square.Orientation && !wall.IsOpen) _mazeRotator.GoBack(); // a (c) -> b closed
             else if (_nearest.Orientation != _target.Orientation && _target.Orientation != square.Orientation && wall.IsOpen) 
             {
@@ -75,7 +72,6 @@ namespace Game
                 _mazeRotator.SetTarget(direction);
             } // a (c) -> b open
             else if (_target.Orientation != square.Orientation && wall.IsOpen) { _mazeRotator.SetTarget(direction); } // (a) -> b open
-            else if (_target.Orientation != square.Orientation && !wall.IsOpen) {} // (a) -> b closed
 
             _target = wall.IsOpen ? square : _nearest;
         }
