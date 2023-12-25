@@ -64,6 +64,7 @@ public class ClassicModeLogic : MonoBehaviour
                 _ when i < levelsCompleted => completed,
                 _ when i == levelsCompleted => open,
                 _ when i > levelsCompleted  => locked,
+                _ => throw new ArgumentOutOfRangeException() // Not possible
             };
         }
     }

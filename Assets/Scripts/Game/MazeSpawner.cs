@@ -23,8 +23,7 @@ namespace Game
         
             var (start, finish) = _mazeInstance.FurthestApart();
             var player = Instantiate(playerPrefab, _mazeInstance.transform);
-            player.SetSquares(_mazeInstance._positions, start);
-            player.ObjectiveSquare = finish;
+            player.SetSquares(_mazeInstance._positions, start, finish);
             _mazeInstance.GetComponent<MazeRotator>().SnapToFace(start.Orientation);
 
             var goal = Instantiate(goalPrefab, _mazeInstance._positions[finish].position, Quaternion.identity, _mazeInstance.transform);

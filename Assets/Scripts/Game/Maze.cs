@@ -90,22 +90,22 @@ namespace Game
             }
         }
 
-        private void OnDrawGizmos()
-        {
-            Random.InitState(0);
-            if (Squares == null) return;
-            foreach (var square in Squares)
-            {
-                if (square.Neighbors == null) return;
-                Gizmos.color = new Color(Random.value, Random.value, Random.value);
-                foreach (var neighbor in square.Neighbors)
-                {
-                    var midPoint = Vector3.Lerp(_positions[square].transform.position,
-                        _positions[neighbor.Item1].transform.position, 0.5f);
-                    Gizmos.DrawLine(_positions[square].transform.position, midPoint);
-                    if (neighbor.Item2 == null) Gizmos.DrawSphere(_positions[square].transform.position, 0.2f);
-                }
-            }
-        }
+        // private void OnDrawGizmos()
+        // {
+        //     Random.InitState(0);
+        //     if (Squares == null) return;
+        //     foreach (var square in Squares)
+        //     {
+        //         if (square.Neighbors == null) return;
+        //         Gizmos.color = new Color(Random.value, Random.value, Random.value);
+        //         foreach (var neighbor in square.Neighbors)
+        //         {
+        //             var midPoint = Vector3.Lerp(_positions[square].transform.position,
+        //                 _positions[neighbor.Item1].transform.position, 0.5f);
+        //             Gizmos.DrawLine(_positions[square].transform.position, midPoint);
+        //             if (neighbor.Item2 == null) Gizmos.DrawSphere(_positions[square].transform.position, 0.2f);
+        //         }
+        //     }
+        // }
     }
 }

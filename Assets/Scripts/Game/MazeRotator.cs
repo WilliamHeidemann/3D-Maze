@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Graph;
 using UnityEngine;
 
@@ -7,9 +9,10 @@ namespace Game
     public class MazeRotator : MonoBehaviour
     {
         private Quaternion _target;
-        private Quaternion _tempRotation;
         [SerializeField] [Range(1f, 300f)] private float rotationSpeed;
-    
+        private Quaternion _tempRotation;
+        public Orientation TargetOrientation { get; private set; }
+        public CardinalDirection TargetDirection { get; private set; }
         private void Update()
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, _target, rotationSpeed * Time.deltaTime);
@@ -28,19 +31,27 @@ namespace Game
                 _ => throw new ArgumentOutOfRangeException(nameof(face), face, null)
             };
             transform.rotation = _target;
+            TargetOrientation = face;
         }
 
-        public void Rotate(CardinalDirection direction)
+        public void SetTarget(CardinalDirection direction)
+        {
+            _target = Get90DegreeRotation(direction);
+            TargetDirection = direction;
+        }
+
+        public void GoBack()
+        {
+            _target = Get90DegreeRotation(TargetDirection.Opposite());
+            TargetDirection = TargetDirection.Opposite();
+        }
+
+        private Quaternion Get90DegreeRotation(CardinalDirection direction)
         {
             var axis = GetRotationAxis(direction);
             var angle = GetRotationAngle(direction);
-            var cubeTransform = transform;
-            var currentRotation = cubeTransform.rotation;
-            cubeTransform.rotation = _target;
-            transform.Rotate(axis, angle, Space.World);
-            var next = cubeTransform.rotation;
-            _target = next;
-            cubeTransform.rotation = currentRotation;
+            var rotationQuaternion = Quaternion.AngleAxis(angle, axis);
+            return rotationQuaternion * _target;
         }
 
         private static float GetRotationAngle(CardinalDirection direction) => direction switch
@@ -60,16 +71,5 @@ namespace Game
             CardinalDirection.West => Vector3.up,
             _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
         };
-
-        public void RotateToTarget()
-        {
-            _tempRotation = transform.rotation;
-            transform.rotation = _target;
-        }
-
-        public void ReturnToTempRotation()
-        {
-            transform.rotation = _tempRotation;
-        }
     }
 }
