@@ -16,7 +16,6 @@ namespace Game
         private Square _target;
         private Square _objectiveSquare;
         private MazeRotator _mazeRotator;
-        private List<Quaternion> _quaternions;
 
         private void Awake()
         {
@@ -67,7 +66,7 @@ namespace Game
 
         private void TryMove(CardinalDirection direction, Square square, Wall wall)
         {
-            if (_target.Orientation == square.Orientation) {} // (a) -> a
+            if (_target.Orientation == square.Orientation) {} // (a) -> a og (b) -> b
             else if (_nearest.Orientation != _target.Orientation && square.Orientation == _nearest.Orientation && wall.IsOpen) _mazeRotator.GoBack(); // a (c) -> a open
             else if (_nearest.Orientation != _target.Orientation && _target.Orientation != square.Orientation && !wall.IsOpen) _mazeRotator.GoBack(); // a (c) -> b closed
             else if (_nearest.Orientation != _target.Orientation && _target.Orientation != square.Orientation && wall.IsOpen) 
@@ -93,25 +92,29 @@ namespace Game
                 case CardinalDirection.North:
                 {
                     var pair = neighbors.OrderByDescending(neighbor =>
-                        neighbor.ToTuple().Item2.position.y - _squareTransforms[current].transform.position.y).First();
+                        neighbor.ToTuple().Item2.position.y - _squareTransforms[current].transform.position.y)
+                        .First(tuple => Mathf.Abs(tuple.Item2.position.x - _squareTransforms[current].transform.position.x) < 1f);
                     return pair.neighbor;
                 }
                 case CardinalDirection.South:
                 {
                     var pair = neighbors.OrderBy(neighbor =>
-                        neighbor.ToTuple().Item2.position.y - _squareTransforms[current].transform.position.y).First();
+                        neighbor.ToTuple().Item2.position.y - _squareTransforms[current].transform.position.y)
+                        .First(tuple => Mathf.Abs(tuple.Item2.position.x - _squareTransforms[current].transform.position.x) < 1f);
                     return pair.neighbor;
                 }
                 case CardinalDirection.East:
                 {
                     var pair = neighbors.OrderByDescending(neighbor =>
-                        neighbor.ToTuple().Item2.position.x - _squareTransforms[current].transform.position.x).First();
+                        neighbor.ToTuple().Item2.position.x - _squareTransforms[current].transform.position.x)
+                        .First(tuple => Mathf.Abs(tuple.Item2.position.y - _squareTransforms[current].transform.position.y) < 1f);
                     return pair.neighbor;
                 }
                 case CardinalDirection.West:
                 {
                     var pair = neighbors.OrderBy(neighbor =>
-                        neighbor.ToTuple().Item2.position.x - _squareTransforms[current].transform.position.x).First();
+                        neighbor.ToTuple().Item2.position.x - _squareTransforms[current].transform.position.x)
+                        .First(tuple => Mathf.Abs(tuple.Item2.position.y - _squareTransforms[current].transform.position.y) < 1f);
                     return pair.neighbor;
                 }
                 default:

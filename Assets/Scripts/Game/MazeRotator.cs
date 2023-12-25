@@ -10,6 +10,7 @@ namespace Game
     {
         private Quaternion _target;
         [SerializeField] [Range(1f, 300f)] private float rotationSpeed;
+        private Quaternion _tempRotation;
         public Orientation TargetOrientation { get; private set; }
         public CardinalDirection TargetDirection { get; private set; }
         private void Update()
