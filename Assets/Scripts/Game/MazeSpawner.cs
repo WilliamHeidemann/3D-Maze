@@ -1,6 +1,7 @@
 using System;
 using Graph;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Game
 {
@@ -19,7 +20,15 @@ namespace Game
         {
             if (_mazeInstance != null) Destroy(_mazeInstance.gameObject);
         }
-    
+
+        public void SpawnRandomMaze()
+        {
+            var width = Random.Range(1, 7);
+            var height = Random.Range(1, 7);
+            var depth = Random.Range(1, 7);
+            SpawnMaze(width, height, depth);
+        }
+        
         public void SpawnMaze(int width, int height, int depth)
         {
             DeSpawnMaze();
