@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game
+namespace Game.SurvivalMode
 {
     public class PauseController : MonoBehaviour
     {

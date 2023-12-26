@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace Game
+namespace Game.SurvivalMode
 {
     public class SurvivalModeStarter : MonoBehaviour
     {

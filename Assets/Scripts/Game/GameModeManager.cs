@@ -9,13 +9,13 @@ namespace Game
     {
         [SerializeField] private GameMode gameMode;
         [SerializeField] private List<GameObject> timeTrialModeObjects;
-        [SerializeField] private List<GameObject> classicModeObjects;
+        [SerializeField] private List<GameObject> campaignModeObjects;
         [SerializeField] private List<GameObject> levelSelectObjects;
 
         private enum GameMode
         {
             TimeTrial,
-            Classic,
+            Campaign,
         }
 
         private void Start()
@@ -25,7 +25,7 @@ namespace Game
                 case GameMode.TimeTrial:
                     EnterTimeTrialMode();
                     break;
-                case GameMode.Classic:
+                case GameMode.Campaign:
                     EnterLevelSelect();
                     break;
                 default:
@@ -36,7 +36,7 @@ namespace Game
         private void DisableAll()
         {
             timeTrialModeObjects.ForEach(o => o.SetActive(false));
-            classicModeObjects.ForEach(o => o.SetActive(false));
+            campaignModeObjects.ForEach(o => o.SetActive(false));
             levelSelectObjects.ForEach(o => o.SetActive(false));
         }
 

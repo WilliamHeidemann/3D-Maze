@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 219393906}
   - component: {fileID: 219393907}
   m_Layer: 0
-  m_Name: Classic Mode
+  m_Name: Campaign Mode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -699,7 +699,7 @@ MonoBehaviour:
   timeTrialModeObjects:
   - {fileID: 2039008161}
   - {fileID: 139658734}
-  classicModeObjects:
+  campaignModeObjects:
   - {fileID: 1434587733}
   levelSelectObjects:
   - {fileID: 1391298901}
@@ -1484,7 +1484,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 301462923827348333, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_Name
-      value: Canvas Classic Mode
+      value: Canvas Campaign Mode
       objectReference: {fileID: 0}
     - target: {fileID: 301462923827348333, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_IsActive
@@ -4599,19 +4599,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6784273405361200569}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 219393907}
-        m_TargetAssemblyTypeName: ClassicModeLogic, Assembly-CSharp
-        m_MethodName: Set4
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!222 &1049576080072831118
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4894,7 +4882,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Classic
+  m_text: Play Campaign
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -8060,19 +8048,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 713380097933075835}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 219393907}
-        m_TargetAssemblyTypeName: ClassicModeLogic, Assembly-CSharp
-        m_MethodName: Set0
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!224 &3111298623858788276
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9099,19 +9075,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1353911817116131736}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 219393907}
-        m_TargetAssemblyTypeName: ClassicModeLogic, Assembly-CSharp
-        m_MethodName: Set3
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!222 &3790301439198151686
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9252,19 +9216,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6522195797041353662}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 219393907}
-        m_TargetAssemblyTypeName: ClassicModeLogic, Assembly-CSharp
-        m_MethodName: Set2
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1001 &3983620105946910366
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10268,7 +10220,7 @@ GameObject:
   - component: {fileID: 8008864780344776776}
   - component: {fileID: 5245201109254801144}
   m_Layer: 5
-  m_Name: Classic
+  m_Name: Campaign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14947,7 +14899,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Time Trial
+  m_text: Play Time Trial
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -15115,19 +15067,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5120079393716547208}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 219393907}
-        m_TargetAssemblyTypeName: ClassicModeLogic, Assembly-CSharp
-        m_MethodName: Set1
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &8184154495011901559
 MonoBehaviour:
   m_ObjectHideFlags: 0

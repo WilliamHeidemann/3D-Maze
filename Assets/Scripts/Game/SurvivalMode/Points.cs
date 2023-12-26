@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Game
+namespace Game.SurvivalMode
 {
     public class Points : MonoBehaviour
     {
