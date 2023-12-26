@@ -10,7 +10,7 @@ namespace Game.CampaignMode
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            logic.SetWorld(world);
+            logic.TrySetWorld(world);
         }
     }
 }

@@ -9,18 +9,34 @@ namespace Game.CampaignMode
 {
     public class CampaignModeLogic : MonoBehaviour
     {
-        public World world;
-        public List<Image> levelImages;
+        [SerializeField] private World world;
+        [SerializeField] private List<LevelButton> levelButtons;
+        [SerializeField] private Image[] levelImages;
         [SerializeField] private Color completed;
         [SerializeField] private Color open;
         [SerializeField] private Color locked;
         [SerializeField] private TextMeshProUGUI title;
 
-        public void SetWorld(World chosenWorld)
+        private void Start()
+        {
+            SetWorld(world);
+            for (int i = 0; i < levelButtons.Count; i++)
+            {
+                levelButtons[i].Seed = i;
+            }
+        }
+
+        public void TrySetWorld(World chosenWorld)
         {
             if (world == chosenWorld) return;
+            SetWorld(chosenWorld);
+        }
+
+        private void SetWorld(World chosenWorld)
+        {
             world = chosenWorld;
-            UpdateLevelImages(chosenWorld);
+            levelButtons.ForEach(button => button.World = chosenWorld);
+            UpdateLevelLockedStatus(chosenWorld);
             UpdateTitle(chosenWorld);
         }
 
@@ -37,7 +53,7 @@ namespace Game.CampaignMode
             };
         }
 
-        private void UpdateLevelImages(World chosenWorld)
+        private void UpdateLevelLockedStatus(World chosenWorld)
         {
             // if (!SteamManager.Initialized) return;
 
@@ -56,7 +72,7 @@ namespace Game.CampaignMode
             Random.InitState((int)chosenWorld);
             int levelsCompleted = Random.Range(0, 50);
         
-            for (var i = 0; i < levelImages.Count; i++)
+            for (var i = 0; i < levelImages.Length; i++)
             {
                 levelImages[i].color = levelsCompleted switch
                 {
@@ -65,6 +81,13 @@ namespace Game.CampaignMode
                     _ when i > levelsCompleted  => locked,
                     _ => throw new ArgumentOutOfRangeException() // Not possible
                 };
+            }
+            
+            for (var i = 0; i < levelButtons.Count; i++)
+            {
+                levelButtons[i].LevelLockedStatus = i <= levelsCompleted
+                    ? LevelButton.LockedStatus.Unlocked
+                    : LevelButton.LockedStatus.Locked;
             }
         }
 
