@@ -97,6 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81ca2565e41a2cc418e64382b1400877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  adjacentProximity: 0.6
+  aheadProximity: 0.4
 --- !u!114 &2700823384620928670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,4 +111,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67f013771f2f1ca42a6c31048e6df045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joystick: {fileID: 0}

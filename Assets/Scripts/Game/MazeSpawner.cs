@@ -51,8 +51,9 @@ namespace Game
             if (Input.GetKeyDown(KeyCode.R)) ResetLevel();
         }
 
-        private void ResetLevel()
+        public void ResetLevel()
         {
+            if (_mazeInstance == null) return;
             _playerInstance.SetSquares(_mazeInstance.Positions, _start, _finish);
             _mazeInstance.GetComponent<MazeRotator>().SnapToFace(_start.Orientation);
         }

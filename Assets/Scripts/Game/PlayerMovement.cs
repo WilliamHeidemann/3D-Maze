@@ -15,6 +15,8 @@ namespace Game
         private Square _target;
         private Square _objectiveSquare;
         private MazeRotator _mazeRotator;
+        [SerializeField] private float adjacentProximity;
+        [SerializeField] private float aheadProximity;
 
         private void Awake()
         {
@@ -92,8 +94,8 @@ namespace Game
                 {
                     var pair = neighbors.OrderByDescending(neighbor =>
                         neighbor.ToTuple().Item2.position.y - _squareTransforms[current].transform.position.y)
-                        .FirstOrDefault(tuple => Mathf.Abs(tuple.Item2.position.x - _squareTransforms[current].transform.position.x) < 1f
-                                                 && tuple.Item2.position.y - _squareTransforms[current].transform.position.y > 0.1f
+                        .FirstOrDefault(tuple => Mathf.Abs(tuple.Item2.position.x - _squareTransforms[current].transform.position.x) < adjacentProximity //1f
+                                                 && tuple.Item2.position.y - _squareTransforms[current].transform.position.y > aheadProximity //0.1f
                         );
                     return pair.neighbor;
                 }
@@ -101,8 +103,8 @@ namespace Game
                 {
                     var pair = neighbors.OrderBy(neighbor =>
                         neighbor.ToTuple().Item2.position.y - _squareTransforms[current].transform.position.y)
-                        .FirstOrDefault(tuple => Mathf.Abs(tuple.Item2.position.x - _squareTransforms[current].transform.position.x) < 1f
-                                                 && _squareTransforms[current].transform.position.y - tuple.Item2.position.y > 0.1f
+                        .FirstOrDefault(tuple => Mathf.Abs(tuple.Item2.position.x - _squareTransforms[current].transform.position.x) < adjacentProximity
+                                                 && _squareTransforms[current].transform.position.y - tuple.Item2.position.y > aheadProximity
                         );
                     return pair.neighbor;
                 }
@@ -110,8 +112,8 @@ namespace Game
                 {
                     var pair = neighbors.OrderByDescending(neighbor =>
                         neighbor.ToTuple().Item2.position.x - _squareTransforms[current].transform.position.x)
-                        .FirstOrDefault(tuple => Mathf.Abs(tuple.Item2.position.y - _squareTransforms[current].transform.position.y) < 1f
-                        && tuple.Item2.position.x - _squareTransforms[current].transform.position.x > 0.1f
+                        .FirstOrDefault(tuple => Mathf.Abs(tuple.Item2.position.y - _squareTransforms[current].transform.position.y) < adjacentProximity
+                        && tuple.Item2.position.x - _squareTransforms[current].transform.position.x > aheadProximity
                         );
                     return pair.neighbor;
                 }
@@ -119,8 +121,8 @@ namespace Game
                 {
                     var pair = neighbors.OrderBy(neighbor =>
                         neighbor.ToTuple().Item2.position.x - _squareTransforms[current].transform.position.x)
-                        .FirstOrDefault(tuple => Mathf.Abs(tuple.Item2.position.y - _squareTransforms[current].transform.position.y) < 1f
-                                                 && _squareTransforms[current].transform.position.x - tuple.Item2.position.x > 0.1f
+                        .FirstOrDefault(tuple => Mathf.Abs(tuple.Item2.position.y - _squareTransforms[current].transform.position.y) < adjacentProximity
+                                                 && _squareTransforms[current].transform.position.x - tuple.Item2.position.x > aheadProximity
                         );
                     return pair.neighbor;
                 }
