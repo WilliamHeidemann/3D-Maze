@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.CampaignMode;
 using Game.SurvivalMode;
 using Graph;
 using UnityEngine;
@@ -136,6 +137,8 @@ namespace Game
             FindObjectOfType<Timer>()?.IncrementTimer();
             FindObjectOfType<Points>()?.IncrementPoints(_squareTransforms.Count);
             FindObjectOfType<SurvivalModeStarter>()?.NextMaze();
+            
+            FindObjectOfType<LevelManager>()?.AdvanceLevel();
         }
 
         private void OnDrawGizmos()

@@ -5,8 +5,8 @@ namespace Game.CampaignMode
 {
     public class WorldLogic : MonoBehaviour, IPointerEnterHandler
     {
-        [SerializeField] private CampaignModeLogic.World world;
-        [SerializeField] private CampaignModeLogic logic;
+        [SerializeField] private World world;
+        [SerializeField] private LevelSelectLogic logic;
 
         public void OnPointerEnter(PointerEventData eventData)
         {

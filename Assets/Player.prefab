@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81ca2565e41a2cc418e64382b1400877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  adjacentProximity: 0.6
+  adjacentProximity: 0.8
   aheadProximity: 0.4
 --- !u!114 &2700823384620928670
 MonoBehaviour:

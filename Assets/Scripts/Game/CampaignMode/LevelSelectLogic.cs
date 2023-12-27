@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace Game.CampaignMode
 {
-    public class CampaignModeLogic : MonoBehaviour
+    public class LevelSelectLogic : MonoBehaviour
     {
         [SerializeField] private World world;
         [SerializeField] private List<LevelButton> levelButtons;
@@ -89,15 +89,6 @@ namespace Game.CampaignMode
                     ? LevelButton.LockedStatus.Unlocked
                     : LevelButton.LockedStatus.Locked;
             }
-        }
-
-        public enum World
-        {
-            SmallWorld,
-            Regular,
-            Chunks,
-            LongIsland,
-            Massive
         }
     }
 }
