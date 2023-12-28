@@ -138,7 +138,9 @@ namespace Game
             FindObjectOfType<Points>()?.IncrementPoints(_squareTransforms.Count);
             FindObjectOfType<SurvivalModeStarter>()?.NextMaze();
             
-            FindObjectOfType<LevelManager>()?.AdvanceLevel();
+            SoundManager.Instance.PlayCompleteLevelSound();
+            
+            // FindObjectOfType<LevelManager>()?.AdvanceLevel();
         }
 
         private void OnDrawGizmos()

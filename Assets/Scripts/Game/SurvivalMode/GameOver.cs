@@ -13,12 +13,18 @@ namespace Game.SurvivalMode
             if (_isGameOver == false) return;
             if (Input.GetKey(KeyCode.Space))
             {
-                _isGameOver = false;
-                pauseController.enabled = true;
-                gameOverScreen.SetActive(false);
-                Time.timeScale = 1;
-                survivalModeStarter.FirstMaze();
+                RestartGame();
             }
+        }
+
+        public void RestartGame()
+        {
+            _isGameOver = false;
+            pauseController.enabled = true;
+            gameOverScreen.SetActive(false);
+            Time.timeScale = 1;
+            SoundManager.Instance.StartMusic();
+            survivalModeStarter.FirstMaze();
         }
 
         public void EndGame()
@@ -26,6 +32,7 @@ namespace Game.SurvivalMode
             _isGameOver = true;
             gameOverScreen.SetActive(true);
             pauseController.enabled = false;
+            SoundManager.Instance.StopMusic();
             Time.timeScale = 0;
         }
     }
