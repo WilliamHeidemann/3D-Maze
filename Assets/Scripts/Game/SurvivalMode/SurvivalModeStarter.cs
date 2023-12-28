@@ -13,14 +13,12 @@ namespace Game.SurvivalMode
         };
 
         private int _levelIndex = 0;
-
-    
-        // void Start() => FirstMaze();
-
+        
         private void OnEnable() => FirstMaze();
 
         public void FirstMaze()
         {
+            Random.InitState((int)System.DateTime.Now.Ticks);
             FindObjectOfType<Timer>()?.ResetTimer();
             FindObjectOfType<Points>()?.ResetPoints();
             _levelIndex = 0;
@@ -39,7 +37,6 @@ namespace Game.SurvivalMode
                 mazeSpawner.SpawnMaze(width, height, depth);
             }
             _levelIndex++;
-            // _levelIndex = Mathf.Min(_levelIndex + 1, _levels.Length - 1);
         }
     }
 }

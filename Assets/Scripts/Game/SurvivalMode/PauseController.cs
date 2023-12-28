@@ -24,7 +24,7 @@ namespace Game.SurvivalMode
             Time.timeScale = 0;
         }
     
-        private void Resume()
+        public void Resume()
         {
             _isPaused = false;
             pauseScreen.SetActive(false);

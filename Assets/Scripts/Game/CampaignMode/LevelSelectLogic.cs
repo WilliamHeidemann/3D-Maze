@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Steamworks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -55,7 +56,7 @@ namespace Game.CampaignMode
 
         private void UpdateLevelLockedStatus(World chosenWorld)
         {
-            // if (!SteamManager.Initialized) return;
+            if (!SteamManager.Initialized) return;
 
             var id = chosenWorld switch
             {
@@ -67,10 +68,11 @@ namespace Game.CampaignMode
                 _ => throw new ArgumentOutOfRangeException(nameof(chosenWorld), chosenWorld, null)
             };
 
-            // if (!SteamUserStats.GetStat(id, out int levelsCompleted)) return;
+            if (!SteamUserStats.GetStat(id, out int levelsCompleted)) return;
 
-            Random.InitState((int)chosenWorld);
-            int levelsCompleted = Random.Range(0, 50);
+            // Debugging without steam manager initialized:
+            // Random.InitState((int)chosenWorld);
+            // int levelsCompleted = Random.Range(0, 50);
         
             for (var i = 0; i < levelImages.Length; i++)
             {
