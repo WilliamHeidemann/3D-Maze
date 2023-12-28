@@ -1,23 +1,16 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Game
 {
     public class GameModeManager : MonoBehaviour
     {
-        [SerializeField] private GameMode gameMode;
+        public GameMode gameMode;
         [SerializeField] private List<GameObject> timeTrialModeObjects;
         [SerializeField] private List<GameObject> campaignModeObjects;
         [SerializeField] private List<GameObject> levelSelectObjects;
-
-        private enum GameMode
-        {
-            TimeTrial,
-            Campaign,
-        }
-
+        
         private void Start()
         {
             switch (gameMode)
@@ -44,12 +37,14 @@ namespace Game
         {
             DisableAll();
             timeTrialModeObjects.ForEach(o => o.SetActive(true));
+            gameMode = GameMode.TimeTrial;
         }
 
         public void EnterLevelSelect()
         {
             DisableAll();
             levelSelectObjects.ForEach(o => o.SetActive(true));
+            gameMode = GameMode.Campaign;
         }
     
     }

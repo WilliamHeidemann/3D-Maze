@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using Random = UnityEngine.Random;
+﻿using UnityEngine;
 
 namespace Game.CampaignMode
 {
@@ -12,6 +10,7 @@ namespace Game.CampaignMode
         [SerializeField] private MazeSpawner mazeSpawner;
         [SerializeField] private GameObject levelSelectCanvas;
         [SerializeField] private GameObject campaignCanvas;
+        [SerializeField] private LevelManager levelManager;
 
         public void StartLevel()
         {
@@ -20,6 +19,8 @@ namespace Game.CampaignMode
             campaignCanvas.SetActive(true);
             var dimensions = LevelManager.GetDimensions(Seed, World);
             mazeSpawner.SpawnMaze(dimensions.Item1, dimensions.Item2, dimensions.Item3);
+            levelManager.currentLevelIndex = Seed;
+            levelManager.UpdateLevelText();
         }
 
         public enum LockedStatus

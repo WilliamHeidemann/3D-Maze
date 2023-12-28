@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Graph;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 
 namespace Game

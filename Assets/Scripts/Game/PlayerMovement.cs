@@ -5,7 +5,6 @@ using Game.CampaignMode;
 using Game.SurvivalMode;
 using Graph;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Game
 {
@@ -134,13 +133,19 @@ namespace Game
 
         private void AdvanceLevel()
         {
-            FindObjectOfType<Timer>()?.IncrementTimer();
-            FindObjectOfType<Points>()?.IncrementPoints(_squareTransforms.Count);
-            FindObjectOfType<SurvivalModeStarter>()?.NextMaze();
-            
+            var gameMode = FindObjectOfType<GameModeManager>()?.gameMode;
+
+            if (gameMode == GameMode.TimeTrial)
+            {
+                FindObjectOfType<Timer>()?.IncrementTimer();
+                FindObjectOfType<Points>()?.IncrementPoints(_squareTransforms.Count);
+                FindObjectOfType<SurvivalModeStarter>()?.NextMaze();
+            }
+            else
+            {
+                FindObjectOfType<LevelManager>()?.AdvanceLevel();
+            }
             SoundManager.Instance.PlayCompleteLevelSound();
-            
-            // FindObjectOfType<LevelManager>()?.AdvanceLevel();
         }
 
         private void OnDrawGizmos()

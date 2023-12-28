@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,6 +10,7 @@ namespace Game.CampaignMode
         public int currentLevelIndex;
         public World currentWorld;
         [SerializeField] private MazeSpawner mazeSpawner;
+        [SerializeField] private TextMeshProUGUI levelText;
     
         public void AdvanceLevel()
         {
@@ -23,6 +25,13 @@ namespace Game.CampaignMode
             {
                 Debug.LogWarning("This should load the level select screen.");
             }
+            UpdateLevelText();
+        }
+
+        public void UpdateLevelText()
+        {
+            var level = currentLevelIndex + 1;
+            levelText.text = $"Level {level}";
         }
     
         public static (int, int, int) GetDimensions(int seed, World world)
@@ -30,7 +39,7 @@ namespace Game.CampaignMode
             var lowWidth = world switch
             {
                 World.SmallWorld => 1,
-                World.Regular => 2,
+                World.Regular => 3,
                 World.Chunks => 4,
                 World.LongIsland => 1,
                 World.Massive => 6,
@@ -49,7 +58,7 @@ namespace Game.CampaignMode
             var lowHeight = world switch
             {
                 World.SmallWorld => 1,
-                World.Regular => 2,
+                World.Regular => 3,
                 World.Chunks => 4,
                 World.LongIsland => 1,
                 World.Massive => 6,
@@ -68,7 +77,7 @@ namespace Game.CampaignMode
             var lowDepth = world switch
             {
                 World.SmallWorld => 1,
-                World.Regular => 2,
+                World.Regular => 3,
                 World.Chunks => 4,
                 World.LongIsland => 5,
                 World.Massive => 6,
