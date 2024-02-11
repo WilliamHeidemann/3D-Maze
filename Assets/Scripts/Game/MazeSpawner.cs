@@ -1,3 +1,4 @@
+using Game.SurvivalMode;
 using Graph;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -10,6 +11,7 @@ namespace Game
         [SerializeField] private GameObject goalPrefab;
         [SerializeField] private Maze mazePrefab;
         [SerializeField] private CameraLock cameraLock;
+        [SerializeField] private PauseController pauseController;
         private Maze _mazeInstance;
         private Square _start;
         private Square _finish;
@@ -55,6 +57,7 @@ namespace Game
             if (_mazeInstance == null) return;
             _playerInstance.SetSquares(_mazeInstance.Positions, _start, _finish);
             _mazeInstance.GetComponent<MazeRotator>().SnapToFace(_start.Orientation);
+            pauseController.Resume();
         }
     }
 }

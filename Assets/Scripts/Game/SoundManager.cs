@@ -25,7 +25,7 @@ namespace Game
         public void ToggleSound()
         {
             _isMute = !_isMute;
-            levelCompleteAudioSource.mute = _isMute;
+            // levelCompleteAudioSource.mute = _isMute; Can be commented back in, if levelComplete sound should also be muted.
             backgroundMusic.mute = _isMute;
         }
     }
