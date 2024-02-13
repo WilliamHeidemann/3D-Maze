@@ -431,6 +431,7 @@ GameObject:
   m_Component:
   - component: {fileID: 219393906}
   - component: {fileID: 219393907}
+  - component: {fileID: 219393908}
   m_Layer: 0
   m_Name: Level Select Logic
   m_TagString: Untagged
@@ -572,6 +573,24 @@ MonoBehaviour:
   open: {r: 0.9529412, g: 0.9529412, b: 0.9529412, a: 1}
   locked: {r: 0.18039216, g: 0.18039216, b: 0.18039216, a: 1}
   title: {fileID: 8936153420661626464}
+  saveFileManager: {fileID: 219393908}
+--- !u!114 &219393908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219393905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00db088d5ea94c97969ebe75b631470c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smallLevelsCompleted: 2
+  regularLevelsCompleted: 7
+  chunksLevelsCompleted: 6
+  longIslandLevelsCompleted: 25
+  massiveLevelsCompleted: 42
 --- !u!114 &336438659 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4997399501519487256, guid: 939cfb891df292143b9234622ea8a15b, type: 3}
@@ -3225,6 +3244,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1691762883}
+        m_TargetAssemblyTypeName: Game.CampaignMode.LevelManager, Game
+        m_MethodName: UpdateLevelMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1686281564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3337,7 +3368,10 @@ MonoBehaviour:
   currentLevelIndex: 0
   currentWorld: 0
   mazeSpawner: {fileID: 1579902242}
+  worldText: {fileID: 523167474}
   levelText: {fileID: 1729538017}
+  saveFileManager: {fileID: 219393908}
+  levelSelectLogic: {fileID: 219393907}
 --- !u!114 &1705878523 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4997399501519487256, guid: 939cfb891df292143b9234622ea8a15b, type: 3}

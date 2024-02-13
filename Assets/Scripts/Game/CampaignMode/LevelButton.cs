@@ -20,6 +20,7 @@ namespace Game.CampaignMode
             var dimensions = LevelManager.GetDimensions(Seed, World);
             mazeSpawner.SpawnMaze(dimensions.Item1, dimensions.Item2, dimensions.Item3);
             levelManager.currentLevelIndex = Seed;
+            levelManager.currentWorld = World;
             levelManager.UpdateLevelText();
         }
 

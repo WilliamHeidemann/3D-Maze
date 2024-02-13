@@ -17,6 +17,7 @@ namespace Game.CampaignMode
         [SerializeField] private Color open;
         [SerializeField] private Color locked;
         [SerializeField] private TextMeshProUGUI title;
+        [SerializeField] private SaveFileManager saveFileManager;
 
         private void Start()
         {
@@ -33,7 +34,7 @@ namespace Game.CampaignMode
             SetWorld(chosenWorld);
         }
 
-        private void SetWorld(World chosenWorld)
+        public void SetWorld(World chosenWorld)
         {
             world = chosenWorld;
             levelButtons.ForEach(button => button.World = chosenWorld);
@@ -56,25 +57,8 @@ namespace Game.CampaignMode
 
         private void UpdateLevelLockedStatus(World chosenWorld)
         {
-            // if (!SteamManager.Initialized) return;
-
-            var id = chosenWorld switch
-            {
-                World.SmallWorld => "levelsCompleted0",
-                World.Regular => "levelsCompleted1",
-                World.Chunks => "levelsCompleted2",
-                World.LongIsland => "levelsCompleted3",
-                World.Massive => "levelsCompleted4",
-                _ => throw new ArgumentOutOfRangeException(nameof(chosenWorld), chosenWorld, null)
-            };
-
-            // if (!SteamUserStats.GetStat(id, out int levelsCompleted)) return;
-            int levelsCompleted = 0;
+            var levelsCompleted = saveFileManager.GetLevelsCompleted(chosenWorld);
             
-            // Debugging without steam manager initialized:
-            // Random.InitState((int)chosenWorld);
-            // int levelsCompleted = Random.Range(0, 50);
-        
             for (var i = 0; i < levelImages.Length; i++)
             {
                 levelImages[i].color = levelsCompleted switch

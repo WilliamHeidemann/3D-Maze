@@ -10,11 +10,13 @@ namespace Game.CampaignMode
         public int currentLevelIndex;
         public World currentWorld;
         [SerializeField] private MazeSpawner mazeSpawner;
+        [SerializeField] private TextMeshProUGUI worldText;
         [SerializeField] private TextMeshProUGUI levelText;
-    
+        [SerializeField] private SaveFileManager saveFileManager;
+        [SerializeField] private LevelSelectLogic levelSelectLogic;
         public void AdvanceLevel()
         {
-            // Mark currentLevelIndex as completed
+            saveFileManager.LevelComplete(currentLevelIndex, currentWorld);
             currentLevelIndex++;
             if (currentLevelIndex < 50)
             {
@@ -28,9 +30,15 @@ namespace Game.CampaignMode
             UpdateLevelText();
         }
 
+        public void UpdateLevelMenu()
+        {
+            levelSelectLogic.SetWorld(currentWorld);
+        }
+
         public void UpdateLevelText()
         {
             var level = currentLevelIndex + 1;
+            worldText.text = $"{currentWorld.AsString()}";
             levelText.text = $"Level {level}";
         }
     
