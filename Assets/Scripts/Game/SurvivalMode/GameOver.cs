@@ -7,10 +7,11 @@ namespace Game.SurvivalMode
         [SerializeField] private GameObject gameOverScreen;
         [SerializeField] private SurvivalModeStarter survivalModeStarter;
         [SerializeField] private PauseController pauseController;
-        private bool _isGameOver;
+        [SerializeField] private Points points;
+        private bool isGameOver;
         void Update()
         {
-            if (_isGameOver == false) return;
+            if (isGameOver == false) return;
             if (Input.GetKey(KeyCode.Space))
             {
                 RestartGame();
@@ -19,7 +20,7 @@ namespace Game.SurvivalMode
 
         public void RestartGame()
         {
-            _isGameOver = false;
+            isGameOver = false;
             pauseController.enabled = true;
             gameOverScreen.SetActive(false);
             Time.timeScale = 1;
@@ -29,11 +30,12 @@ namespace Game.SurvivalMode
 
         public void EndGame()
         {
-            _isGameOver = true;
+            isGameOver = true;
             gameOverScreen.SetActive(true);
             pauseController.enabled = false;
             SoundManager.Instance.StopMusic();
             Time.timeScale = 0;
+            points.SendScoreToLeaderboard();
         }
     }
 }

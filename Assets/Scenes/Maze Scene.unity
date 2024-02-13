@@ -2478,6 +2478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fcef3a7af50d8f47a9cd9b7fdd089d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leaderBoard: {fileID: 382976894}
   pointsText: {fileID: 4632240588864187097}
   pointAwardText: {fileID: 1568720248868137372}
   animator: {fileID: 3155165020006738758}
@@ -3875,6 +3876,7 @@ MonoBehaviour:
   gameOverScreen: {fileID: 5997061653061292186}
   survivalModeStarter: {fileID: 1369870054}
   pauseController: {fileID: 1302199444}
+  points: {fileID: 1356915486}
 --- !u!224 &1986371284 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7010575540402193043, guid: 939cfb891df292143b9234622ea8a15b, type: 3}

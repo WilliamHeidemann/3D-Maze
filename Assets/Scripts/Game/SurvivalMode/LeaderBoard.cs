@@ -20,9 +20,10 @@ namespace Game.SurvivalMode
             var nullableLeaderboard = await SteamUserStats.FindLeaderboardAsync("GlobalHighScores");
             if (nullableLeaderboard.HasValue == false) return;
             leaderboard = nullableLeaderboard.Value;
+            DisplayGlobalHighScores();
         }
         
-        private async void PopulateGlobalHighScores()
+        private async void DisplayGlobalHighScores()
         {
             var globalScores = await leaderboard.GetScoresAsync(10);
             for (int i = 0; i < globalScores.Length; i++)
@@ -32,13 +33,11 @@ namespace Game.SurvivalMode
             }
         }
 
-        private async void SubmitScore(int scoreToSubmit)
+        public async void SubmitScore(int scoreToSubmit)
         {
             var nullableResult = await leaderboard.SubmitScoreAsync(scoreToSubmit);
             if (nullableResult.HasValue == false) return;
-            var result = nullableResult.Value;
-            print($"Successfully uploaded score of {result.Score}!");
-            print($"Score has changed? {result.Changed}");
+            DisplayGlobalHighScores();
         }
     }
 }

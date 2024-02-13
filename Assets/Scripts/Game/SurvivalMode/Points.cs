@@ -5,6 +5,7 @@ namespace Game.SurvivalMode
 {
     public class Points : MonoBehaviour
     {
+        [SerializeField] private LeaderBoard leaderBoard;
         [SerializeField] private TextMeshProUGUI pointsText;
         [SerializeField] private TextMeshProUGUI pointAwardText;
         [SerializeField] private Animator animator;
@@ -25,6 +26,11 @@ namespace Game.SurvivalMode
             _points += points;
             pointsText.text = _points.ToString();
             animator.SetTrigger(LevelComplete);
+        }
+
+        public void SendScoreToLeaderboard()
+        {
+            leaderBoard.SubmitScore(_points);
         }
     }
 }
