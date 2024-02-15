@@ -22,6 +22,7 @@ namespace Game.CampaignMode
         [SerializeField] private int chunksLevelsCompleted; 
         [SerializeField] private int longIslandLevelsCompleted; 
         [SerializeField] private int massiveLevelsCompleted;
+        private static string UniqueLevelDataFileName => SteamClient.SteamId + "/levelData";
 
         private void Start()
         {
@@ -73,9 +74,7 @@ namespace Game.CampaignMode
             var jsonData = GenerateJson();
             var bytes = Encoding.UTF8.GetBytes(jsonData);
             var memoryStream = new MemoryStream(bytes);
-            var fileName = SteamClient.SteamId + "/levelData";
-            var writeSuccess = SteamRemoteStorage.FileWrite(fileName, memoryStream.ToArray());
-            print(writeSuccess ? "Successfully uploaded game data!" : "Failed to upload game data!");
+            var writeSuccess = SteamRemoteStorage.FileWrite(UniqueLevelDataFileName, memoryStream.ToArray());
         }
 
         private string GenerateJson()
@@ -91,9 +90,18 @@ namespace Game.CampaignMode
             return JsonConvert.SerializeObject(gameData);
         }
 
-        private void LoadSaveFile()
+        public void LoadSaveFile()
         {
-            print("Implementation missing.");
+            if (SteamRemoteStorage.FileExists(UniqueLevelDataFileName) == false) return;
+            var content = SteamRemoteStorage.FileRead(UniqueLevelDataFileName);
+            var json = Encoding.UTF8.GetString(content);
+            var gameData = JsonConvert.DeserializeObject<GameData>(json);
+            if (gameData == null) return;
+            smallLevelsCompleted = gameData.small;
+            regularLevelsCompleted = gameData.regular;
+            chunksLevelsCompleted = gameData.chunks;
+            longIslandLevelsCompleted = gameData.longIsland;
+            massiveLevelsCompleted = gameData.massive;
         }
     }
 

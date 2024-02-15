@@ -28,14 +28,14 @@ namespace Scripts.Editor
 
             if (GUILayout.Button("Download Cloud File"))
             {
-                
+                manager.LoadSaveFile();
             }
             
-            if (GUILayout.Button("Steam enabled check"))
+            if (GUILayout.Button("Quota check"))
             {
-                Debug.Log("1: " + SteamRemoteStorage.QuotaBytes);
-                Debug.Log("2: " + SteamRemoteStorage.QuotaRemainingBytes);
-                Debug.Log("3: " + SteamRemoteStorage.QuotaUsedBytes);
+                Debug.Log("Quota bytes: " + SteamRemoteStorage.QuotaBytes);
+                Debug.Log("Quota remaining bytes: " + SteamRemoteStorage.QuotaRemainingBytes);
+                Debug.Log("Quota used bytes: " + SteamRemoteStorage.QuotaUsedBytes);
             }
         }
     }

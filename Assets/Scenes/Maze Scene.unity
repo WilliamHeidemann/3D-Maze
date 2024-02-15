@@ -586,11 +586,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00db088d5ea94c97969ebe75b631470c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smallLevelsCompleted: 2
-  regularLevelsCompleted: 7
-  chunksLevelsCompleted: 6
-  longIslandLevelsCompleted: 25
-  massiveLevelsCompleted: 42
+  smallLevelsCompleted: 0
+  regularLevelsCompleted: 0
+  chunksLevelsCompleted: 0
+  longIslandLevelsCompleted: 0
+  massiveLevelsCompleted: 0
 --- !u!114 &336438659 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4997399501519487256, guid: 939cfb891df292143b9234622ea8a15b, type: 3}
