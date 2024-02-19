@@ -6,18 +6,17 @@ namespace Game
 {
     public class MazeRotator : MonoBehaviour
     {
-        private Quaternion _target;
+        private Quaternion target;
         [SerializeField] [Range(1f, 300f)] private float rotationSpeed;
-        private Quaternion _tempRotation;
         private CardinalDirection TargetDirection { get; set; }
         private void Update()
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, _target, rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotationSpeed * Time.deltaTime);
         }
 
         public void SnapToFace(Orientation face)
         {
-            _target = face switch
+            target = face switch
             {
                 Orientation.Front => Quaternion.Euler(0,0,0),
                 Orientation.Back => Quaternion.Euler(180, 0, 180),
@@ -27,18 +26,18 @@ namespace Game
                 Orientation.Down => Quaternion.Euler(90, 0, 0),
                 _ => throw new ArgumentOutOfRangeException(nameof(face), face, null)
             };
-            transform.rotation = _target;
+            transform.rotation = target;
         }
 
         public void SetTarget(CardinalDirection direction)
         {
-            _target = Get90DegreeRotation(direction);
+            target = Get90DegreeRotation(direction);
             TargetDirection = direction;
         }
 
         public void GoBack()
         {
-            _target = Get90DegreeRotation(TargetDirection.Opposite());
+            target = Get90DegreeRotation(TargetDirection.Opposite());
             TargetDirection = TargetDirection.Opposite();
         }
 
@@ -47,7 +46,7 @@ namespace Game
             var axis = GetRotationAxis(direction);
             var angle = GetRotationAngle(direction);
             var rotationQuaternion = Quaternion.AngleAxis(angle, axis);
-            return rotationQuaternion * _target;
+            return rotationQuaternion * target;
         }
 
         private static float GetRotationAngle(CardinalDirection direction) => direction switch

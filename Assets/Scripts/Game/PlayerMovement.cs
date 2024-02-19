@@ -76,7 +76,7 @@ namespace Game
                 _mazeRotator.GoBack();
                 _mazeRotator.SetTarget(direction);
             } // a (c) -> b open
-            else if (_target.Orientation != square.Orientation && wall.IsOpen) { _mazeRotator.SetTarget(direction); } // (a) -> b open
+            else if (_target.Orientation != square.Orientation && wall.IsOpen) _mazeRotator.SetTarget(direction); // (a) -> b open
 
             _target = wall.IsOpen ? square : _nearest;
         }
