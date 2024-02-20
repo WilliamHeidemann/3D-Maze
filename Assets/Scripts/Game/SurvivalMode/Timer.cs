@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game.SurvivalMode
 {
@@ -11,6 +12,7 @@ namespace Game.SurvivalMode
         [SerializeField] private GameOver gameOver;
         [SerializeField] private int timeBonus;
         [SerializeField] private int maxTimeInSeconds;
+        [SerializeField] private Slider slider;
         private float _timeLeft;
         private bool _isTimeUp;
         private static readonly int LevelComplete = Animator.StringToHash("LevelComplete");
@@ -26,6 +28,7 @@ namespace Game.SurvivalMode
             if (_isTimeUp) return;
             _timeLeft -= Time.deltaTime;
             timePassedText.text = FormatTime(_timeLeft);
+            slider.value = _timeLeft / maxTimeInSeconds;
             if (_timeLeft < 1)
             {
                 _isTimeUp = true;

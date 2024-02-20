@@ -49,7 +49,7 @@ MonoBehaviour:
   debugHeight: 1
   debugDepth: 1
   squarePrefab: {fileID: 2166238180326112377, guid: 700d66b82af062847ae19015fb6faf75, type: 3}
-  debugMode: 1
+  debugMode: 0
 --- !u!114 &8678468210360356695
 MonoBehaviour:
   m_ObjectHideFlags: 0
