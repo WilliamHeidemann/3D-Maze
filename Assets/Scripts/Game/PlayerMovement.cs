@@ -17,8 +17,6 @@ namespace Game
         private MazeRotator _mazeRotator;
         private DirectionCalculator directionCalculator;
         private CardinalDirection lastMoveDirection;
-        [SerializeField] private float adjacentProximity;
-        [SerializeField] private float aheadProximity;
 
         private void Awake()
         {
@@ -62,7 +60,6 @@ namespace Game
             {
                 // var (square, wall) = CalculateNeighbor(_nearest, direction);
                 var calculatedDirection = directionCalculator.CalculateWorldDirection(direction);
-                // print($"Pressed direction: {direction}\t | Calculated direction: {calculatedDirection}");
                 var (square, wall) = GetNeighbor(_nearest, calculatedDirection);
                 if (square == null) continue;
                 if (!wall.IsOpen) continue;
@@ -91,70 +88,18 @@ namespace Game
 
         private void TryMove(CardinalDirection direction, Square square, Wall wall, CardinalDirection keyDirection)
         {
-            // print($"Current target: {_squareTransforms[_target].name}\t | Moving to {_squareTransforms[square].name}");
             if (_nearest.Orientation != _target.Orientation && square.Orientation == _nearest.Orientation && wall.IsOpen) _mazeRotator.GoBack(); // a (c) -> a open
             else if (_nearest.Orientation != _target.Orientation && _target.Orientation != square.Orientation && !wall.IsOpen) _mazeRotator.GoBack(); // a (c) -> b closed
             else if (_nearest.Orientation != _target.Orientation && _target.Orientation != square.Orientation && wall.IsOpen) 
             {
                 _mazeRotator.GoBack();
-                _mazeRotator.SetTarget(direction);
+                _mazeRotator.SetTarget(keyDirection);
             } // a (c) -> b open
-            else if (_target.Orientation != square.Orientation && wall.IsOpen) _mazeRotator.SetTarget(direction); // (a) -> b open
+            else if (_target.Orientation != square.Orientation && wall.IsOpen) _mazeRotator.SetTarget(keyDirection); // (a) -> b open
 
             _target = wall.IsOpen ? square : _nearest;
-            lastMoveDirection = keyDirection;
+            lastMoveDirection = direction;
         }
-
-        private (Square, Wall) CalculateNeighbor(Square current, CardinalDirection direction)
-        {
-            var neighbors = 
-                current.Neighbors
-                    .Select(neighbor => (neighbor, _squareTransforms[neighbor.Item1]))
-                    .ToArray();
-        
-            switch (direction)
-            {
-                case CardinalDirection.North:
-                {
-                    var pair = neighbors.OrderByDescending(neighbor =>
-                        neighbor.ToTuple().Item2.position.y - _squareTransforms[current].transform.position.y)
-                        .FirstOrDefault(tuple => Mathf.Abs(tuple.Item2.position.x - _squareTransforms[current].transform.position.x) < adjacentProximity //1f
-                                                 && tuple.Item2.position.y - _squareTransforms[current].transform.position.y > aheadProximity //0.1f
-                        );
-                    return pair.neighbor;
-                }
-                case CardinalDirection.South:
-                {
-                    var pair = neighbors.OrderBy(neighbor =>
-                        neighbor.ToTuple().Item2.position.y - _squareTransforms[current].transform.position.y)
-                        .FirstOrDefault(tuple => Mathf.Abs(tuple.Item2.position.x - _squareTransforms[current].transform.position.x) < adjacentProximity
-                                                 && _squareTransforms[current].transform.position.y - tuple.Item2.position.y > aheadProximity
-                        );
-                    return pair.neighbor;
-                }
-                case CardinalDirection.East:
-                {
-                    var pair = neighbors.OrderByDescending(neighbor =>
-                        neighbor.ToTuple().Item2.position.x - _squareTransforms[current].transform.position.x)
-                        .FirstOrDefault(tuple => Mathf.Abs(tuple.Item2.position.y - _squareTransforms[current].transform.position.y) < adjacentProximity
-                        && tuple.Item2.position.x - _squareTransforms[current].transform.position.x > aheadProximity
-                        );
-                    return pair.neighbor;
-                }
-                case CardinalDirection.West:
-                {
-                    var pair = neighbors.OrderBy(neighbor =>
-                        neighbor.ToTuple().Item2.position.x - _squareTransforms[current].transform.position.x)
-                        .FirstOrDefault(tuple => Mathf.Abs(tuple.Item2.position.y - _squareTransforms[current].transform.position.y) < adjacentProximity
-                                                 && _squareTransforms[current].transform.position.x - tuple.Item2.position.x > aheadProximity
-                        );
-                    return pair.neighbor;
-                }
-                default:
-                    throw new Exception("This is not possible");
-            }
-        }
-
         private void AdvanceLevel()
         {
             var gameMode = FindObjectOfType<GameModeManager>()?.gameMode;

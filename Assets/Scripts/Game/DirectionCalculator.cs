@@ -13,14 +13,8 @@ namespace Game
         {
             face = startingFace;
             facing = CardinalDirection.North;
-            Print();
         }
-
-        private void Print()
-        {
-            Debug.Log($"Changing face! New face: {face} \t Facing: {facing}");
-        }
-
+        
         public CardinalDirection CalculateWorldDirection(CardinalDirection keyPressDirection)
         {
             // Debug.Log($"Facing: {facing}");
@@ -48,12 +42,12 @@ namespace Game
             };
         }
 
-        public void HandleFaceChange(CardinalDirection keyDirection)
+        public void HandleFaceChange(CardinalDirection worldDirection)
         {
             // Assumes the orientation face has just changed
             // Changes face and facing
-            // Should be called when switching to a new orientation and moved past an edge in "keyDirection".
-            switch (keyDirection)
+            // Should be called when switching to a new orientation and moved past an edge in "worldDirection".
+            switch (worldDirection)
             {
                 case CardinalDirection.North:
                     switch (face)
@@ -518,10 +512,8 @@ namespace Game
                     }
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(keyDirection), keyDirection, null);
+                    throw new ArgumentOutOfRangeException(nameof(worldDirection), worldDirection, null);
             }
-
-            Print();
         }
     }
 }
