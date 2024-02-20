@@ -4,5 +4,6 @@
     {
         TimeTrial,
         Campaign,
+        LevelSelect,
     }
 }

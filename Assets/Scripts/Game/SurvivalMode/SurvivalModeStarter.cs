@@ -14,12 +14,12 @@ namespace Game.SurvivalMode
 
         private int _levelIndex = 0;
         
-        private void OnEnable() => FirstMaze();
-
         public void FirstMaze()
         {
             Random.InitState((int)System.DateTime.Now.Ticks);
-            FindObjectOfType<Timer>()?.ResetTimer();
+            var timer = FindObjectOfType<Timer>();
+            timer.ResetTimer();
+            timer.StartTimer(true);
             FindObjectOfType<Points>()?.ResetPoints();
             _levelIndex = 0;
             NextMaze();

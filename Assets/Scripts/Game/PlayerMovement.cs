@@ -109,7 +109,7 @@ namespace Game
                 FindObjectOfType<Points>()?.IncrementPoints(_squareTransforms.Count);
                 FindObjectOfType<SurvivalModeStarter>()?.NextMaze();
             }
-            else
+            else if (gameMode == GameMode.Campaign)
             {
                 FindObjectOfType<LevelManager>()?.AdvanceLevel();
             }

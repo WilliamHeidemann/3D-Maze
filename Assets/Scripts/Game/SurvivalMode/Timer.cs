@@ -13,7 +13,8 @@ namespace Game.SurvivalMode
         [SerializeField] private int timeBonus;
         [SerializeField] private int maxTimeInSeconds;
         [SerializeField] private Slider slider;
-        private float _timeLeft;
+        [SerializeField] private float _timeLeft;
+        [SerializeField] private bool _isRunning;
         private bool _isTimeUp;
         private static readonly int LevelComplete = Animator.StringToHash("LevelComplete");
 
@@ -25,6 +26,7 @@ namespace Game.SurvivalMode
 
         void Update()
         {
+            if (!_isRunning) return;
             if (_isTimeUp) return;
             _timeLeft -= Time.deltaTime;
             timePassedText.text = FormatTime(_timeLeft);
@@ -50,6 +52,11 @@ namespace Game.SurvivalMode
             timePassedText.text = FormatTime(_timeLeft);
         }
 
+        public void StartTimer(bool running)
+        {
+            _isRunning = running;
+        }
+        
         private static string FormatTime(float time)
         {
             if (time < 0) return "00:00";

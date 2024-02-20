@@ -4,6 +4,7 @@ namespace Game.SurvivalMode
 {
     public class PauseController : MonoBehaviour
     {
+        [SerializeField] private GameObject pauseCanvas;
         [SerializeField] private GameObject pauseScreen; 
         private bool _isPaused;
     
@@ -21,6 +22,7 @@ namespace Game.SurvivalMode
         {
             _isPaused = true;
             pauseScreen.SetActive(true);
+            pauseCanvas.SetActive(true);
             Time.timeScale = 0;
         }
     
@@ -28,6 +30,7 @@ namespace Game.SurvivalMode
         {
             _isPaused = false;
             pauseScreen.SetActive(false);
+            pauseCanvas.SetActive(false);
             Time.timeScale = 1;
         }
     }
