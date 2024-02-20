@@ -15,6 +15,8 @@ namespace Game
         private Square _target;
         private Square _objectiveSquare;
         private MazeRotator _mazeRotator;
+        private DirectionCalculator directionCalculator;
+        private CardinalDirection lastMoveDirection;
         [SerializeField] private float adjacentProximity;
         [SerializeField] private float aheadProximity;
 
@@ -30,11 +32,14 @@ namespace Game
             _target = startingSquare;
             _objectiveSquare = objectiveSquare;
             transform.position = _squareTransforms[_target].position;
+            directionCalculator = new DirectionCalculator(startingSquare.Orientation);
         }
     
         private void Update()
         {
-            _nearest = Nearest(_nearest);
+            var newNearest = Nearest(_nearest);
+            if (newNearest.Orientation != _nearest.Orientation) directionCalculator.HandleFaceChange(lastMoveDirection);
+            _nearest = newNearest;
             if (_nearest == _objectiveSquare) AdvanceLevel();
             transform.position = Vector3.MoveTowards(transform.position, _squareTransforms[_target].position, Time.deltaTime * 5.3f);
         }
@@ -55,20 +60,38 @@ namespace Game
             if (input.Count == 0) return;
             foreach (var direction in input)
             {
-                var (square, wall) = CalculateNeighbor(_nearest, direction);
+                // var (square, wall) = CalculateNeighbor(_nearest, direction);
+                var calculatedDirection = directionCalculator.CalculateWorldDirection(direction);
+                // print($"Pressed direction: {direction}\t | Calculated direction: {calculatedDirection}");
+                var (square, wall) = GetNeighbor(_nearest, calculatedDirection);
                 if (square == null) continue;
                 if (!wall.IsOpen) continue;
-                TryMove(direction, square, wall);
+                TryMove(calculatedDirection, square, wall, direction);
                 return;
             }
             var d = input.First();
-            var (s, w) = CalculateNeighbor(_nearest, d);
+            var calculatedD = directionCalculator.CalculateWorldDirection(d);
+            var (s, w) = GetNeighbor(_nearest, calculatedD);
             if (s == null) return;
-            TryMove(d, s, w);
+            TryMove(calculatedD, s, w, d);
         }
 
-        private void TryMove(CardinalDirection direction, Square square, Wall wall)
+        private static (Square, Wall) GetNeighbor(Square square, CardinalDirection direction)
         {
+            return direction switch
+            {
+                CardinalDirection.North => square.TopNeighbor,
+                CardinalDirection.South => square.BottomNeighbor,
+                CardinalDirection.East => square.RightNeighbor,
+                CardinalDirection.West => square.LeftNeighbor,
+                _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+            };
+        }
+
+
+        private void TryMove(CardinalDirection direction, Square square, Wall wall, CardinalDirection keyDirection)
+        {
+            // print($"Current target: {_squareTransforms[_target].name}\t | Moving to {_squareTransforms[square].name}");
             if (_nearest.Orientation != _target.Orientation && square.Orientation == _nearest.Orientation && wall.IsOpen) _mazeRotator.GoBack(); // a (c) -> a open
             else if (_nearest.Orientation != _target.Orientation && _target.Orientation != square.Orientation && !wall.IsOpen) _mazeRotator.GoBack(); // a (c) -> b closed
             else if (_nearest.Orientation != _target.Orientation && _target.Orientation != square.Orientation && wall.IsOpen) 
@@ -79,6 +102,7 @@ namespace Game
             else if (_target.Orientation != square.Orientation && wall.IsOpen) _mazeRotator.SetTarget(direction); // (a) -> b open
 
             _target = wall.IsOpen ? square : _nearest;
+            lastMoveDirection = keyDirection;
         }
 
         private (Square, Wall) CalculateNeighbor(Square current, CardinalDirection direction)
