@@ -58,7 +58,6 @@ namespace Game
             if (input.Count == 0) return;
             foreach (var direction in input)
             {
-                // var (square, wall) = CalculateNeighbor(_nearest, direction);
                 var calculatedDirection = directionCalculator.CalculateWorldDirection(direction);
                 var (square, wall) = GetNeighbor(_nearest, calculatedDirection);
                 if (square == null) continue;

@@ -17,7 +17,6 @@ namespace Game
         
         public CardinalDirection CalculateWorldDirection(CardinalDirection keyPressDirection)
         {
-            // Debug.Log($"Facing: {facing}");
             return facing switch
             {
                 CardinalDirection.North => keyPressDirection,
