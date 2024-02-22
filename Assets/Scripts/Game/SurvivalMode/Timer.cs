@@ -7,8 +7,6 @@ namespace Game.SurvivalMode
     public class Timer : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI timePassedText;
-        [SerializeField] private TextMeshProUGUI timeAwardText;
-        [SerializeField] private Animator animator;
         [SerializeField] private GameOver gameOver;
         [SerializeField] private int timeBonus;
         [SerializeField] private int maxTimeInSeconds;
@@ -16,12 +14,10 @@ namespace Game.SurvivalMode
         [SerializeField] private float _timeLeft;
         [SerializeField] private bool _isRunning;
         private bool _isTimeUp;
-        private static readonly int LevelComplete = Animator.StringToHash("LevelComplete");
 
         void Start()
         {
             _timeLeft = maxTimeInSeconds;
-            timeAwardText.text = $"+{timeBonus} seconds";
         }
 
         void Update()
@@ -42,7 +38,6 @@ namespace Game.SurvivalMode
         {
             _timeLeft += timeBonus;
             _timeLeft = Mathf.Min(_timeLeft, maxTimeInSeconds);
-            animator.SetTrigger(LevelComplete);
         }
 
         public void ResetTimer()

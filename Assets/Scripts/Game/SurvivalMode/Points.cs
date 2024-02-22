@@ -27,11 +27,6 @@ namespace Game.SurvivalMode
             pointAwardText.alpha = 0f;
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.L)) PlayPopUp();
-        }
-
         public void IncrementPoints(int squareCount)
         {
             var randomBonus = Random.Range(0, 10);
