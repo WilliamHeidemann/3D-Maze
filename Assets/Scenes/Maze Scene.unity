@@ -3826,7 +3826,7 @@ GameObject:
   - component: {fileID: 1691762882}
   - component: {fileID: 1691762883}
   m_Layer: 0
-  m_Name: Campaign Mode
+  m_Name: Level Manager Campaign Mode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3866,6 +3866,7 @@ MonoBehaviour:
   levelText: {fileID: 1729538017}
   saveFileManager: {fileID: 219393908}
   levelSelectLogic: {fileID: 219393907}
+  gameModeManager: {fileID: 704409217}
 --- !u!114 &1705878523 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4997399501519487256, guid: 939cfb891df292143b9234622ea8a15b, type: 3}
@@ -7767,7 +7768,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6784273405361200569}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691762883}
+        m_TargetAssemblyTypeName: Game.CampaignMode.LevelManager, Game
+        m_MethodName: StartWorld
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &1049576080072831118
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11289,7 +11302,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 713380097933075835}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691762883}
+        m_TargetAssemblyTypeName: Game.CampaignMode.LevelManager, Game
+        m_MethodName: StartWorld
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &3111298623858788276
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12376,7 +12401,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1353911817116131736}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691762883}
+        m_TargetAssemblyTypeName: Game.CampaignMode.LevelManager, Game
+        m_MethodName: StartWorld
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &3790301439198151686
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12517,7 +12554,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6522195797041353662}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691762883}
+        m_TargetAssemblyTypeName: Game.CampaignMode.LevelManager, Game
+        m_MethodName: StartWorld
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &3983620105946910366
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18771,7 +18820,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5120079393716547208}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691762883}
+        m_TargetAssemblyTypeName: Game.CampaignMode.LevelManager, Game
+        m_MethodName: StartWorld
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8184154495011901559
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -42,6 +42,8 @@ namespace Game.CampaignMode
             UpdateTitle(chosenWorld);
         }
 
+        public World SelectedWorld() => world;
+
         private void UpdateTitle(World chosenWorld)
         {
             title.text = chosenWorld switch

@@ -14,6 +14,25 @@ namespace Game.CampaignMode
         [SerializeField] private TextMeshProUGUI levelText;
         [SerializeField] private SaveFileManager saveFileManager;
         [SerializeField] private LevelSelectLogic levelSelectLogic;
+        [SerializeField] private GameModeManager gameModeManager;
+
+        public void StartLevel(World world, int seedLevel)
+        {
+            gameModeManager.EnterCampaignMode();
+            var dimensions = GetDimensions(seedLevel, world);
+            mazeSpawner.SpawnMaze(dimensions.Item1, dimensions.Item2, dimensions.Item3);
+            currentLevelIndex = seedLevel;
+            currentWorld = world;
+            UpdateLevelText();
+        }
+
+        public void StartWorld()
+        {
+            var world = levelSelectLogic.SelectedWorld();
+            var level = saveFileManager.GetLevelsCompleted(world);
+            StartLevel(world, level);
+        }
+
         public void AdvanceLevel()
         {
             saveFileManager.LevelComplete(currentLevelIndex, currentWorld);
@@ -35,14 +54,14 @@ namespace Game.CampaignMode
             levelSelectLogic.SetWorld(currentWorld);
         }
 
-        public void UpdateLevelText()
+        private void UpdateLevelText()
         {
             var level = currentLevelIndex + 1;
             worldText.text = $"{currentWorld.AsString()}";
             levelText.text = $"Level {level}";
         }
-    
-        public static (int, int, int) GetDimensions(int seed, World world)
+
+        private static (int, int, int) GetDimensions(int seed, World world)
         {
             var lowWidth = world switch
             {
