@@ -13,6 +13,9 @@ namespace Game.SurvivalMode
         [SerializeField] private Slider slider;
         [SerializeField] private float _timeLeft;
         [SerializeField] private bool _isRunning;
+        [SerializeField] private Image sliderFillImage;
+        [SerializeField] private Color sliderColor;
+        [SerializeField] private Color sliderAlmostEmptyColor;
         private bool _isTimeUp;
 
         void Start()
@@ -26,8 +29,10 @@ namespace Game.SurvivalMode
             if (_isTimeUp) return;
             _timeLeft -= Time.deltaTime;
             timePassedText.text = FormatTime(_timeLeft);
-            slider.value = _timeLeft / maxTimeInSeconds;
-            if (_timeLeft < 1)
+            var value = _timeLeft / maxTimeInSeconds;
+            slider.value = value;
+            sliderFillImage.color = Color.Lerp(sliderAlmostEmptyColor, sliderColor, value * 3);
+            if (_timeLeft < 0.1f)
             {
                 _isTimeUp = true;
                 gameOver.EndGame();

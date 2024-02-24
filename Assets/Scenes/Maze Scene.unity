@@ -4391,10 +4391,13 @@ MonoBehaviour:
   timePassedText: {fileID: 665374646}
   gameOver: {fileID: 1973519930}
   timeBonus: 10
-  maxTimeInSeconds: 120
+  maxTimeInSeconds: 10
   slider: {fileID: 721632133}
   _timeLeft: 0
   _isRunning: 0
+  sliderFillImage: {fileID: 355152426}
+  sliderColor: {r: 0.4627451, g: 0.34509805, b: 0.15294118, a: 1}
+  sliderAlmostEmptyColor: {r: 0.4627451, g: 0.15561847, b: 0.1529412, a: 1}
 --- !u!224 &1918332271 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7010575540402193043, guid: 939cfb891df292143b9234622ea8a15b, type: 3}
