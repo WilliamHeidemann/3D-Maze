@@ -2664,7 +2664,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: a6db6f2eec8b85f4aac6faa74a1f13c6, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.25
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -4391,7 +4391,7 @@ MonoBehaviour:
   timePassedText: {fileID: 665374646}
   gameOver: {fileID: 1973519930}
   timeBonus: 10
-  maxTimeInSeconds: 10
+  maxTimeInSeconds: 120
   slider: {fileID: 721632133}
   _timeLeft: 0
   _isRunning: 0

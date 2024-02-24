@@ -17,6 +17,9 @@ namespace Game
         private MazeRotator _mazeRotator;
         public DirectionCalculator directionCalculator;
         private CardinalDirection lastMoveDirection;
+        [SerializeField] private GameObject rewardEffect1;
+        [SerializeField] private GameObject rewardEffect2;
+        [SerializeField] private GameObject rewardEffect3;
 
         private void Awake()
         {
@@ -107,6 +110,9 @@ namespace Game
             {
                 FindObjectOfType<LevelManager>()?.AdvanceLevel();
             }
+            Instantiate(rewardEffect1);
+            Instantiate(rewardEffect2);
+            Instantiate(rewardEffect3);
             SoundManager.Instance.PlayCompleteLevelSound();
         }
 

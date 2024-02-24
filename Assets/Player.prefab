@@ -109,5 +109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81ca2565e41a2cc418e64382b1400877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  adjacentProximity: 0.8
-  aheadProximity: 0.4
+  rewardEffect1: {fileID: 4021103657954561961, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}
+  rewardEffect2: {fileID: 5880797563127281583, guid: 265d3a5ba69981a4698ceabcedf368b0, type: 3}
+  rewardEffect3: {fileID: 8791802859087666345, guid: ae07f2a45f14a82428409cfe410e6002, type: 3}
