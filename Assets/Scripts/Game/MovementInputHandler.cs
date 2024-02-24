@@ -5,18 +5,18 @@ namespace Game
 {
     public class MovementInputHandler : MonoBehaviour
     {
-        private PlayerMovement _playerMovement;
-        private readonly InputStructure _inputStructure = new();
+        private PlayerMovement playerMovement;
+        private readonly InputStructure inputStructure = new();
         
         void Start()
         {
-            _playerMovement = GetComponent<PlayerMovement>();
+            playerMovement = GetComponent<PlayerMovement>();
         }
 
         void Update()
         {
             HandleInput();
-            _playerMovement.DetermineInput(_inputStructure.GetInput());
+            playerMovement.DetermineInput(inputStructure.GetInput());
         }
         
         // Requirements 
@@ -31,36 +31,36 @@ namespace Game
         
         private class InputStructure
         {
-            private readonly List<CardinalDirection> _list = new();
-            private readonly HashSet<CardinalDirection> _set = new();
+            private readonly List<CardinalDirection> list = new();
+            private readonly HashSet<CardinalDirection> set = new();
 
             public void Add(CardinalDirection direction)
             {
-                if (_set.Contains(direction)) return;
-                _set.Add(direction);
-                _list.Add(direction);
+                if (set.Contains(direction)) return;
+                set.Add(direction);
+                list.Add(direction);
             }
 
             public void Remove(CardinalDirection direction)
             {
-                _set.Remove(direction);
-                _list.Remove(direction);
+                set.Remove(direction);
+                list.Remove(direction);
             }
             
-            public List<CardinalDirection> GetInput() => _list;
+            public List<CardinalDirection> GetInput() => list;
         }
 
         private void HandleInput()
         {
-            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) _inputStructure.Add(CardinalDirection.North);
-            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) _inputStructure.Add(CardinalDirection.East);
-            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) _inputStructure.Add(CardinalDirection.South);
-            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) _inputStructure.Add(CardinalDirection.West);
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) inputStructure.Add(CardinalDirection.North);
+            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) inputStructure.Add(CardinalDirection.East);
+            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) inputStructure.Add(CardinalDirection.South);
+            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) inputStructure.Add(CardinalDirection.West);
             
-            if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow)) _inputStructure.Remove(CardinalDirection.North);
-            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow)) _inputStructure.Remove(CardinalDirection.East);
-            if (Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.DownArrow)) _inputStructure.Remove(CardinalDirection.South);
-            if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.LeftArrow)) _inputStructure.Remove(CardinalDirection.West);
+            if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow)) inputStructure.Remove(CardinalDirection.North);
+            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow)) inputStructure.Remove(CardinalDirection.East);
+            if (Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.DownArrow)) inputStructure.Remove(CardinalDirection.South);
+            if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.LeftArrow)) inputStructure.Remove(CardinalDirection.West);
         }
     }
 }

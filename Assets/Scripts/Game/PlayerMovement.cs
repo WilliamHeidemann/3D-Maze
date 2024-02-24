@@ -15,7 +15,7 @@ namespace Game
         private Square _target;
         private Square _objectiveSquare;
         private MazeRotator _mazeRotator;
-        public DirectionCalculator directionCalculator;
+        private DirectionCalculator directionCalculator;
         private CardinalDirection lastMoveDirection;
         [SerializeField] private GameObject rewardEffect1;
         [SerializeField] private GameObject rewardEffect2;
