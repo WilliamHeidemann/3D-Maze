@@ -9,8 +9,8 @@ namespace Game
         public Orientation nearestOrientation;
         public CardinalDirection nearestDirection;
 
-        public Orientation targetOrientation;
-        public CardinalDirection targetDirection;
+        private Orientation targetOrientation;
+        private CardinalDirection targetDirection;
 
         public DirectionCalculator(Orientation startingNearestOrientation)
         {
@@ -137,7 +137,12 @@ namespace Game
         {
             if (nearestOrientation == targetOrientation) return nearestDirection;
             if (nearestOrientation.Opposite() == targetOrientation)
-                throw new Exception("Went directly to opposite side. Should not be possible.");
+            {
+                Debug.Log("Went directly to the opposite site.");
+                return nearestDirection; 
+                // Not always correct. Fails on super low frame rate
+                // when the player might travel to the opposite site of the cube.
+            }
             
             switch (nearestOrientation)
             {

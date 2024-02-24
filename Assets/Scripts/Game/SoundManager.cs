@@ -1,4 +1,7 @@
+using System;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game
 {
@@ -6,8 +9,11 @@ namespace Game
     {
         public static SoundManager Instance;
         [SerializeField] private AudioClip levelCompleteSoundEffect;
-        [SerializeField] private AudioSource levelCompleteAudioSource;
+        [SerializeField] private AudioClip buttonClickSoundEffect;
+        [SerializeField] private AudioSource soundEffects;
+        [SerializeField] private AudioSource turningNoiseAudio;
         [SerializeField] private AudioSource backgroundMusic;
+        [SerializeField] private GameObject[] canvases;
         private bool _isMute;
         private void Awake()
         {
@@ -15,9 +21,23 @@ namespace Game
             Instance = this;
         }
 
+        private void Start()
+        {
+            var buttons = canvases.SelectMany(canvas => canvas.GetComponentsInChildren<Button>()).ToList();
+            buttons.ForEach(button =>
+            {
+                button.onClick.AddListener(PlayButtonClickSound);
+            });
+        }
+
         public void PlayCompleteLevelSound()
         {
-            levelCompleteAudioSource.PlayOneShot(levelCompleteSoundEffect);
+            soundEffects.PlayOneShot(levelCompleteSoundEffect);
+        }
+
+        public void PlayButtonClickSound()
+        {
+            soundEffects.PlayOneShot(buttonClickSoundEffect);
         }
 
         public void StopMusic() => backgroundMusic.Stop();
@@ -25,8 +45,13 @@ namespace Game
         public void ToggleSound()
         {
             _isMute = !_isMute;
-            // levelCompleteAudioSource.mute = _isMute; Can be commented back in, if levelComplete sound should also be muted.
+            // soundEffects.mute = _isMute; Can be commented back in, if sound effects sound should also be muted.
             backgroundMusic.mute = _isMute;
+        }
+
+        public void PlayTurningNoise(bool isStill)
+        {
+            turningNoiseAudio.mute = isStill;
         }
     }
 }

@@ -2414,6 +2414,7 @@ GameObject:
   - component: {fileID: 1090281017}
   - component: {fileID: 1090281019}
   - component: {fileID: 1090281018}
+  - component: {fileID: 1090281021}
   - component: {fileID: 1090281020}
   m_Layer: 0
   m_Name: Sound
@@ -2546,8 +2547,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelCompleteSoundEffect: {fileID: 8300000, guid: 5ada3ac9a3a317c42985bdb14b95bd3b, type: 3}
-  levelCompleteAudioSource: {fileID: 1090281018}
+  buttonClickSoundEffect: {fileID: 8300000, guid: a2d86a9aad2a7c94cb5e7b86fa51c54d, type: 3}
+  soundEffects: {fileID: 1090281018}
+  turningNoiseAudio: {fileID: 1090281021}
   backgroundMusic: {fileID: 1090281020}
+  canvases:
+  - {fileID: 1391298901}
+  - {fileID: 1434587733}
+  - {fileID: 139658734}
+  - {fileID: 2107491412}
 --- !u!82 &1090281020
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2561,6 +2569,102 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 1e43e2d49be3e444e9ea0b670a832332, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.2
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &1090281021
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090281016}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: a6db6f2eec8b85f4aac6faa74a1f13c6, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -5062,7 +5166,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 38120
+  m_text: 27230
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -5751,7 +5855,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: some name
+  m_text: FrostByteX
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -8519,7 +8623,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 38120
+  m_text: 37200
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -8931,7 +9035,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: some name
+  m_text: MysticAegis
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -9117,7 +9221,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: some name
+  m_text: QuantumFury89
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -9699,7 +9803,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 38120
+  m_text: 21020
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -10585,7 +10689,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: some name
+  m_text: EmberEcho
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -10674,7 +10778,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: some name
+  m_text: ShadowPulse
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -10983,7 +11087,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 38120
+  m_text: 19980
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -11727,7 +11831,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 38120
+  m_text: 22010
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -12245,7 +12349,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 38120
+  m_text: 29980
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -12442,7 +12546,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: some name
+  m_text: NeonNebula93
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -12733,7 +12837,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: some name
+  m_text: CyberStrikeX
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -13711,7 +13815,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1286348359
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -13808,7 +13912,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 38120
+  m_text: 32010
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -15152,6 +15256,10 @@ PrefabInstance:
     - target: {fileID: 301806860060254557, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -26.92495
+      objectReference: {fileID: 0}
+    - target: {fileID: 963867959808865402, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1342051565216722925, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_AnchorMax.y
@@ -17056,7 +17164,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 38120
+  m_text: 20100
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -17377,7 +17485,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 38120
+  m_text: 25400
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -18354,7 +18462,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: some name
+  m_text: NovaNexus
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -19618,7 +19726,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: some name
+  m_text: BlazeRunner47
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
@@ -19814,7 +19922,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: some name
+  m_text: VaporVortex
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}
   m_sharedMaterial: {fileID: 3865011615693822019, guid: 1815afc63b51d32498748c226d8f5fc6, type: 2}

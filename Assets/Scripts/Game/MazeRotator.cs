@@ -8,9 +8,17 @@ namespace Game
     {
         private Quaternion target;
         [SerializeField] [Range(1f, 300f)] private float rotationSpeed;
+        private SoundManager soundManager;
+
+        private void Start()
+        {
+            soundManager = FindObjectOfType<SoundManager>();
+        }
+
         private void Update()
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotationSpeed * Time.deltaTime);
+            soundManager.PlayTurningNoise(IsStill);
         }
 
         public void SnapToFace(Orientation face)
@@ -33,6 +41,7 @@ namespace Game
             target = targetRotation;
         }
 
-        public Quaternion Target => target;
+        private bool IsStill => AnglesFromTarget < 1f;
+        private float AnglesFromTarget => Quaternion.Angle(transform.rotation, target);
     }
 }

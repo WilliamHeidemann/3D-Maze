@@ -40,12 +40,6 @@ namespace Game
             _nearest = newNearest;
 
             directionCalculator.SetTargetRotationDirection(_target.Orientation);
-            
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                print($"{directionCalculator.nearestDirection} {directionCalculator.nearestOrientation} {_mazeRotator.Target.eulerAngles}");
-            }
-                
             _mazeRotator.SetTarget(directionCalculator.GetRotation());
             
             transform.position = Vector3.MoveTowards(transform.position, _squareTransforms[_target].position, Time.deltaTime * 5.3f);
