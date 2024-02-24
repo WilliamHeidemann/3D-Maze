@@ -94,19 +94,8 @@ namespace Game
                 _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
             };
         }
-
-
         private void Move(CardinalDirection direction, Square square, Wall wall, CardinalDirection keyDirection)
-        {                                                                                                                        // nearest (prev target) -> target
-            // if (_nearest.Orientation != _target.Orientation && square.Orientation == _nearest.Orientation && wall.IsOpen) _mazeRotator.GoBack(); // a (c) -> a open
-            // else if (_nearest.Orientation != _target.Orientation && _target.Orientation != square.Orientation && !wall.IsOpen) _mazeRotator.GoBack(); // a (c) -> b closed
-            // else if (_nearest.Orientation != _target.Orientation && _target.Orientation != square.Orientation && wall.IsOpen) // a (c) -> b open
-            // {
-            //     _mazeRotator.GoBack();
-            //     _mazeRotator.SetTarget(keyDirection);
-            // } 
-            // else if (_target.Orientation != square.Orientation && wall.IsOpen) _mazeRotator.SetTarget(keyDirection); // (a) -> b open
-
+        {
             _target = wall.IsOpen ? square : _nearest;
             lastMoveDirection = direction;
         }
