@@ -23,5 +23,29 @@ namespace Game
                 _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
             };
         }
+
+        public static CardinalDirection Clockwise90Degrees(this CardinalDirection direction)
+        {
+            return direction switch
+            {
+                CardinalDirection.North => CardinalDirection.East,
+                CardinalDirection.South => CardinalDirection.West,
+                CardinalDirection.East => CardinalDirection.South,
+                CardinalDirection.West => CardinalDirection.North,
+                _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+            };
+        }
+
+        public static CardinalDirection CounterClockwise90Degrees(this CardinalDirection direction)
+        {
+            return direction switch
+            {
+                CardinalDirection.North => CardinalDirection.West,
+                CardinalDirection.South => CardinalDirection.East,
+                CardinalDirection.East => CardinalDirection.North,
+                CardinalDirection.West => CardinalDirection.South,
+                _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+            };
+        }
     }
 }

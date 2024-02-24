@@ -29,6 +29,12 @@ namespace Game
             transform.rotation = target;
         }
 
+        public void SetTarget(Quaternion targetRotation)
+        {
+            target = targetRotation;
+        }
+
+        public Quaternion Target => target;
         public void SetTarget(CardinalDirection direction)
         {
             target = Get90DegreeRotation(direction);

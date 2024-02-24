@@ -15,7 +15,7 @@ namespace Game
         private Square _target;
         private Square _objectiveSquare;
         private MazeRotator _mazeRotator;
-        private DirectionCalculator directionCalculator;
+        public DirectionCalculator directionCalculator;
         private CardinalDirection lastMoveDirection;
 
         private void Awake()
@@ -36,10 +36,21 @@ namespace Game
         private void Update()
         {
             var newNearest = Nearest(_nearest);
-            if (newNearest.Orientation != _nearest.Orientation) directionCalculator.HandleFaceChange(lastMoveDirection);
+            if (newNearest.Orientation != _nearest.Orientation) directionCalculator.HandleLogicalFaceChange(lastMoveDirection);
             _nearest = newNearest;
-            if (_nearest == _objectiveSquare) AdvanceLevel();
+
+            directionCalculator.SetTargetRotationDirection(_target.Orientation);
+            
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                print($"{directionCalculator.nearestDirection} {directionCalculator.nearestOrientation} {_mazeRotator.Target.eulerAngles}");
+            }
+                
+            _mazeRotator.SetTarget(directionCalculator.GetRotation());
+            
             transform.position = Vector3.MoveTowards(transform.position, _squareTransforms[_target].position, Time.deltaTime * 5.3f);
+            
+            if (_nearest == _objectiveSquare) AdvanceLevel();
         }
 
         private Square Nearest(Square current)
@@ -62,14 +73,14 @@ namespace Game
                 var (square, wall) = GetNeighbor(_nearest, calculatedDirection);
                 if (square == null) continue;
                 if (!wall.IsOpen) continue;
-                TryMove(calculatedDirection, square, wall, direction);
+                Move(calculatedDirection, square, wall, direction);
                 return;
             }
             var d = input.First();
             var calculatedD = directionCalculator.CalculateWorldDirection(d);
             var (s, w) = GetNeighbor(_nearest, calculatedD);
             if (s == null) return;
-            TryMove(calculatedD, s, w, d);
+            Move(calculatedD, s, w, d);
         }
 
         private static (Square, Wall) GetNeighbor(Square square, CardinalDirection direction)
@@ -85,16 +96,16 @@ namespace Game
         }
 
 
-        private void TryMove(CardinalDirection direction, Square square, Wall wall, CardinalDirection keyDirection)
-        {
-            if (_nearest.Orientation != _target.Orientation && square.Orientation == _nearest.Orientation && wall.IsOpen) _mazeRotator.GoBack(); // a (c) -> a open
-            else if (_nearest.Orientation != _target.Orientation && _target.Orientation != square.Orientation && !wall.IsOpen) _mazeRotator.GoBack(); // a (c) -> b closed
-            else if (_nearest.Orientation != _target.Orientation && _target.Orientation != square.Orientation && wall.IsOpen) 
-            {
-                _mazeRotator.GoBack();
-                _mazeRotator.SetTarget(keyDirection);
-            } // a (c) -> b open
-            else if (_target.Orientation != square.Orientation && wall.IsOpen) _mazeRotator.SetTarget(keyDirection); // (a) -> b open
+        private void Move(CardinalDirection direction, Square square, Wall wall, CardinalDirection keyDirection)
+        {                                                                                                                        // nearest (prev target) -> target
+            // if (_nearest.Orientation != _target.Orientation && square.Orientation == _nearest.Orientation && wall.IsOpen) _mazeRotator.GoBack(); // a (c) -> a open
+            // else if (_nearest.Orientation != _target.Orientation && _target.Orientation != square.Orientation && !wall.IsOpen) _mazeRotator.GoBack(); // a (c) -> b closed
+            // else if (_nearest.Orientation != _target.Orientation && _target.Orientation != square.Orientation && wall.IsOpen) // a (c) -> b open
+            // {
+            //     _mazeRotator.GoBack();
+            //     _mazeRotator.SetTarget(keyDirection);
+            // } 
+            // else if (_target.Orientation != square.Orientation && wall.IsOpen) _mazeRotator.SetTarget(keyDirection); // (a) -> b open
 
             _target = wall.IsOpen ? square : _nearest;
             lastMoveDirection = direction;
