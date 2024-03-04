@@ -108,6 +108,7 @@ namespace Game
             }
             else if (gameMode == GameMode.Campaign)
             {
+                Destroy(gameObject);
                 FindObjectOfType<LevelManager>()?.AdvanceLevel();
             }
             Instantiate(rewardEffect1);

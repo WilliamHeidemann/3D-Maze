@@ -15,6 +15,7 @@ namespace Game.CampaignMode
         [SerializeField] private SaveFileManager saveFileManager;
         [SerializeField] private LevelSelectLogic levelSelectLogic;
         [SerializeField] private GameModeManager gameModeManager;
+        [SerializeField] private GameObject campaignCompleteScreen;
 
         public void StartLevel(World world, int seedLevel)
         {
@@ -41,12 +42,12 @@ namespace Game.CampaignMode
             {
                 var dimensions = GetDimensions(currentLevelIndex, currentWorld);
                 mazeSpawner.SpawnMaze(dimensions.Item1, dimensions.Item2, dimensions.Item3);
+                UpdateLevelText();
             }
             else
             {
-                Debug.LogWarning("This should load the level select screen.");
+                campaignCompleteScreen.SetActive(true);
             }
-            UpdateLevelText();
         }
 
         public void UpdateLevelMenu()
