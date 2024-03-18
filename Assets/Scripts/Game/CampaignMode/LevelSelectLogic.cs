@@ -19,7 +19,7 @@ namespace Game.CampaignMode
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private SaveFileManager saveFileManager;
 
-        private void Start()
+        public void Initialize()
         {
             SetWorld(world);
             for (int i = 0; i < levelButtons.Count; i++)
@@ -60,7 +60,6 @@ namespace Game.CampaignMode
         private void UpdateLevelLockedStatus(World chosenWorld)
         {
             var levelsCompleted = saveFileManager.GetLevelsCompleted(chosenWorld);
-            
             for (var i = 0; i < levelImages.Length; i++)
             {
                 levelImages[i].color = levelsCompleted switch

@@ -23,10 +23,12 @@ namespace Game.CampaignMode
         [SerializeField] private int longIslandLevelsCompleted; 
         [SerializeField] private int massiveLevelsCompleted;
         private static string UniqueLevelDataFileName => SteamClient.SteamId + "/levelData";
+        [SerializeField] private LevelSelectLogic levelSelectLogic;
 
         private void Start()
         {
             LoadSaveFile();
+            levelSelectLogic.Initialize();
         }
 
         public int GetLevelsCompleted(World chosenWorld) =>

@@ -656,6 +656,7 @@ MonoBehaviour:
   chunksLevelsCompleted: 0
   longIslandLevelsCompleted: 0
   massiveLevelsCompleted: 0
+  levelSelectLogic: {fileID: 219393907}
 --- !u!1 &332543300
 GameObject:
   m_ObjectHideFlags: 0
@@ -1693,7 +1694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcea37edefcfe8e4194ef2b84c189bed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMode: 0
+  gameMode: 2
   timeTrialModeObjects:
   - {fileID: 139658734}
   - {fileID: 2107491412}
@@ -3771,16 +3772,44 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2661501157647892381, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2661501157647892381, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2661501157647892381, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 704409217}
+    - target: {fileID: 2661501157647892381, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1579902242}
+    - target: {fileID: 2661501157647892381, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2661501157647892381, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: EnterLevelSelect
       objectReference: {fileID: 0}
     - target: {fileID: 2661501157647892381, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: DeSpawnMaze
+      objectReference: {fileID: 0}
+    - target: {fileID: 2661501157647892381, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Game.GameModeManager, Game
+      objectReference: {fileID: 0}
+    - target: {fileID: 2661501157647892381, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Game.MazeSpawner, Game
+      objectReference: {fileID: 0}
+    - target: {fileID: 2661501157647892381, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3719300383455662331, guid: 4dbcd5f745b06c3409ed413cee2782e0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
