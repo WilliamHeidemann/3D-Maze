@@ -6,8 +6,8 @@ namespace Game
 {
     public class DirectionCalculator
     {
-        public Orientation nearestOrientation;
-        public CardinalDirection nearestDirection;
+        private Orientation nearestOrientation;
+        private CardinalDirection nearestDirection;
 
         private Orientation targetOrientation;
         private CardinalDirection targetDirection;
@@ -26,105 +26,58 @@ namespace Game
             {
                 CardinalDirection.North => keyPressDirection,
                 CardinalDirection.South => keyPressDirection.Opposite(),
-                CardinalDirection.East => keyPressDirection switch
-                {
-                    CardinalDirection.North => CardinalDirection.East,
-                    CardinalDirection.South => CardinalDirection.West,
-                    CardinalDirection.East => CardinalDirection.South,
-                    CardinalDirection.West => CardinalDirection.North,
-                    _ => throw new ArgumentOutOfRangeException(nameof(keyPressDirection), keyPressDirection, null)
-                },
-                CardinalDirection.West => keyPressDirection switch
-                {
-                    CardinalDirection.North => CardinalDirection.West,
-                    CardinalDirection.South => CardinalDirection.East,
-                    CardinalDirection.East => CardinalDirection.North,
-                    CardinalDirection.West => CardinalDirection.South,
-                    _ => throw new ArgumentOutOfRangeException(nameof(keyPressDirection), keyPressDirection, null)
-                },
+                CardinalDirection.East => keyPressDirection.Clockwise90Degrees(),
+                CardinalDirection.West => keyPressDirection.CounterClockwise90Degrees(),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
         
         public Quaternion GetRotation()
         {
-            switch (targetDirection)
+            return targetDirection switch
             {
-                case CardinalDirection.North:
-                    switch (targetOrientation)
-                    {
-                        case Orientation.Front:
-                            return Quaternion.Euler(0f, 0f, 0f);
-                        case Orientation.Back:
-                            return Quaternion.Euler(0f, 180f, 0f);
-                        case Orientation.Right:
-                            return Quaternion.Euler(0f, 90f, 0f);
-                        case Orientation.Left:
-                            return Quaternion.Euler(0f, 270f, 0f);
-                        case Orientation.Up:
-                            return Quaternion.Euler(270f, 0f, 0f);
-                        case Orientation.Down:
-                            return Quaternion.Euler(90f, 0f, 0f);
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                case CardinalDirection.South:
-                    switch (targetOrientation)
-                    {
-                        case Orientation.Front:
-                            return Quaternion.Euler(0f, 0f, 180f);
-                        case Orientation.Back:
-                            return Quaternion.Euler(0f, 180f, 180f);
-                        case Orientation.Right:
-                            return Quaternion.Euler(0f, 270f, 180f);
-                        case Orientation.Left:
-                            return Quaternion.Euler(0f, 90f, 180f);
-                        case Orientation.Up:
-                            return Quaternion.Euler(90f, 180f, 0f);
-                        case Orientation.Down:
-                            return Quaternion.Euler(270f, 180f, 0f);
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                case CardinalDirection.East:
-                    switch (targetOrientation)
-                    {
-                        case Orientation.Front:
-                            return Quaternion.Euler(0f, 0f, 90f);
-                        case Orientation.Back:
-                            return Quaternion.Euler(0f, 180f, 270f);
-                        case Orientation.Right:
-                            return Quaternion.Euler(270f, 90f, 0f);
-                        case Orientation.Left:
-                            return Quaternion.Euler(90f, 270f, 0f);
-                        case Orientation.Up:
-                            return Quaternion.Euler(0f, 270f, 90f);
-                        case Orientation.Down:
-                            return Quaternion.Euler(0f, 90f, 90f);
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                case CardinalDirection.West:
-                    switch (targetOrientation)
-                    {
-                        case Orientation.Front:
-                            return Quaternion.Euler(0f, 0f, 270f);
-                        case Orientation.Back:
-                            return Quaternion.Euler(0f, 180f, 90f);
-                        case Orientation.Right:
-                            return Quaternion.Euler(90f, 90f, 0f);
-                        case Orientation.Left:
-                            return Quaternion.Euler(270f, 270f, 0f);
-                        case Orientation.Up:
-                            return Quaternion.Euler(0f, 90f, 270f);
-                        case Orientation.Down:
-                            return Quaternion.Euler(0f, 270f, 270f);
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+                CardinalDirection.North => targetOrientation switch
+                {
+                    Orientation.Front => Quaternion.Euler(0f, 0f, 0f),
+                    Orientation.Back => Quaternion.Euler(0f, 180f, 0f),
+                    Orientation.Right => Quaternion.Euler(0f, 90f, 0f),
+                    Orientation.Left => Quaternion.Euler(0f, 270f, 0f),
+                    Orientation.Up => Quaternion.Euler(270f, 0f, 0f),
+                    Orientation.Down => Quaternion.Euler(90f, 0f, 0f),
+                    _ => throw new ArgumentOutOfRangeException()
+                },
+                CardinalDirection.South => targetOrientation switch
+                {
+                    Orientation.Front => Quaternion.Euler(0f, 0f, 180f),
+                    Orientation.Back => Quaternion.Euler(0f, 180f, 180f),
+                    Orientation.Right => Quaternion.Euler(0f, 270f, 180f),
+                    Orientation.Left => Quaternion.Euler(0f, 90f, 180f),
+                    Orientation.Up => Quaternion.Euler(90f, 180f, 0f),
+                    Orientation.Down => Quaternion.Euler(270f, 180f, 0f),
+                    _ => throw new ArgumentOutOfRangeException()
+                },
+                CardinalDirection.East => targetOrientation switch
+                {
+                    Orientation.Front => Quaternion.Euler(0f, 0f, 90f),
+                    Orientation.Back => Quaternion.Euler(0f, 180f, 270f),
+                    Orientation.Right => Quaternion.Euler(270f, 90f, 0f),
+                    Orientation.Left => Quaternion.Euler(90f, 270f, 0f),
+                    Orientation.Up => Quaternion.Euler(0f, 270f, 90f),
+                    Orientation.Down => Quaternion.Euler(0f, 90f, 90f),
+                    _ => throw new ArgumentOutOfRangeException()
+                },
+                CardinalDirection.West => targetOrientation switch
+                {
+                    Orientation.Front => Quaternion.Euler(0f, 0f, 270f),
+                    Orientation.Back => Quaternion.Euler(0f, 180f, 90f),
+                    Orientation.Right => Quaternion.Euler(90f, 90f, 0f),
+                    Orientation.Left => Quaternion.Euler(270f, 270f, 0f),
+                    Orientation.Up => Quaternion.Euler(0f, 90f, 270f),
+                    Orientation.Down => Quaternion.Euler(0f, 270f, 270f),
+                    _ => throw new ArgumentOutOfRangeException()
+                },
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
         
         public void SetTargetRotationDirection(Orientation targetOrientationParameter)
@@ -138,10 +91,10 @@ namespace Game
             if (nearestOrientation == targetOrientation) return nearestDirection;
             if (nearestOrientation.Opposite() == targetOrientation)
             {
-                Debug.Log("Went directly to the opposite site.");
+                Debug.Log("Went directly to the opposite side.");
                 return nearestDirection; 
                 // Not always correct. Fails on super low frame rate
-                // when the player might travel to the opposite site of the cube.
+                // when the player might travel to the opposite side of the cube.
             }
             
             switch (nearestOrientation)
@@ -232,113 +185,69 @@ namespace Game
                     {
                         case Orientation.Front:
                             nearestOrientation = Orientation.Up;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                                default:
-                                    throw new ArgumentOutOfRangeException();
-                            }
+                                CardinalDirection.North => CardinalDirection.North,
+                                CardinalDirection.South => CardinalDirection.South,
+                                CardinalDirection.East => CardinalDirection.East,
+                                CardinalDirection.West => CardinalDirection.West,
+                                _ => throw new ArgumentOutOfRangeException()
+                            };
                             break;
                         case Orientation.Back:
                             nearestOrientation = Orientation.Up;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.South,
+                                CardinalDirection.East => CardinalDirection.West,
+                                CardinalDirection.South => CardinalDirection.North,
+                                CardinalDirection.West => CardinalDirection.East,
+                                _ => nearestDirection
+                            };
                             break;
                         case Orientation.Right:
                             nearestOrientation = Orientation.Up;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.West,
+                                CardinalDirection.East => CardinalDirection.North,
+                                CardinalDirection.South => CardinalDirection.East,
+                                CardinalDirection.West => CardinalDirection.South,
+                                _ => nearestDirection
+                            };
                             break;
                         case Orientation.Left:
                             nearestOrientation = Orientation.Up;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.East,
+                                CardinalDirection.East => CardinalDirection.South,
+                                CardinalDirection.South => CardinalDirection.West,
+                                CardinalDirection.West => CardinalDirection.North,
+                                _ => nearestDirection
+                            };
                             break;
                         case Orientation.Up:
                             nearestOrientation = Orientation.Back;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.South,
+                                CardinalDirection.East => CardinalDirection.West,
+                                CardinalDirection.South => CardinalDirection.North,
+                                CardinalDirection.West => CardinalDirection.East,
+                                _ => nearestDirection
+                            };
                             break;
                         case Orientation.Down:
                             nearestOrientation = Orientation.Front;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.North,
+                                CardinalDirection.East => CardinalDirection.East,
+                                CardinalDirection.South => CardinalDirection.South,
+                                CardinalDirection.West => CardinalDirection.West,
+                                _ => nearestDirection
+                            };
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -349,111 +258,69 @@ namespace Game
                     {
                         case Orientation.Front:
                             nearestOrientation = Orientation.Down;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.North,
+                                CardinalDirection.East => CardinalDirection.East,
+                                CardinalDirection.South => CardinalDirection.South,
+                                CardinalDirection.West => CardinalDirection.West,
+                                _ => nearestDirection
+                            };
                             break;
                         case Orientation.Back:
                             nearestOrientation = Orientation.Down;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.South,
+                                CardinalDirection.East => CardinalDirection.West,
+                                CardinalDirection.South => CardinalDirection.North,
+                                CardinalDirection.West => CardinalDirection.East,
+                                _ => nearestDirection
+                            };
                             break;
                         case Orientation.Right:
                             nearestOrientation = Orientation.Down;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.East,
+                                CardinalDirection.East => CardinalDirection.South,
+                                CardinalDirection.South => CardinalDirection.West,
+                                CardinalDirection.West => CardinalDirection.North,
+                                _ => nearestDirection
+                            };
                             break;
                         case Orientation.Left:
                             nearestOrientation = Orientation.Down;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.West,
+                                CardinalDirection.East => CardinalDirection.North,
+                                CardinalDirection.South => CardinalDirection.East,
+                                CardinalDirection.West => CardinalDirection.South,
+                                _ => nearestDirection
+                            };
                             break;
                         case Orientation.Up:
                             nearestOrientation = Orientation.Front;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.North,
+                                CardinalDirection.East => CardinalDirection.East,
+                                CardinalDirection.South => CardinalDirection.South,
+                                CardinalDirection.West => CardinalDirection.West,
+                                _ => nearestDirection
+                            };
                             break;
                         case Orientation.Down:
                             nearestOrientation = Orientation.Back;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.South,
+                                CardinalDirection.East => CardinalDirection.West,
+                                CardinalDirection.South => CardinalDirection.North,
+                                CardinalDirection.West => CardinalDirection.East,
+                                _ => nearestDirection
+                            };
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -464,111 +331,69 @@ namespace Game
                     {
                         case Orientation.Front:
                             nearestOrientation = Orientation.Right;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.North,
+                                CardinalDirection.East => CardinalDirection.East,
+                                CardinalDirection.South => CardinalDirection.South,
+                                CardinalDirection.West => CardinalDirection.West,
+                                _ => nearestDirection
+                            };
                             break;
                         case Orientation.Back:
                             nearestOrientation = Orientation.Left;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.North,
+                                CardinalDirection.East => CardinalDirection.East,
+                                CardinalDirection.South => CardinalDirection.South,
+                                CardinalDirection.West => CardinalDirection.West,
+                                _ => nearestDirection
+                            };
                             break;
                         case Orientation.Right:
                             nearestOrientation = Orientation.Back;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.North,
+                                CardinalDirection.East => CardinalDirection.East,
+                                CardinalDirection.South => CardinalDirection.South,
+                                CardinalDirection.West => CardinalDirection.West,
+                                _ => nearestDirection
+                            };
                             break;
                         case Orientation.Left:
                             nearestOrientation = Orientation.Front;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.North,
+                                CardinalDirection.East => CardinalDirection.East,
+                                CardinalDirection.South => CardinalDirection.South,
+                                CardinalDirection.West => CardinalDirection.West,
+                                _ => nearestDirection
+                            };
                             break;
                         case Orientation.Up:
                             nearestOrientation = Orientation.Right;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.East,
+                                CardinalDirection.East => CardinalDirection.South,
+                                CardinalDirection.South => CardinalDirection.West,
+                                CardinalDirection.West => CardinalDirection.North,
+                                _ => nearestDirection
+                            };
                             break;
                         case Orientation.Down:
                             nearestOrientation = Orientation.Right;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.West,
+                                CardinalDirection.East => CardinalDirection.North,
+                                CardinalDirection.South => CardinalDirection.East,
+                                CardinalDirection.West => CardinalDirection.South,
+                                _ => nearestDirection
+                            };
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -579,111 +404,69 @@ namespace Game
                     {
                         case Orientation.Front:
                             nearestOrientation = Orientation.Left;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.North,
+                                CardinalDirection.East => CardinalDirection.East,
+                                CardinalDirection.South => CardinalDirection.South,
+                                CardinalDirection.West => CardinalDirection.West,
+                                _ => nearestDirection
+                            };
                             break;
                         case Orientation.Back:
                             nearestOrientation = Orientation.Right;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.North,
+                                CardinalDirection.East => CardinalDirection.East,
+                                CardinalDirection.South => CardinalDirection.South,
+                                CardinalDirection.West => CardinalDirection.West,
+                                _ => nearestDirection
+                            };
                             break;
                         case Orientation.Right: 
                             nearestOrientation = Orientation.Front;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.North,
+                                CardinalDirection.South => CardinalDirection.South,
+                                CardinalDirection.East => CardinalDirection.East,
+                                CardinalDirection.West => CardinalDirection.West,
+                                _ => nearestDirection
+                            };
                             break;
                         case Orientation.Left:
                             nearestOrientation = Orientation.Back;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.North,
+                                CardinalDirection.East => CardinalDirection.East,
+                                CardinalDirection.South => CardinalDirection.South,
+                                CardinalDirection.West => CardinalDirection.West,
+                                _ => nearestDirection
+                            };
                             break;
                         case Orientation.Up:
                             nearestOrientation = Orientation.Left;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.West,
+                                CardinalDirection.East => CardinalDirection.North,
+                                CardinalDirection.South => CardinalDirection.East,
+                                CardinalDirection.West => CardinalDirection.South,
+                                _ => nearestDirection
+                            };
                             break;
                         case Orientation.Down:
                             nearestOrientation = Orientation.Left;
-                            switch (nearestDirection)
+                            nearestDirection = nearestDirection switch
                             {
-                                case CardinalDirection.North:
-                                    nearestDirection = CardinalDirection.East;
-                                    break;
-                                case CardinalDirection.East:
-                                    nearestDirection = CardinalDirection.South;
-                                    break;
-                                case CardinalDirection.South:
-                                    nearestDirection = CardinalDirection.West;
-                                    break;
-                                case CardinalDirection.West:
-                                    nearestDirection = CardinalDirection.North;
-                                    break;
-                            }
+                                CardinalDirection.North => CardinalDirection.East,
+                                CardinalDirection.East => CardinalDirection.South,
+                                CardinalDirection.South => CardinalDirection.West,
+                                CardinalDirection.West => CardinalDirection.North,
+                                _ => nearestDirection
+                            };
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
