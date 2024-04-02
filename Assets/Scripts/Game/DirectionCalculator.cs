@@ -89,13 +89,7 @@ namespace Game
         private CardinalDirection CalculateTargetRotationDirection()
         {
             if (nearestOrientation == targetOrientation) return nearestDirection;
-            if (nearestOrientation.Opposite() == targetOrientation)
-            {
-                Debug.Log("Went directly to the opposite side.");
-                return nearestDirection; 
-                // Not always correct. Fails on super low frame rate
-                // when the player might travel to the opposite side of the cube.
-            }
+            if (nearestOrientation.Opposite() == targetOrientation) return nearestDirection; 
             
             switch (nearestOrientation)
             {

@@ -38,16 +38,22 @@ namespace Game
     
         private void Update()
         {
+            CalculateRotation();
+            transform.position = Vector3.MoveTowards(transform.position, _squareTransforms[_target].position, Time.deltaTime * 5.3f);
+            if (_nearest == _objectiveSquare) AdvanceLevel();
+        }
+
+        public void CalculateNearest()
+        {
             var newNearest = Nearest(_nearest);
             if (newNearest.Orientation != _nearest.Orientation) directionCalculator.HandleLogicalFaceChange(lastMoveDirection);
             _nearest = newNearest;
+        }
 
+        private void CalculateRotation()
+        {
             directionCalculator.SetTargetRotationDirection(_target.Orientation);
             _mazeRotator.SetTarget(directionCalculator.GetRotation());
-            
-            transform.position = Vector3.MoveTowards(transform.position, _squareTransforms[_target].position, Time.deltaTime * 5.3f);
-            
-            if (_nearest == _objectiveSquare) AdvanceLevel();
         }
 
         private Square Nearest(Square current)
@@ -58,26 +64,24 @@ namespace Game
                 .ToList();
             neighbors.Add(current);
             return neighbors.OrderBy(square =>
-                Vector3.Distance(transform.position, _squareTransforms[square].position)).First();
+                Vector3.SqrMagnitude(transform.position - _squareTransforms[square].position)).First();
         }
 
         public void DetermineInput(List<CardinalDirection> input)
         {
             if (input.Count == 0) return;
-            foreach (var direction in input)
+            foreach (var direction in input.Select(direction => directionCalculator.CalculateWorldDirection(direction)))
             {
-                var calculatedDirection = directionCalculator.CalculateWorldDirection(direction);
-                var (square, wall) = GetNeighbor(_nearest, calculatedDirection);
+                var (square, wall) = GetNeighbor(_nearest, direction);
                 if (square == null) continue;
                 if (!wall.IsOpen) continue;
-                Move(calculatedDirection, square, wall, direction);
+                Move(direction, square, wall);
                 return;
             }
-            var d = input.First();
-            var calculatedD = directionCalculator.CalculateWorldDirection(d);
-            var (s, w) = GetNeighbor(_nearest, calculatedD);
+            var d = directionCalculator.CalculateWorldDirection(input.First());
+            var (s, w) = GetNeighbor(_nearest, d);
             if (s == null) return;
-            Move(calculatedD, s, w, d);
+            Move(d, s, w);
         }
 
         private static (Square, Wall) GetNeighbor(Square square, CardinalDirection direction)
@@ -91,7 +95,7 @@ namespace Game
                 _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
             };
         }
-        private void Move(CardinalDirection direction, Square square, Wall wall, CardinalDirection keyDirection)
+        private void Move(CardinalDirection direction, Square square, Wall wall)
         {
             _target = wall.IsOpen ? square : _nearest;
             lastMoveDirection = direction;
